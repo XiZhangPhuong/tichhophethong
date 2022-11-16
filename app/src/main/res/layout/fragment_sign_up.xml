@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_marginLeft="45dp"
+    tools:context=".Activity.Login_SignUpActivity">
+
+    <!-- TODO: Update blank fragment layout -->
+
+
+   <LinearLayout
+       android:id="@+id/linear_SignUp"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="vertical">
+
+       <EditText
+           android:id="@+id/edt_fullname"
+           android:layout_width="match_parent"
+           android:layout_height="50dp"
+           android:layout_gravity="center"
+           android:layout_marginTop="10dp"
+           android:background="@drawable/customedittext"
+           android:drawableStart="@drawable/ic_user_24"
+           android:drawablePadding="10dp"
+           android:hint="FullName"
+           android:paddingStart="20dp"
+           android:paddingEnd="20dp" />
+
+       <EditText
+           android:id="@+id/edt_phonenumber"
+           android:layout_width="match_parent"
+           android:layout_height="50dp"
+           android:layout_gravity="center"
+           android:layout_marginTop="12dp"
+           android:background="@drawable/customedittext"
+           android:drawableStart="@drawable/ic_phone_24"
+           android:drawablePadding="10dp"
+           android:hint="Phone Number"
+           android:inputType="phone"
+           android:paddingStart="20dp"
+           android:paddingEnd="20dp" />
+
+       <EditText
+           android:id="@+id/edt_password"
+           android:layout_width="match_parent"
+           android:layout_height="50dp"
+           android:layout_gravity="center"
+           android:layout_marginTop="12dp"
+           android:background="@drawable/customedittext"
+           android:drawableStart="@drawable/ic_lock_24"
+           android:drawablePadding="10dp"
+           android:hint="Password"
+           android:inputType="textPassword"
+           android:paddingStart="20dp"
+           android:paddingEnd="20dp" />
+
+       <EditText
+           android:id="@+id/edt_confirmpassword"
+           android:layout_width="match_parent"
+           android:layout_height="50dp"
+           android:layout_gravity="center"
+           android:layout_marginTop="12dp"
+           android:background="@drawable/customedittext"
+           android:drawableStart="@drawable/ic_lock_24"
+           android:drawablePadding="10dp"
+           android:hint="Confirm Password"
+           android:inputType="textPassword"
+           android:paddingStart="20dp"
+           android:paddingEnd="20dp" />
+
+       <ProgressBar
+           android:id="@+id/progressBar"
+           style="?android:attr/progressBarStyle"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content" />
+
+       <Button
+           android:id="@+id/btnsingup"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_gravity="center"
+           android:layout_marginTop="30dp"
+           android:background="@drawable/customedittext"
+           android:text="Đăng ký tài khoản"
+           android:textAllCaps="false"
+           android:textSize="15sp"
+           app:backgroundTint="#FF9800" />
+
+
+   </LinearLayout>
+
+
+
+
+</LinearLayout>

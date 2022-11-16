@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    android:padding="6sp"
+    android:layout_marginLeft="45dp"
+    android:layout_marginRight="45dp"
+    tools:context=".Activity.Login_SignUpActivity">
+
+    <!-- TODO: Update blank fragment layout -->
+
+
+    <EditText
+        android:id="@+id/username"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/customedittext"
+        android:hint="Phone Number"
+        android:inputType="phone"
+        android:text="0359203218"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:drawablePadding="10dp"
+        android:drawableStart="@drawable/ic_user_24"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"/>
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingStart="20sp"
+        android:paddingEnd="20dp"
+        android:drawableStart="@drawable/ic_lock_24"
+        android:background="@drawable/customedittext"
+        android:hint="Password"
+        android:text="123456"
+        android:drawablePadding="10dp"
+        android:layout_gravity="center"
+        android:inputType="textPassword"
+        android:layout_marginTop="20dp"/>
+    <TextView
+        android:id="@+id/forgotpassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Quên mật khẩu"
+        android:layout_marginTop="6sp"
+        android:layout_gravity="right"
+        android:textColor="@android:color/holo_red_light"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/btnlogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        app:backgroundTint="#ff1a1a"
+        android:text="Đăng nhập"
+        android:textAllCaps="false"
+        android:background="@drawable/customedittext"
+        android:textSize="15dp" />
+
+    <Button
+        android:id="@+id/btnlogin_fb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        app:backgroundTint="#03A9F4"
+        android:background="@drawable/customedittext"
+        android:text="Đăng nhập với Facebok"
+        android:textAllCaps="false"
+        android:textSize="15dp" />
+
+    <Button
+        android:id="@+id/btnlogin_OTP"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/customedittext"
+        app:backgroundTint="@color/teal_700"
+        android:textAllCaps="false"
+        android:text="Đăng nhập với OTP"
+        android:textSize="15dp" />
+
+</LinearLayout>

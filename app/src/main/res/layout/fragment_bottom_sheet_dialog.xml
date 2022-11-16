@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="50dp"
+    android:orientation="vertical"
+
+    tools:context=".Dialog.BottomSheetDialogFragment">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/red"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/img_return"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/ic_back_24" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:text="Thông tin món ăn"
+            android:textColor="@color/white"
+            android:textSize="18dp"
+            android:layout_gravity="center"
+            />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/img_getImageFood"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/comchientrung" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:id="@+id/txt_getNameFood"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="3"
+            android:textColor="@color/black"
+            android:text="Chan ga xa tac" />
+
+        <Button
+            android:id="@+id/btn_addTOCart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:backgroundTint="#ff1a1a"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:textAllCaps="false"
+            android:text="Thêm giỏ hàng" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/txt_getInForFood"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:text="Vi dam da tuoi ngon kho cuong" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:id="@+id/txt_getPriceFood"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="80.000VND"
+            android:textColor="@color/red"
+            android:textSize="23dp"
+             />
+
+        <TextView
+            android:id="@+id/txt_km_Food"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="3km" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/img_like_Food"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:srcCompat="@drawable/ic_favorite_24" />
+
+            <TextView
+                android:id="@+id/txt_getLike"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="12 like" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:id="@+id/txt_commme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:text="Bình luận" />
+
+            <TextView
+                android:id="@+id/txt_viewALlCMT"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:textColor="@color/red"
+                android:gravity="right"
+                android:layout_marginRight="10dp"
+                android:text="Xem thêm  " />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear_Cmt"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/ic_user_24" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="5"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txt_name_Comment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lê Thành Đạt"
+                    android:layout_marginTop="10dp"
+                    android:textSize="17dp"
+                    android:textColor="@color/black" />
+
+                <RatingBar
+                    android:id="@+id/ratingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:stepSize="1"
+                    android:numStars="5"
+                    android:scaleX=".5"
+                    android:scaleY=".5"
+                    android:transformPivotX="0dp"
+                    android:transformPivotY="0dp"
+                    android:theme="@style/RatingBar"
+                    android:isIndicator="true"
+                    android:rating="3"
+                    />
+
+                    <TextView
+                        android:id="@+id/txt_Comment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:textSize="15dp"
+                        android:layout_weight="1"
+                        android:text="Món này rất ngon nha" />
+
+                   <LinearLayout
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:orientation="horizontal">
+
+                       <TextView
+                           android:id="@+id/txt_likeComment"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:text="Thích"
+                           android:textColor="@color/black"
+         />
+
+                       <TextView
+                           android:id="@+id/ds"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:text="Trả lời"
+
+                           android:layout_marginLeft="20dp"
+                           android:textColor="@color/black"
+      />
+
+                       <TextView
+                           android:id="@+id/countLikeCMT"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:text="1 lượt thích"
+                           android:layout_marginLeft="40dp"
+                           android:textColor="@color/black"/>
+                   </LinearLayout>
+            </LinearLayout>
+
+
+
+
+
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+</ScrollView>

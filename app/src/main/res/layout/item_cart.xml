@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="12dp"
+    android:layout_marginLeft="12dp"
+    android:layout_marginRight="12dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
+    android:backgroundTint="@color/white"
+    >
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="horizontal">
+
+
+       <ImageView
+           android:id="@+id/img_cart_photo"
+           android:layout_width="150dp"
+           android:layout_height="100dp"
+           android:layout_weight="1"
+           android:scaleType="centerCrop"
+           app:srcCompat="@drawable/comchientrung" />
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:layout_weight="3"
+           android:orientation="vertical"
+           android:layout_marginLeft="10dp"
+           >
+
+           <TextView
+               android:id="@+id/tv_name_cart"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="Cơm chiên trứng"
+               android:textColor="@color/black"
+               android:textSize="18dp"
+               />
+
+           <TextView
+               android:id="@+id/tv_name_inf_cart"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="Món này rất ngon"
+               android:textSize="15dp"
+               android:layout_marginTop="5dp"
+               />
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="10dp"
+               android:orientation="horizontal">
+
+               <TextView
+                   android:id="@+id/tv_total_item"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="2500000"
+                   android:textColor="@color/red"
+                   android:textSize="18dp"
+                   android:layout_weight="2"
+                   />
+
+               <ImageView
+                   android:id="@+id/imb_minus_cart"
+                   android:layout_width="wrap_content"
+                   android:layout_height="24dp"
+                   android:layout_weight="1"
+                   app:srcCompat="@drawable/dautru" />
+
+               <TextView
+                   android:id="@+id/tv_number_cart"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="3"
+                   android:textColor="@color/black"
+                   android:textSize="18dp" />
+
+               <ImageView
+                   android:id="@+id/imb_plus_cart"
+                   android:layout_width="wrap_content"
+                   android:layout_height="24dp"
+                   android:layout_weight="1"
+                   app:srcCompat="@drawable/daucong" />
+
+
+           </LinearLayout>
+       </LinearLayout>
+
+
+   </LinearLayout>
+
+</androidx.cardview.widget.CardView>

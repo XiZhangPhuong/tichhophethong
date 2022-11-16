@@ -1,0 +1,143 @@
+{
+  "project_info": {
+    "project_number": "156540035401",
+    "firebase_url": "https://fastfooddelivery-646b3-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "fastfooddelivery-646b3",
+    "storage_bucket": "fastfooddelivery-646b3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:156540035401:android:65bf6bb5370ff07cb13a98",
+        "android_client_info": {
+          "package_name": "com.example.adminfastfooddelivery"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "156540035401-ko1cs6fi46mqlis6bep1scd5d0bu0vb5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHueeKcKT6RkTtgbKLI7qm-nza7mwldz4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "156540035401-ko1cs6fi46mqlis6bep1scd5d0bu0vb5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:156540035401:android:8bb78a1f93cf4918b13a98",
+        "android_client_info": {
+          "package_name": "com.example.bottomnavigationbardeprecated"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "156540035401-slj918as0sdt7864nscamvapvad44eon.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.bottomnavigationbardeprecated",
+            "certificate_hash": "eee3104b2b3182421aa986faa9260d74906a0376"
+          }
+        },
+        {
+          "client_id": "156540035401-ko1cs6fi46mqlis6bep1scd5d0bu0vb5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHueeKcKT6RkTtgbKLI7qm-nza7mwldz4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "156540035401-ko1cs6fi46mqlis6bep1scd5d0bu0vb5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:156540035401:android:ee801438f19cab21b13a98",
+        "android_client_info": {
+          "package_name": "com.example.fastfooddelivery"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "156540035401-cfn6pm1jueon3m1438csi39b6f2dntu9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.fastfooddelivery",
+            "certificate_hash": "eee3104b2b3182421aa986faa9260d74906a0376"
+          }
+        },
+        {
+          "client_id": "156540035401-ko1cs6fi46mqlis6bep1scd5d0bu0vb5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHueeKcKT6RkTtgbKLI7qm-nza7mwldz4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "156540035401-ko1cs6fi46mqlis6bep1scd5d0bu0vb5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:156540035401:android:d1181d4efc6cc803b13a98",
+        "android_client_info": {
+          "package_name": "com.example.fastfooddelivery2023"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "156540035401-ko1cs6fi46mqlis6bep1scd5d0bu0vb5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHueeKcKT6RkTtgbKLI7qm-nza7mwldz4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "156540035401-ko1cs6fi46mqlis6bep1scd5d0bu0vb5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
