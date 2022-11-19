@@ -1,24 +1,24 @@
 package com.example.fastfooddelivery2023.Model;
 
 public class User {
-    private int id;
+    private String id;
     private String fullName,phoneNumber,passWord;
 
     public User() {
     }
 
-    public User(int id, String fullName, String phoneNumber, String passWord) {
+    public User(String id, String fullName, String phoneNumber, String passWord) {
         this.id = id;
         this.fullName = fullName;
         this.phoneNumber = phoneNumber;
         this.passWord = passWord;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

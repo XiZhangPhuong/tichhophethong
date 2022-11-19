@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fastfooddelivery2023.Model.Category;
 import com.example.fastfooddelivery2023.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -39,7 +40,7 @@ public class Category_Adapter extends RecyclerView.Adapter<Category_Adapter.Cate
         if(category==null){
             return;
         }
-        holder.image_Category.setImageResource(Integer.parseInt(category.getImage_Category()));
+        Picasso.get().load(category.getImage_Category()).into(holder.image_Category);
         holder.name_Category.setText(category.getName_Category());
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override

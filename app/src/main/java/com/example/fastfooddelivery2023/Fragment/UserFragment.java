@@ -28,7 +28,7 @@ import com.google.android.material.tabs.TabLayoutMediator;
 
 public class UserFragment extends Fragment {
     private View mView;
-    private TextView txt_name_avt,txt_phone_avt;
+    private TextView txt_name_user,txt_phone_user,txt_id_user;
     private TabLayout tabLayout;
     private ViewPager2 viewPager2;
     private ImageView img_back;
@@ -37,16 +37,9 @@ public class UserFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView =inflater.inflate(R.layout.fragment_user, container, false);
-//        txt_name_avt = mView.findViewById(R.id.txt_name_avt);
-//        txt_phone_avt = mView.findViewById(R.id.txt_phone_avt);
         initView(mView);
+        setDataUser();
 
-        img_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
 
         linear_history.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,14 +51,21 @@ public class UserFragment extends Fragment {
 
 
 
-//        User user = DataPreferences.getUser(getContext(),KEY_USER);
-//        txt_name_avt.setText(user.getFullName());
-//        txt_phone_avt.setText(user.getPhoneNumber());
+
 
         return mView;
     }
+    private void setDataUser(){
+        User user = DataPreferences.getUser(getContext(),KEY_USER);
+        txt_phone_user.setText(user.getPhoneNumber());
+        txt_name_user.setText(user.getFullName());
+        txt_id_user.setText(user.getId());
+    }
+
     private void initView(View view){
-        img_back = view.findViewById(R.id.img_return_user);
         linear_history = view.findViewById(R.id.linear_history_cart);
+        txt_name_user = view.findViewById(R.id.tv_name_user);
+        txt_id_user = view.findViewById(R.id.tv_id_user);
+        txt_phone_user = view.findViewById(R.id.tv_phone_user);
     }
 }

@@ -7,8 +7,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.fastfooddelivery2023.Control.TEMPS;
 import com.example.fastfooddelivery2023.Model.Food;
 import com.example.fastfooddelivery2023.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -40,7 +43,7 @@ public class Cart_Adapter extends RecyclerView.Adapter<Cart_Adapter.CartViewHold
         if(food==null){
             return;
         }
-        holder.img_cart_photo.setImageResource(Integer.parseInt(food.getImage_Food()));
+        Picasso.get().load(food.getImage_Food()).into(holder.img_cart_photo);
         holder.tv_name_cart.setText(food.getName_Food());
         holder.tv_number_cart.setText(String.valueOf(food.getQuantity()));
         holder.tv_total_item.setText(String.valueOf(food.getPrice_Food()));

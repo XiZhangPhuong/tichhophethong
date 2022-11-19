@@ -1,5 +1,6 @@
 package com.example.fastfooddelivery2023.Adapter;
 
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,42 +11,52 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.fastfooddelivery2023.Control.TEMPS;
 import com.example.fastfooddelivery2023.Model.Food;
 import com.example.fastfooddelivery2023.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class Recommend_Adapter extends RecyclerView.Adapter<Recommend_Adapter.RecommendViewHolder> {
     private List<Food> listFood;
-    public interface IClickFood{
-        void Click(Food food);
+    private Sale_Adapter.ICLickFood icLickFood;
+    public interface ICLickFood{
+        void Click_Add_Cart(Food food);
+        void Click_View_Food(Food food);
     }
-    private  IClickFood iClickFood;
 
-    public Recommend_Adapter(List<Food> listFood, IClickFood iClickFood) {
+    public Recommend_Adapter(List<Food> listFood, Sale_Adapter.ICLickFood icLickFood) {
         this.listFood = listFood;
-        this.iClickFood = iClickFood;
+        this.icLickFood = icLickFood;
         notifyDataSetChanged();
     }
 
     @NonNull
     @Override
     public Recommend_Adapter.RecommendViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new RecommendViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_food,parent,false));
+        return new RecommendViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_fastfood,parent,false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull Recommend_Adapter.RecommendViewHolder holder, int position) {
-        Food food = listFood.get(position);
+        Food food = this.listFood.get(position);
         if(food==null){
             return;
         }
-        holder.img_red_photo.setImageResource(Integer.parseInt(food.getImage_Food()));
-        holder.tv_red_price.setText(food.getName_Food());
+        Picasso.get().load(food.getImage_Food()).into(holder.img_food);
+        holder.txt_name_food.setText(food.getName_Food());
+        holder.txt_prince_new.setText(food.getPrice_Food()+" vnd");
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                iClickFood.Click(food);
+                icLickFood.Click_View_Food(food);
+            }
+        });
+        holder.img_add_Cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                icLickFood.Click_Add_Cart(food);
             }
         });
 
@@ -60,14 +71,16 @@ public class Recommend_Adapter extends RecyclerView.Adapter<Recommend_Adapter.Re
     }
 
     public class RecommendViewHolder extends RecyclerView.ViewHolder {
-        private ImageView img_red_photo;
-        private TextView tv_red_price;
         private LinearLayout linearLayout;
+        private TextView txt_name_food,txt_prince_new,txt_prince_old;
+        private ImageView img_add_Cart,img_food;
         public RecommendViewHolder(@NonNull View itemView) {
             super(itemView);
-            img_red_photo = itemView.findViewById(R.id.img_red_photo);
-            tv_red_price = itemView.findViewById(R.id.tv_name_red_food);
-            linearLayout = itemView.findViewById(R.id.linear_Food);
+            linearLayout = itemView.findViewById(R.id.linear_OnClick);
+            txt_name_food = itemView.findViewById(R.id.txt_name_food);
+            txt_prince_new = itemView.findViewById(R.id.txt_prince_new);
+            img_food = itemView.findViewById(R.id.img_items_food);
+            img_add_Cart  = itemView.findViewById(R.id.img_add_Cart);
         }
     }
 }

@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import com.example.fastfooddelivery2023.R;
+
 public class LoginActivity extends AppCompatActivity {
 
     @Override
@@ -11,4 +13,4 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
     }
-}
+            }

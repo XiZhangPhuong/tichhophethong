@@ -25,7 +25,7 @@ public class OTPActivity extends AppCompatActivity {
     private Button bt_veiry;
     private CountDownTimer countDownTimer;
     private String name,phone,pass;
-    private DatabaseReference dataUser = FirebaseDatabase.getInstance().getReference("USER");
+    private DatabaseReference dataUser = FirebaseDatabase.getInstance().getReference("User");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,11 +76,16 @@ public class OTPActivity extends AppCompatActivity {
          bt_veiry.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View view) {
+                  if(edt_code_verify.length()==0){
+                      edt_code_verify.setError("Chưa nhập OTP");
+                      edt_code_verify.requestFocus();
+                      return;
+                  }
                   if(Integer.parseInt(edt_code_verify.getText().toString())==OTP){
-                      User user = new User(ranDomCODE(),name,phone,pass);
-                      dataUser.child(user.getPhoneNumber()).setValue(user);
-                      finishAffinity();
+                      User user = new User("User"+ranDomCODE(),name,phone,pass);
+                      dataUser.child(user.getId()).setValue(user);
                       startActivity(new Intent(OTPActivity.this,Login_SignUpActivity.class));
+                      finishAffinity();
                       Toast.makeText(OTPActivity.this,"Đăng ký tài khoản thành công",Toast.LENGTH_SHORT).show();
                       showNotification(OTPActivity.this,"FastFoodDelivery","Đăng ký tài khoản thành công");
 

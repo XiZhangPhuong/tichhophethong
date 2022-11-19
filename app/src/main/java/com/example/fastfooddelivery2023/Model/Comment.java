@@ -1,17 +1,27 @@
 package com.example.fastfooddelivery2023.Model;
 
 public class Comment {
+    private String idFood;
     private String name,comment,date;
     private int quantityLike;
 
     public Comment() {
     }
 
-    public Comment(String name, String comment, String date, int quantityLike) {
+    public Comment(String idFood, String name, String comment, String date, int quantityLike) {
+        this.idFood = idFood;
         this.name = name;
         this.comment = comment;
         this.date = date;
         this.quantityLike = quantityLike;
+    }
+
+    public String getIdFood() {
+        return idFood;
+    }
+
+    public void setIdFood(String idFood) {
+        this.idFood = idFood;
     }
 
     public String getName() {

@@ -25,14 +25,23 @@ import android.widget.ViewFlipper;
 
 import com.example.fastfooddelivery2023.Adapter.Category_Adapter;
 import com.example.fastfooddelivery2023.Adapter.Recommend_Adapter;
+import com.example.fastfooddelivery2023.Adapter.Sale_Adapter;
+import com.example.fastfooddelivery2023.Control.TEMPS;
 import com.example.fastfooddelivery2023.Dialog.BottomSheetDialogFragment;
 import com.example.fastfooddelivery2023.Model.Category;
 import com.example.fastfooddelivery2023.Model.Food;
+import com.example.fastfooddelivery2023.Model.Order;
 import com.example.fastfooddelivery2023.Model.User;
 import com.example.fastfooddelivery2023.R;
 import com.example.fastfooddelivery2023.SharedPreferences.DataPreferences;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -41,11 +50,17 @@ private View mView;
 private AutoCompleteTextView singleComplete;
 private MultiAutoCompleteTextView mutiComplete;
 private ViewFlipper viewFlipper;
-private RecyclerView rcv_category,rcv_recommend;
+private RecyclerView rcv_category,rcv_recommend,rcv_sale_food;
 private Category_Adapter category_adapter;
 private Recommend_Adapter recommend_adapter;
+private Sale_Adapter sale_adapter;
 public static final String OBJECT_FOOD = "object_food";
-
+private User user;
+public static List<Food> listFood = new ArrayList<>();
+public static List<Food> listFoodFb = new ArrayList<>();
+private Category category;
+private DatabaseReference dataFood =  FirebaseDatabase.getInstance().getReference("Food");
+private final DatabaseReference dataOrder = FirebaseDatabase.getInstance().getReference("Order");
 
     @Nullable
     @Override
@@ -56,15 +71,90 @@ public static final String OBJECT_FOOD = "object_food";
         viewFlipper = mView.findViewById(R.id.viewflipper);
         rcv_category = mView.findViewById(R.id.rcv_category);
         rcv_recommend = mView.findViewById(R.id.rcv_recommend);
+        rcv_sale_food = mView.findViewById(R.id.rcv_sale_food);
+
+
+        // get data food from FireBase
+
+
+        user = DataPreferences.getUser(getContext(),KEY_USER);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                dataFood.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        listFoodFb.clear();
+                        for(DataSnapshot ds  : snapshot.getChildren()){
+                            Food f  = ds.getValue(Food.class);
+                            listFoodFb.add(f);
+                        }
+                        recommend_adapter.notifyDataSetChanged();
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
+        }).start();
+        // load data cart from firebase
 
         ViewFliperAnimation();
         SearchEditText();
         Category_Food();
         Recommend_Food();
+        sale_Food();
+
+
+
 
 
         return mView;
     }
+
+    private void sale_Food(){
+        sale_adapter = new Sale_Adapter(listFoodFb, new Sale_Adapter.ICLickFood() {
+            @Override
+            public void Click_Add_Cart(Food food) {
+
+            }
+
+            @Override
+            public void Click_View_Food(Food food) {
+                BottomSheetDialogFragment bottomSheetDialogFragment = BottomSheetDialogFragment.newInstance(food);
+                bottomSheetDialogFragment.show(getActivity().getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
+            }
+        });
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(),RecyclerView.HORIZONTAL,false);
+        rcv_sale_food.setLayoutManager(linearLayoutManager);
+        rcv_sale_food.setAdapter(sale_adapter);
+        rcv_sale_food.setHasFixedSize(true);
+    }
+
+    private void Recommend_Food(){
+        recommend_adapter = new Recommend_Adapter(listFoodFb, new Sale_Adapter.ICLickFood() {
+            @Override
+            public void Click_Add_Cart(Food food) {
+
+            }
+
+            @Override
+            public void Click_View_Food(Food food) {
+                BottomSheetDialogFragment bottomSheetDialogFragment = BottomSheetDialogFragment.newInstance(food);
+                bottomSheetDialogFragment.show(getActivity().getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
+            }
+        });
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(),RecyclerView.HORIZONTAL,false);
+        rcv_recommend.setLayoutManager(linearLayoutManager);
+        rcv_recommend.setAdapter(recommend_adapter);
+        rcv_recommend.setHasFixedSize(true);
+
+
+    }
+
+
 
     private void SearchEditText(){
         String arr[] = {"Cơm","Bún","Ăn vặt","Trà sửa","Mỳ","Gà rán","Cơm chiên trứng","Cơm xào bò","Cơm xường nướng"};
@@ -93,7 +183,7 @@ public static final String OBJECT_FOOD = "object_food";
     }
 
     private void ViewFliperAnimation() {
-        int images [] = {R.drawable.slide1,R.drawable.slide2};
+        int images [] = {R.drawable.sale,R.drawable.food1,R.drawable.food2};
         for(int i = 0;i<images.length;i++){
             fliperimage(images[i]);
         }
@@ -102,42 +192,38 @@ public static final String OBJECT_FOOD = "object_food";
     private void fliperimage(int image) {
         ImageView imageView = new ImageView(getContext());
         imageView.setBackgroundResource(image);
+        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         viewFlipper.addView(imageView);
         viewFlipper.setFlipInterval(4000);
         viewFlipper.setAutoStart(true);
         viewFlipper.setInAnimation(getContext(), android.R.anim.slide_in_left);
         viewFlipper.setOutAnimation(getContext(), android.R.anim.slide_out_right);
     }
-    private void Recommend_Food(){
-        List<Food> list = new ArrayList<>();
-        list.add(new Food("123456","Cơm chiên",String.valueOf(R.drawable.comchientrung),"Cơm","Cơm chiên rất ngon nha","Luôn ủng hộ","0",1,450000));
-        recommend_adapter  = new Recommend_Adapter(list, new Recommend_Adapter.IClickFood() {
-            @Override
-            public void Click(Food food) {
-                BottomSheetDialogFragment bottomSheetDialogFragment = BottomSheetDialogFragment.newInstance(food);
-                bottomSheetDialogFragment.show(getActivity().getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
 
-            }
-        });
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false);
-        rcv_recommend.setLayoutManager(linearLayoutManager);
-        rcv_recommend.setAdapter(recommend_adapter);
-        rcv_recommend.setHasFixedSize(true);
-    }
     private void Category_Food(){
         List<Category> listCategory = new ArrayList<>();
-//        listCategory.add(new Category(String.valueOf(R.drawable.icon_rice_50px),"Cơm"));
-//        listCategory.add(new Category(String.valueOf(R.drawable.icon_noodle_50px),"Mỳ"));
-        listCategory.add(new Category(String.valueOf(R.drawable.icon_bread_50px),"Gà rán"));
-        listCategory.add(new Category(String.valueOf(R.drawable.icon_bread_50px),"Đồ uống"));
-        listCategory.add(new Category(String.valueOf(R.drawable.icon_bread_50px),"Trà sửa"));
-        listCategory.add(new Category(String.valueOf(R.drawable.icon_bread_50px),"Ăn vặt"));
+        final DatabaseReference dataCategory = FirebaseDatabase.getInstance().getReference("Category");
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                dataCategory.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        listCategory.clear();
+                        for(DataSnapshot ds : snapshot.getChildren()){
+                            category = ds.getValue(Category.class);
+                            listCategory.add(category);
+                        }
+                        category_adapter.notifyDataSetChanged();
+                    }
 
-        listCategory.add(new Category(String.valueOf(R.drawable.icon_bread_50px),"Gà rán"));
-        listCategory.add(new Category(String.valueOf(R.drawable.icon_bread_50px),"Đồ uống"));
-        listCategory.add(new Category(String.valueOf(R.drawable.icon_bread_50px),"Trà sửa"));
-        listCategory.add(new Category(String.valueOf(R.drawable.icon_bread_50px),"Ăn vặt"));
-
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(getContext(),error.toString(),Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        }).start();
         category_adapter = new Category_Adapter(listCategory, new Category_Adapter.IClickCategory() {
             @Override
             public void Click(Category category) {
@@ -148,7 +234,13 @@ public static final String OBJECT_FOOD = "object_food";
         rcv_category.setLayoutManager(gridLayoutManager);
         rcv_category.setAdapter(category_adapter);
         rcv_category.setHasFixedSize(true);
+
     }
+
+
+
+
+
 
 
 

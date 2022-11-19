@@ -1,9 +1,160 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white_tea"
     tools:context=".Activity.LoginActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/red">
+
+
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="Đăng nhập"
+            android:textColor="@color/white"
+            android:textSize="15dp"
+
+            />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:text="Welcome to FastFoodDelivery" />
+
+            <EditText
+                android:id="@+id/edt_phone_login"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:ems="10"
+                android:hint="Số điện thoại"
+                android:paddingStart="20dp"
+                android:maxLength="10"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/black"
+                android:background="@drawable/custom_edt2"
+                android:inputType="phone" />
+
+
+            <EditText
+                android:id="@+id/edt_pass_login"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:ems="10"
+                android:hint="Mật khẩu"
+                android:paddingStart="20dp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/black"
+                android:maxLength="20"
+                android:background="@drawable/custom_edt2"
+                android:inputType="phone" />
+
+            <TextView
+                android:id="@+id/txt_forgot_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Quên mật khẩu"
+                android:layout_marginTop="10sp"
+                android:layout_gravity="right"
+                android:textSize="15dp"
+                android:textColor="@android:color/holo_red_light"/>
+
+
+            <Button
+                android:id="@+id/btn_login"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginTop="20dp"
+                app:backgroundTint="@color/red"
+                android:textAllCaps="false"
+                android:text="Đăng nhập bằng số điện thoại" />
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:text="--------or---------" />
+
+
+            <Button
+                android:id="@+id/btn_loginFB"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginTop="20dp"
+                app:backgroundTint="#146EB4"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:text="Đăng nhập bằng FaceBook" />
+
+            <Button
+                android:id="@+id/btn_loginGoogle"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginTop="5dp"
+                app:backgroundTint="@color/white"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:text="Đăng nhập bằng Google" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="30dp"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:id="@+id/textView16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="15dp"
+                    android:textColor="@color/black"
+                    android:text="Bạn đã có tài khoản?" />
+
+                <TextView
+                    android:id="@+id/txt_signup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="10"
+                    android:textColor="@color/red"
+                    android:text="Đăng ký" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

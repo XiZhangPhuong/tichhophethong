@@ -1,6 +1,13 @@
 package com.example.fastfooddelivery2023.Fragment.LoginSignUp;
 
+import static com.example.fastfooddelivery2023.Control.TEMPS.convertImageResourceToBitMap;
+import static com.example.fastfooddelivery2023.Control.TEMPS.convertImage_toBase64;
+import static com.example.fastfooddelivery2023.Control.TEMPS.notificationManagerCompat;
+
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,9 +20,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.example.fastfooddelivery2023.Activity.ForgotPasswordActivity;
 import com.example.fastfooddelivery2023.MainActivity;
+import com.example.fastfooddelivery2023.Model.Comment;
+import com.example.fastfooddelivery2023.Model.Food;
+import com.example.fastfooddelivery2023.Model.Order;
 import com.example.fastfooddelivery2023.Model.User;
 import com.example.fastfooddelivery2023.R;
 import com.example.fastfooddelivery2023.SharedPreferences.DataPreferences;
@@ -25,6 +38,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,9 +48,10 @@ public class LoginFragment extends Fragment {
     private EditText edt_username,edt_password;
     private Button btn_login;
     private ProgressBar progressBar;
-    private DatabaseReference dataUser = FirebaseDatabase.getInstance().getReference("USER");
+    private DatabaseReference dataUser = FirebaseDatabase.getInstance().getReference("User");
     public static final String KEY_USER = "KEY_USER";
     private List<User> listUser = new ArrayList<>();
+    private TextView txt_forgot_password;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -46,8 +61,18 @@ public class LoginFragment extends Fragment {
         progressBar = mView.findViewById(R.id.progressBar);
         edt_username = mView.findViewById(R.id.username);
         edt_password = mView.findViewById(R.id.password);
+        txt_forgot_password = mView.findViewById(R.id.forgotpassword);
         progressBar.setVisibility(View.GONE);
 
+
+
+        txt_forgot_password.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), ForgotPasswordActivity.class);
+                startActivity(intent);
+            }
+        });
 
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override

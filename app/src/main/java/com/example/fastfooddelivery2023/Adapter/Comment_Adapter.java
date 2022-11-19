@@ -3,6 +3,7 @@ package com.example.fastfooddelivery2023.Adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -38,7 +39,8 @@ public class Comment_Adapter extends RecyclerView.Adapter<Comment_Adapter.Commen
        holder.txt_name_Comment.setText(cmt.getName());
        holder.txt_Comment.setText(cmt.getComment());
        holder.txt_date_cmt.setText(cmt.getDate());
-       holder.txt_countLikeCMT.setText(cmt.getQuantityLike());
+      // holder.txt_countLikeCMT.setText(cmt.getQuantityLike());
+       holder.ratingBar.setRating(cmt.getQuantityLike());
        holder.txt_likeComment.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
@@ -58,6 +60,7 @@ public class Comment_Adapter extends RecyclerView.Adapter<Comment_Adapter.Commen
 
     public class CommentViewHolder extends RecyclerView.ViewHolder {
         private TextView txt_name_Comment,txt_Comment,txt_date_cmt,txt_likeComment,txt_repcmt,txt_countLikeCMT;
+        private RatingBar ratingBar;
         public CommentViewHolder(@NonNull View itemView) {
             super(itemView);
             txt_name_Comment = itemView.findViewById(R.id.txt_name_Comment);
@@ -65,7 +68,8 @@ public class Comment_Adapter extends RecyclerView.Adapter<Comment_Adapter.Commen
             txt_date_cmt = itemView.findViewById(R.id.txt_date_cmt);
             txt_likeComment = itemView.findViewById(R.id.txt_likeComment);
             txt_repcmt = itemView.findViewById(R.id.txt_repcmt);
-            txt_countLikeCMT = itemView.findViewById(R.id.countLikeCMT);
+            txt_countLikeCMT = itemView.findViewById(R.id.txt_countLikeCMT);
+            ratingBar = itemView.findViewById(R.id.ratingBar);
         }
     }
 

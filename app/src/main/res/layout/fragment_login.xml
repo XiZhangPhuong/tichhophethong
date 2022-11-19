@@ -49,6 +49,7 @@
         android:text="Quên mật khẩu"
         android:layout_marginTop="6sp"
         android:layout_gravity="right"
+        android:textSize="15dp"
         android:textColor="@android:color/holo_red_light"/>
 
     <ProgressBar
@@ -69,28 +70,6 @@
         android:background="@drawable/customedittext"
         android:textSize="15dp" />
 
-    <Button
-        android:id="@+id/btnlogin_fb"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="8dp"
-        app:backgroundTint="#03A9F4"
-        android:background="@drawable/customedittext"
-        android:text="Đăng nhập với Facebok"
-        android:textAllCaps="false"
-        android:textSize="15dp" />
 
-    <Button
-        android:id="@+id/btnlogin_OTP"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/customedittext"
-        app:backgroundTint="@color/teal_700"
-        android:textAllCaps="false"
-        android:text="Đăng nhập với OTP"
-        android:textSize="15dp" />
 
 </LinearLayout>

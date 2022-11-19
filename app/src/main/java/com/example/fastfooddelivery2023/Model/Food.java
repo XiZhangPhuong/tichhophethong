@@ -1,6 +1,7 @@
 package com.example.fastfooddelivery2023.Model;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Food implements Serializable {
     private String id_Food;
@@ -8,25 +9,26 @@ public class Food implements Serializable {
     private String image_Food;
     private String category_Food;
     private String information_Food;
-    private String comment_Food;
+    private List<Comment> listComment;
     private String like;
     private int quantity;
     private double price_Food;
 
 
-    public Food(String id_Food, String name_Food, String image_Food, String category_Food, String information_Food, String comment_Food, String like, int quantity, double price_Food) {
+    public Food(){
+
+    }
+
+    public Food(String id_Food, String name_Food, String image_Food, String category_Food, String information_Food, List<Comment> listComment, String like, int quantity, double price_Food) {
         this.id_Food = id_Food;
         this.name_Food = name_Food;
         this.image_Food = image_Food;
         this.category_Food = category_Food;
         this.information_Food = information_Food;
-        this.comment_Food = comment_Food;
+        this.listComment = listComment;
         this.like = like;
         this.quantity = quantity;
         this.price_Food = price_Food;
-    }
-
-    public Food() {
     }
 
     public String getId_Food() {
@@ -69,12 +71,12 @@ public class Food implements Serializable {
         this.information_Food = information_Food;
     }
 
-    public String getComment_Food() {
-        return comment_Food;
+    public List<Comment> getListComment() {
+        return listComment;
     }
 
-    public void setComment_Food(String comment_Food) {
-        this.comment_Food = comment_Food;
+    public void setListComment(List<Comment> listComment) {
+        this.listComment = listComment;
     }
 
     public String getLike() {
