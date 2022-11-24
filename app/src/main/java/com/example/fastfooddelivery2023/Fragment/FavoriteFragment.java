@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +40,7 @@ public class FavoriteFragment extends Fragment {
     private ImageView img_return;
     private TextView txt_sizeList,txt_delete_items_favorite;
     private RecyclerView rcv_favorite;
+    private LinearLayout linear_Favorite_Empty,linear_favorite,linear_title_favorite;
     private Favorite_Adapter  favorite_adapter;
     private User user;
     private List<Food> listFavoriteFB = new ArrayList<>();
@@ -46,6 +48,7 @@ public class FavoriteFragment extends Fragment {
     private boolean flag_Cart = true;
     final DatabaseReference dataFavorite = FirebaseDatabase.getInstance().getReference("Favorite");
     final DatabaseReference dataCart = FirebaseDatabase.getInstance().getReference("Cart");
+    private Food foodFB;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -62,6 +65,9 @@ public class FavoriteFragment extends Fragment {
         rcv_favorite = view.findViewById(R.id.rcv_favorite);
         txt_sizeList = view.findViewById(R.id.txt_sizeList);
         txt_delete_items_favorite = view.findViewById(R.id.txt_delete_items_favorite);
+        linear_Favorite_Empty = mView.findViewById(R.id.linear_Favorite_Empty);
+        linear_favorite = mView.findViewById(R.id.linear_favorite);
+        linear_title_favorite = mView.findViewById(R.id.linear_title_favorite);
     }
 
     private void getDataFavoriteFromFireBase(){
@@ -75,11 +81,20 @@ public class FavoriteFragment extends Fragment {
                      public void onDataChange(@NonNull DataSnapshot snapshot) {
                          listFavoriteFB.clear();
                          for(DataSnapshot ds : snapshot.getChildren()){
-                             Food f = ds.getValue(Food.class);
-                             listFavoriteFB.add(f);
+                             foodFB = ds.getValue(Food.class);
+                             listFavoriteFB.add(foodFB);
                          }
-                         favorite_adapter.notifyDataSetChanged();
-                         txt_sizeList.setText("Có "+listFavoriteFB.size()+" sản phẩm trong mục yêu thích");
+                         if(listFavoriteFB.size()==0){
+                             linear_favorite.setVisibility(View.GONE);
+                             linear_Favorite_Empty.setVisibility(View.VISIBLE);
+                             linear_title_favorite.setVisibility(View.GONE);
+                         }else{
+                             linear_Favorite_Empty.setVisibility(View.GONE);
+                             linear_favorite.setVisibility(View.VISIBLE);
+                             linear_title_favorite.setVisibility(View.VISIBLE);
+                             favorite_adapter.notifyDataSetChanged();
+                             txt_sizeList.setText("Sản phẩm yêu thích ( "+listFavoriteFB.size()+" )");
+                         }
                      }
                      @Override
                      public void onCancelled(@NonNull DatabaseError error) {
@@ -91,25 +106,14 @@ public class FavoriteFragment extends Fragment {
         favorite_adapter = new Favorite_Adapter(listFavoriteFB, new Favorite_Adapter.IClickFavorite() {
             @Override
             public void ClickLike(Food food, ImageView img_favorite) {
-//                 if(flagLike==true){
-//                     img_favorite.setImageResource(R.drawable.ic_favorite_24);
-//                     dataLike.child(user.getId()).child(food.getId_Food()).removeValue();
-//                     flagLike = false;
-//                 }else{
-//                     img_favorite.setImageResource(R.drawable.ic_like_24);
-//                     dataLike.child(user.getId()).child(food.getId_Food()).setValue(food);
-//                     flagLike = true;
-//                 }
+                img_favorite.setImageResource(R.drawable.ic_favorite_24);
+                dataFavorite.child(user.getId()).child(foodFB.getId_Food()).removeValue();
+                favorite_adapter.notifyDataSetChanged();
             }
 
             @Override
             public void ClickAddToCart(Food food, ImageView img_check) {
-                  if(flag_Cart==true){
-                      img_check.setImageResource(R.drawable.ic_baseline_check_circle_outline_24);
-                      dataCart.child(user.getId()).child(food.getId_Food()).setValue(food);
-                      Toast.makeText(getContext(),"Đã thêm "+food.getName_Food()+" vào giỏ hàng",Toast.LENGTH_SHORT).show();
-                      flag_Cart = false;
-                  }
+
             }
         });
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),2);

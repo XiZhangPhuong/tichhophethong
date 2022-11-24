@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -44,6 +45,7 @@ public class Recommend_Adapter extends RecyclerView.Adapter<Recommend_Adapter.Re
         if(food==null){
             return;
         }
+        holder.progressBar_Food.setVisibility(View.VISIBLE);
         Picasso.get().load(food.getImage_Food()).into(holder.img_food);
         holder.txt_name_food.setText(food.getName_Food());
         holder.txt_prince_new.setText(food.getPrice_Food()+" vnd");
@@ -59,6 +61,7 @@ public class Recommend_Adapter extends RecyclerView.Adapter<Recommend_Adapter.Re
                 icLickFood.Click_Add_Cart(food);
             }
         });
+        holder.progressBar_Food.setVisibility(View.GONE);
 
     }
 
@@ -74,6 +77,7 @@ public class Recommend_Adapter extends RecyclerView.Adapter<Recommend_Adapter.Re
         private LinearLayout linearLayout;
         private TextView txt_name_food,txt_prince_new,txt_prince_old;
         private ImageView img_add_Cart,img_food;
+        private ProgressBar progressBar_Food;
         public RecommendViewHolder(@NonNull View itemView) {
             super(itemView);
             linearLayout = itemView.findViewById(R.id.linear_OnClick);
@@ -81,6 +85,7 @@ public class Recommend_Adapter extends RecyclerView.Adapter<Recommend_Adapter.Re
             txt_prince_new = itemView.findViewById(R.id.txt_prince_new);
             img_food = itemView.findViewById(R.id.img_items_food);
             img_add_Cart  = itemView.findViewById(R.id.img_add_Cart);
+            progressBar_Food = itemView.findViewById(R.id.progressBar_Food);
         }
     }
 }

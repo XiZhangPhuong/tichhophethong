@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_marginLeft="45dp"
     tools:context=".Activity.Login_SignUpActivity">
 
     <!-- TODO: Update blank fragment layout -->

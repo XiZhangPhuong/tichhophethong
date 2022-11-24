@@ -48,6 +48,20 @@
         app:fabSize="normal"
         app:layout_anchor="@id/bottom_bar" />
 
+    <TextView
+        android:id="@+id/cart_badge"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_gravity="right|end|top"
+        android:background="@drawable/badge_background"
+        android:gravity="center"
+        android:padding="3dp"
+        android:text="3"
+        android:textColor="@android:color/white"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        app:layout_anchor="@+id/btn_cart"
+        app:layout_anchorGravity="end|top" />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

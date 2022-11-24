@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white_tea"
+    android:orientation="vertical"
+    tools:context=".Activity.EvaluateActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/red">
+
+
+        <ImageView
+            android:id="@+id/img_return_evaluate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            app:srcCompat="@drawable/ic_back_24" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textSize="18dp"
+            android:textColor="@color/white"
+            android:text="Đánh giá sản phẩm" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:orientation="vertical" >
+
+       <androidx.cardview.widget.CardView
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           app:cardCornerRadius="8dp"
+           android:layout_marginTop="10dp"
+           >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <ImageView
+                android:id="@+id/img_evaluate"
+                android:layout_width="120dp"
+                android:layout_height="100dp"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/comchientrung" />
+
+            <ImageView
+                android:id="@+id/imageView12"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="5dp"
+                app:srcCompat="@drawable/like"
+                android:layout_alignParentRight="true"
+                />
+
+            <TextView
+                android:id="@+id/tv_name_evaluate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cơm chiên trứng"
+                android:textColor="@color/black"
+                android:layout_marginLeft="130dp"
+                android:layout_marginTop="10dp"
+                android:layout_alignLeft="@id/img_evaluate"
+                android:textSize="18dp"
+                />
+
+            <TextView
+                android:id="@+id/tv_name_inf_evaluate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Món này rất ngon"
+                android:textSize="15dp"
+                android:layout_below="@id/tv_name_evaluate"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="130dp"
+                />
+
+            <TextView
+                android:id="@+id/txt_total_evaluate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2500000"
+                android:textColor="@color/red"
+                android:textSize="18dp"
+                android:layout_marginLeft="130dp"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/tv_name_inf_evaluate"
+                />
+        </RelativeLayout>
+
+
+       </androidx.cardview.widget.CardView>
+
+            <RatingBar
+                android:id="@+id/ratingBar_evaluate"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:numStars="5"
+                android:rating="0"
+                android:stepSize="1"
+                android:theme="@style/RatingBar"
+                android:transformPivotX="0dp"
+                android:transformPivotY="0dp" />
+
+            <TextView
+                android:id="@+id/txt_evaluate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textSize="15dp"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:text="" />
+
+            <EditText
+                android:id="@+id/edt_evaluate"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/black"
+                android:background="@drawable/custom_edt2"
+                 />
+
+            <Button
+                android:id="@+id/btn_evaluate"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Gửi đánh giá"
+                android:layout_marginTop="10dp"
+                android:textAllCaps="false"
+                app:backgroundTint="#ff1a1a" />
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

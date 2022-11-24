@@ -9,9 +9,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ImageView;
 
+import com.example.fastfooddelivery2023.Adapter.FunctionUser_Adapter;
 import com.example.fastfooddelivery2023.MainActivity;
+import com.example.fastfooddelivery2023.Model.Advertisement;
 import com.example.fastfooddelivery2023.Model.Comment;
 import com.example.fastfooddelivery2023.Model.Food;
+import com.example.fastfooddelivery2023.Model.FunctionUser;
 import com.example.fastfooddelivery2023.Model.User;
 import com.example.fastfooddelivery2023.Model.VideoShort;
 import com.example.fastfooddelivery2023.R;
@@ -83,6 +86,22 @@ private List<String> list = new ArrayList<>();
         for(VideoShort video : listVideo){
             dataVideo.child(video.getId()).setValue(video);
         }
+
+        final DatabaseReference data = FirebaseDatabase.getInstance().getReference("Function_User");
+        List<FunctionUser> listFun = new ArrayList<>();
+        listFun.add(new FunctionUser("1","https://png.pngtree.com/png-vector/20190115/ourlarge/pngtree-vector-shopping-cart-icon-png-image_321037.jpg","Lịch sử đơn hàng"));
+        listFun.add(new FunctionUser("2","https://png.pngtree.com/png-vector/20190115/ourlarge/pngtree-vector-shopping-cart-icon-png-image_321037.jpg","Bạn đã yêu thích"));
+        listFun.add(new FunctionUser("3","https://png.pngtree.com/png-vector/20190118/ourlarge/pngtree-vector-view-icon-png-image_323837.jpg","Đã xem gần đây"));
+        listFun.add(new FunctionUser("4","https://png.pngtree.com/png-vector/20190419/ourlarge/pngtree-vector-star-icon-png-image_956428.jpg","Đánh giá của tôi"));
+        listFun.add(new FunctionUser("5","https://cdn5.vectorstock.com/i/1000x1000/44/54/settings-icon-vector-21894454.jpg","Thiết lập tài khoản"));
+        listFun.add(new FunctionUser("6","https://media.istockphoto.com/id/1257212890/vi/vec-to/help-desk-question-mark-speech-bubble-icon-vector-thi%E1%BA%BFt-k%E1%BA%BF-minh-h%E1%BB%8Da-bi%E1%BB%83u-t%C6%B0%E1%BB%A3ng.jpg?s=1024x1024&w=is&k=20&c=qx425S8q17Fmv1XD0rrvBCVW6hzcyuvGmNyKCdmLKl8=","Trung tâm trợ giúp"));
+        listFun.add(new FunctionUser("7","https://uxwing.com/wp-content/themes/uxwing/download/communication-chat-call/contact-icon.png","Liên hệ với Admin"));
+        listFun.add(new FunctionUser("8","https://img.freepik.com/free-icon/logout_318-926141.jpg?w=2000","Đăng xuất"));
+//
+//        for(FunctionUser fun : listFun){
+//            data.child(fun.getId()).setValue(fun);
+//        }
+
 
         new Handler().postDelayed(new Runnable() {
             @Override

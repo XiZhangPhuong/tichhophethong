@@ -45,7 +45,7 @@ public class Video_Adapter extends RecyclerView.Adapter<Video_Adapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull Video_Adapter.ViewHolder holder, int position) {
         VideoShort video = this.listVideo.get(position);
-        holder.txt_like.setText(video.getLike()+"");
+        holder.txt_like.setText(video.getLike()+"like");
        // holder.videoView.setVideoURI(Uri.parse(video.getVideo()));
         holder.videoView.setVideoPath(video.getVideo());
         holder.videoView.setMediaController(new MediaController(context));
@@ -89,7 +89,7 @@ public class Video_Adapter extends RecyclerView.Adapter<Video_Adapter.ViewHolder
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             videoView = itemView.findViewById(R.id.videoView);
-            progressBar3 = itemView.findViewById(R.id.progressBar3);
+            progressBar3 = itemView.findViewById(R.id.progressBar2);
             imageView = itemView.findViewById(R.id.imageview_like);
             txt_like = itemView.findViewById(R.id.txt_like);
         }

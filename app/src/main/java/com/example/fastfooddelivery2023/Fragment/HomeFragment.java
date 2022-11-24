@@ -20,6 +20,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.MultiAutoCompleteTextView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
@@ -28,6 +29,7 @@ import com.example.fastfooddelivery2023.Adapter.Recommend_Adapter;
 import com.example.fastfooddelivery2023.Adapter.Sale_Adapter;
 import com.example.fastfooddelivery2023.Control.TEMPS;
 import com.example.fastfooddelivery2023.Dialog.BottomSheetDialogFragment;
+import com.example.fastfooddelivery2023.Model.Advertisement;
 import com.example.fastfooddelivery2023.Model.Category;
 import com.example.fastfooddelivery2023.Model.Food;
 import com.example.fastfooddelivery2023.Model.Order;
@@ -39,6 +41,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -54,6 +57,7 @@ private RecyclerView rcv_category,rcv_recommend,rcv_sale_food;
 private Category_Adapter category_adapter;
 private Recommend_Adapter recommend_adapter;
 private Sale_Adapter sale_adapter;
+private ProgressBar progressBar_Home_Food;
 public static final String OBJECT_FOOD = "object_food";
 private User user;
 public static List<Food> listFood = new ArrayList<>();
@@ -72,7 +76,7 @@ private final DatabaseReference dataOrder = FirebaseDatabase.getInstance().getRe
         rcv_category = mView.findViewById(R.id.rcv_category);
         rcv_recommend = mView.findViewById(R.id.rcv_recommend);
         rcv_sale_food = mView.findViewById(R.id.rcv_sale_food);
-
+        progressBar_Home_Food = mView.findViewById(R.id.progressBar_Home_Food);
 
         // get data food from FireBase
 
@@ -134,6 +138,7 @@ private final DatabaseReference dataOrder = FirebaseDatabase.getInstance().getRe
     }
 
     private void Recommend_Food(){
+        progressBar_Home_Food.setVisibility(View.VISIBLE);
         recommend_adapter = new Recommend_Adapter(listFoodFb, new Sale_Adapter.ICLickFood() {
             @Override
             public void Click_Add_Cart(Food food) {
@@ -150,8 +155,7 @@ private final DatabaseReference dataOrder = FirebaseDatabase.getInstance().getRe
         rcv_recommend.setLayoutManager(linearLayoutManager);
         rcv_recommend.setAdapter(recommend_adapter);
         rcv_recommend.setHasFixedSize(true);
-
-
+        progressBar_Home_Food.setVisibility(View.GONE);
     }
 
 
@@ -183,15 +187,41 @@ private final DatabaseReference dataOrder = FirebaseDatabase.getInstance().getRe
     }
 
     private void ViewFliperAnimation() {
-        int images [] = {R.drawable.sale,R.drawable.food1,R.drawable.food2};
-        for(int i = 0;i<images.length;i++){
-            fliperimage(images[i]);
+        final DatabaseReference dataImage = FirebaseDatabase.getInstance().getReference("Advertisement");
+        List<String> listImage = new ArrayList<>();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                dataImage.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                         listImage.clear();
+                         for(DataSnapshot ds : snapshot.getChildren()){
+                             Advertisement a = ds.getValue(Advertisement.class);
+                             listImage.add(a.getLinkImage());
+                         }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
+        }).start();
+
+        // convert
+        for(int i = 0;i<listImage.size();i++){
+            fliperimage(listImage.get(i));
         }
+
+
+
     }
 
-    private void fliperimage(int image) {
+    private void fliperimage(String image) {
         ImageView imageView = new ImageView(getContext());
-        imageView.setBackgroundResource(image);
+        Picasso.get().load(image).into(imageView);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         viewFlipper.addView(imageView);
         viewFlipper.setFlipInterval(4000);

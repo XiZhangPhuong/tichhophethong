@@ -58,6 +58,7 @@ private TextView txt_items_cart_waiting,txt_id_order,txt_time_waiting,txt_addres
 private Button btn_addTOCart,btn_cancel_Cart;
 private User user;
 private final DatabaseReference dataOrder = FirebaseDatabase.getInstance().getReference("Order");
+private final DatabaseReference dataHistory  = FirebaseDatabase.getInstance().getReference("History");
 public static List<Order> listOrder = new ArrayList<>();
 public static List<Food> listHistoryFood = new ArrayList<>();
 private List<Food> listCartFB = new ArrayList<>();
@@ -80,7 +81,7 @@ private String date;
         // get user login
         user = DataPreferences.getUser(CartActivity.this,KEY_USER);
         dataCart = FirebaseDatabase.getInstance().getReference("Cart").child(user.getId());
-         date = new SimpleDateFormat("dd-MM-yyyy  HH:mm").format(Calendar.getInstance().getTime());
+        date = new SimpleDateFormat("dd-MM-yyyy  HH:mm").format(Calendar.getInstance().getTime());
 
         // get data food cart from firebase
 
@@ -111,11 +112,7 @@ private String date;
                         txt_items.setText("Items ( "+listCartFB.size()+" )");
                         cartAdapter.notifyDataSetChanged();
 
-                        for(Food f : listCartFB){
-                            sum+=f.getPrice_Food();
-                        }
-                        tv_subtotal_cart.setText(String.valueOf(sum));
-                        tv_total_cart.setText(String.valueOf(sum));
+                        totalFood();
 
 
                     }
@@ -146,6 +143,13 @@ private String date;
 
 
 
+    }
+    private void totalFood(){
+        for(Food f : listCartFB){
+            sum+=f.getPrice_Food();
+        }
+        tv_subtotal_cart.setText(String.valueOf(sum));
+        tv_total_cart.setText(String.valueOf(sum));
     }
     private void back(){
         img_return.setOnClickListener(new View.OnClickListener() {
@@ -198,6 +202,8 @@ private String date;
                    if(quantity==0){
                        dataCart.child(foodFB.getId_Food()).removeValue();
                        listCartFB.remove(foodFB);
+                       sum = 0;
+                       totalFood();
                        cartAdapter.notifyDataSetChanged();
                        return;
                    }
@@ -251,8 +257,8 @@ private String date;
                      dataCart.removeValue();
                      startActivity(new Intent(CartActivity.this,MainActivity.class));
                      startService(new Intent(CartActivity.this, MyService.class));
+                     dataHistory.child(user.getId()).child(foodFB.getId_Food()).setValue(foodFB);
                  }
-
              }
 
              @Override
@@ -310,14 +316,12 @@ private String date;
                 order = new Order(String.valueOf(user.getId()),key,inf_user,inf_driver,inf_food,address,total,1);
                 dataOrder.child(user.getId()+"").child(order.getId_Order()).setValue(order);
 
-                listHistoryFood.addAll(listCartFB);
-             //   listCart.clear();
                 cartAdapter.notifyDataSetChanged();
                 listOrder.add(order);
                 showNotification(CartActivity.this,"FastFoodDelivery","Chờ tài xế xác nhận đơn nhé");
 
               // interface user waiting driver
-                linear_CartEmpty.setVisibility(View.GONE);
+                linear_CartEmpty.setVisibility( View.GONE);
                 linear_Cart.setVisibility(View.GONE);
                 linear_waiting.setVisibility(View.VISIBLE);
 
@@ -362,6 +366,8 @@ private String date;
         TextView  txt_phone_driver = (TextView)view_driver.findViewById(R.id.txt_phone_driver);
         TextView  txt_car_driver = (TextView)view_driver.findViewById(R.id.txt_car_driver);
         Button btn_contact_driver = (Button) view_driver.findViewById(R.id.btn_contact_driver);
+
+
         String arr[] = order_get.getInf_driver().split("@");
         txt_driver_received.setText(arr[0]+" đang giao");
         txt_phone_driver.setText("Sđt : "+arr[1]);
@@ -405,5 +411,4 @@ private String date;
         txt_id_order = findViewById(R.id.txt_id_order);
         txt_address_waiting = findViewById(R.id.txt_address_waiting);
     }
-
 }

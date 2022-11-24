@@ -31,7 +31,7 @@
                     android:background="@color/white_tea"
                     android:layout_marginTop="5dp"
                     android:layout_marginLeft="7dp"
-                    app:srcCompat="@drawable/ic_back_24" />
+                    app:srcCompat="@drawable/ic_baseline_keyboard_backspace_24" />
 
 
 
@@ -139,7 +139,6 @@
                     android:textSize="15dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
-
                     android:background="@drawable/custom_edt2"
                     />
 

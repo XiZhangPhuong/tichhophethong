@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:name=".Notification.Notification_Class"
@@ -16,14 +16,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FastFoodDelivery2023"
         tools:targetApi="31">
+        <activity
+            android:name=".Activity.EvaluateActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+
 
         <service
             android:name=".Service.MyService"
             android:enabled="true"
-            android:exported="true">
-
-
-        </service>
+            android:exported="true" />
 
         <activity
             android:name=".Activity.LoginActivity"
@@ -32,7 +37,6 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-
         <activity
             android:name=".Activity.Login_SignUpActivity"
             android:exported="false">

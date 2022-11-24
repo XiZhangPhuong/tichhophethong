@@ -59,7 +59,6 @@ public class SignUpFragment extends Fragment {
 
 
         progressBar.setVisibility(View.GONE);
-        btn_Signup.setEnabled(false);
 
         edt_Name.addTextChangedListener(loginTextWatcher);
         edt_Phone.addTextChangedListener(loginTextWatcher);
@@ -135,7 +134,7 @@ public class SignUpFragment extends Fragment {
             String pass = edt_password.getText().toString();
             String confirm_pass = edt_conf.getText().toString();
 
-            btn_Signup.setEnabled(!name.isEmpty() && phone.length()==10 && pass.length()>=6 && confirm_pass.equals(pass));
+
 
             edt_Name.setError(name.isEmpty() ? "Họ tên trống": null);
             edt_Phone.setError(phone.isEmpty() ? "SĐT trống" : phone.length()<10 ? "SĐT phải 10 số" : null);
