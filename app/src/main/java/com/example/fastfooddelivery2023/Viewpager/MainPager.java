@@ -26,7 +26,7 @@ public class MainPager extends FragmentStateAdapter {
             case 2:
                 return new UserFragment();
             case 3:
-                return new SettingFragment();
+                return new UserFragment();
             default:
                 return new HomeFragment();
 

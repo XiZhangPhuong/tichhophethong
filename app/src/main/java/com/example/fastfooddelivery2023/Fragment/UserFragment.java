@@ -130,6 +130,7 @@ public class UserFragment extends Fragment {
                           break;
 
                       case 8: startActivity(new Intent(getContext(), Login_SignUpActivity.class));
+                            DataPreferences.setUser(mainActivity,null,KEY_USER);
                               mainActivity.finishAffinity();
                           break;
                   }

@@ -102,8 +102,10 @@ public class LoginFragment extends Fragment {
                     startActivity(intent);
                     Toast.makeText(getContext(),"Đăng nhập thành công",Toast.LENGTH_SHORT).show();;
                     DataPreferences.setUser(getContext(),u,KEY_USER);
+                    progressBar.setVisibility(View.GONE);
                 }else{
                     Toast.makeText(getContext(),"Sai tên đăng nhập hoặc mật khẩu",Toast.LENGTH_LONG).show();
+                    progressBar.setVisibility(View.GONE);
                 }
             }
             @Override
