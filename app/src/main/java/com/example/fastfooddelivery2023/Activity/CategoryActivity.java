@@ -4,12 +4,16 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
+import android.widget.ImageView;
 import android.widget.TableLayout;
 
+import com.example.fastfooddelivery2023.MainActivity;
 import com.example.fastfooddelivery2023.R;
 import com.example.fastfooddelivery2023.Viewpager.CategoryViewPager;
 import com.google.android.material.tabs.TabLayout;
@@ -18,11 +22,12 @@ import com.google.android.material.tabs.TabLayoutMediator;
 public class CategoryActivity extends AppCompatActivity {
 private TabLayout tabLayout_category;
 public static ViewPager2 viewPager2;
+private ImageView image_back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
-
+        image_back = findViewById(R.id.image_back);
         tabLayout_category = findViewById(R.id.tabLayout_category);
         tabLayout_category.setTabTextColors(Color.parseColor("#000000"),Color.parseColor("#ff4d4d"));
         tabLayout_category.setSelectedTabIndicatorColor(Color.parseColor("#ff4d4d"));
@@ -30,6 +35,7 @@ public static ViewPager2 viewPager2;
         // tabLayout.setTabTextColors(Color.parseColor("#727272"), Color.parseColor("#ffffff"));
         viewPager2 = findViewById(R.id.viewpager2_category);
         setWindow();
+        clickReturn();
         CategoryViewPager adapterViewPager2 = new CategoryViewPager(this);
         viewPager2.setAdapter(adapterViewPager2);
 
@@ -87,5 +93,13 @@ public static ViewPager2 viewPager2;
             case "Category888888" : viewPager2.setCurrentItem(7);break;
 
         }
+    }
+    private void clickReturn(){
+        image_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(CategoryActivity.this, MainActivity.class));
+            }
+        });
     }
 }

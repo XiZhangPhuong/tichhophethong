@@ -5,7 +5,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:backgroundTint="@color/white_tea"
     android:background="@drawable/custom_alertdialog"
-    app:cardCornerRadius="20dp">
+    app:cardCornerRadius="15dp"
+   >
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -16,7 +17,7 @@
             android:id="@+id/btn_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:backgroundTint="@color/red"
+            app:backgroundTint="#ff4d4d"
             android:text="Liên hệ tài xế"
             android:textAllCaps="false"
             android:textStyle="normal"
@@ -73,7 +74,7 @@
             android:layout_marginBottom="20dp"
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
-            android:backgroundTint="@color/red"
+            android:backgroundTint="#ff4d4d"
             app:cardCornerRadius="10dp">
 
 

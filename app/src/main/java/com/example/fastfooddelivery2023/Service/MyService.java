@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.fastfooddelivery2023.Control.TEMPS;
-import com.example.fastfooddelivery2023.Model.Order;
 import com.example.fastfooddelivery2023.Model.User;
 import com.example.fastfooddelivery2023.SharedPreferences.DataPreferences;
 import com.google.firebase.database.DataSnapshot;
@@ -25,8 +24,7 @@ import java.util.List;
 public class MyService extends Service {
     private User user;
     private DatabaseReference dataOrder;
-    private Order order;
-    private List<Order> listOrder = new ArrayList<>();
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -36,27 +34,10 @@ public class MyService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        CallService();
+
         return super.onStartCommand(intent, flags, startId);
     }
-    private void CallService(){
-        dataOrder.child(user.getId()).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                listOrder.clear();
-                for(DataSnapshot ds : snapshot.getChildren()){
-                    order = ds.getValue(Order.class);
-                    listOrder.add(order);
-                }
 
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
 
     @Override
     public void onDestroy() {

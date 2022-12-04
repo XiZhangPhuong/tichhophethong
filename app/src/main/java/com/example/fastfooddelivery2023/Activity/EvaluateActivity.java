@@ -1,6 +1,5 @@
 package com.example.fastfooddelivery2023.Activity;
 
-import static com.example.fastfooddelivery2023.Activity.HistoryActivity.OBJECT_FOOD;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -60,14 +59,7 @@ private int star = 0;
          });
     }
     private void loadDataBundleFood(){
-       Food food =(Food) getIntent().getSerializableExtra(OBJECT_FOOD);
-       if(food==null) {
-           return;
-       }
-       tv_name_evaluate.setText(food.getName_Food());
-       tv_name_inf_evaluate.setText(food.getInformation_Food());
-       txt_total_evaluate.setText(food.getPrice_Food()+" vnd");
-       Picasso.get().load(food.getImage_Food()).into(img_evaluate);
+
     }
 
     private void initView(){

@@ -3,92 +3,81 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginLeft="10dp"
-    android:layout_marginTop="5dp"
-    android:layout_marginRight="10dp"
-    app:cardCornerRadius="7dp">
+    android:layout_marginTop="1dp"
+    app:cardCornerRadius="0dp"
+    android:elevation="0dp"
 
+    >
 
-   <RelativeLayout
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:id="@+id/relative_clickFood"
+        android:padding="5dp"
+        android:layout_height="wrap_content">
 
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cartview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="8dp">
 
-       <ImageView
-           android:id="@+id/img_history_food"
-           android:layout_width="120dp"
-           android:layout_height="100dp"
-           android:scaleType="centerCrop"
-           app:srcCompat="@drawable/comchientrung" />
+            <ImageView
+                android:id="@+id/imageView_Food"
+                android:layout_width="120dp"
+                android:layout_height="80dp"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/ic_launcher_background" />
+        </androidx.cardview.widget.CardView>
 
-       <TextView
-           android:id="@+id/txt_name_history_food"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_alignLeft="@id/img_history_food"
-           android:layout_marginLeft="130dp"
-           android:text="Mì sào hải sản"
-           android:layout_marginTop="5dp"
-           android:textSize="15dp"
-           android:textColor="@color/black" />
+        <TextView
+            android:id="@+id/txt_name_food"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/cartview"
+            android:layout_marginLeft="10dp"
+            android:textSize="15dp"
 
-       <ImageView
-           android:id="@+id/imageView7"
-           android:layout_width="25dp"
-           android:layout_height="25dp"
-           android:layout_alignParentRight="true"
-           android:layout_marginTop="5dp"
-           android:layout_marginRight="5dp"
-           app:srcCompat="@drawable/img_2" />
+            android:textColor="@color/black"
+            android:text="Cơm chiên trứng" />
 
-       <TextView
-           android:id="@+id/txt_quantity_history_food"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_below="@id/txt_name_history_food"
-           android:layout_marginLeft="130dp"
-           android:layout_marginTop="5dp"
-           android:text="So luong : 1"
-           android:textSize="15dp"
+        <TextView
+            android:id="@+id/txt_category_food"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txt_name_food"
+            android:layout_toRightOf="@id/cartview"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:textSize="15dp"
+            android:text="Cơm" />
 
-           />
+        <TextView
+            android:id="@+id/txt_price_food"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txt_category_food"
+            android:layout_toRightOf="@id/cartview"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:textColor="#B31A1A"
+            android:text="45000" />
 
-       <TextView
-           android:id="@+id/txt_prince_history_food"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_below="@id/txt_quantity_history_food"
-           android:layout_marginLeft="130dp"
-           android:layout_marginTop="5dp"
-           android:text="45000 vnd"
-           android:textColor="@color/red" />
+        <ImageView
+            android:id="@+id/imageView7"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            app:srcCompat="@drawable/like" />
 
-       <TextView
-           android:id="@+id/txt_evaluate_history_food"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_below="@id/txt_prince_history_food"
-           android:layout_marginLeft="130dp"
-           android:layout_marginTop="5dp"
-           android:text="5 sao"
-
-           android:textColor="@color/red" />
-
-
-       <Button
-           android:id="@+id/btn_evaluate_history_food"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_below="@id/imageView7"
-           android:layout_alignRight="@id/txt_evaluate_history_food"
-           android:layout_marginTop="20dp"
-           android:text="Đánh giá"
-           android:textAllCaps="false"
-           android:layout_marginRight="5dp"
-           android:layout_alignParentRight="true"
-           app:backgroundTint="#ff1a1a" />
-   </RelativeLayout>
-
+        <Button
+            android:id="@+id/btn_evaluate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="3dp"
+            android:text="Đánh giá"
+            android:textAllCaps="false"
+            app:backgroundTint="#ff4d4d" />
+    </RelativeLayout>
 </androidx.cardview.widget.CardView>
-
-

@@ -46,6 +46,8 @@ public class CategoryFastFragment extends Fragment {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                rcv_rice.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
+                rcv_rice.setHasFixedSize(true);
                 dataFood.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -60,8 +62,6 @@ public class CategoryFastFragment extends Fragment {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                rcv_rice.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
-                                rcv_rice.setHasFixedSize(true);
                                 searchAdapter = new SearchAdapter(getContext(), list, new SearchAdapter.ClickSearchFood() {
                                     @Override
                                     public void Click(Food food) {
@@ -70,9 +70,9 @@ public class CategoryFastFragment extends Fragment {
                                         startActivity(intent);
                                     }
                                 });
-                                rcv_rice.setAdapter(searchAdapter);
                             }
                         });
+                        rcv_rice.setAdapter(searchAdapter);
                     }
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
@@ -81,5 +81,6 @@ public class CategoryFastFragment extends Fragment {
                 });
             }
         }).start();
+
     }
 }

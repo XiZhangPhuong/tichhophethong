@@ -13,6 +13,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.fastfooddelivery2023.Control.TEMPS;
@@ -29,6 +31,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,9 +41,10 @@ public class MainActivity extends AppCompatActivity {
     public static ViewPager2 viewPager2;
     private MainPager adapter;
     private User user;
-    private   Order_FB order_fb;
-    private  AlertDialog.Builder builder;
+    private Order_FB order_fb;
+    private AlertDialog.Builder builder;
     private AlertDialog dialog;
+    private DatabaseReference dataHistory = FirebaseDatabase.getInstance().getReference("History");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,6 +116,14 @@ public class MainActivity extends AppCompatActivity {
                     TEMPS.showNotification(MainActivity.this,"Hoan hô",order_fb.getStaff().getFullName_staff()+" đã nhận đơn");
                     builder = new AlertDialog.Builder(MainActivity.this);
                     View view = getLayoutInflater().inflate(R.layout.item_waiting_food,null);
+                    Button btn_detail = view.findViewById(R.id.btn_detail);
+                    TextView txt_name_driver = view.findViewById(R.id.txt_name_driver);
+                    TextView txt_phone_driver = view.findViewById(R.id.txt_phone_driver);
+                    ImageView image_phone = view.findViewById(R.id.image_phone);
+                    ImageView image_avatar = view.findViewById(R.id.image_avatar);
+                    Picasso.get().load("https://chuyenphucvu.vn/uploads/images/nghe-shipper-nhung-rui-ro-khon-luong.jpg").into(image_avatar);
+                    txt_phone_driver.setText(order_fb.getStaff().getPhoneNumber());
+                    txt_name_driver.setText(order_fb.getStaff().getFullName_staff());
                     builder.setView(view);
                     dialog = builder.create();
                     dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -120,6 +132,11 @@ public class MainActivity extends AppCompatActivity {
                 }else if(order_fb.getCheck()==3){
                     TEMPS.showNotification(MainActivity.this,order_fb.getId_order(),"Giao hàng thành công");
                     dataOrder.child(String.valueOf(user.getId())).child(order_fb.getId_order()).removeValue();
+                    dataHistory.child(String.valueOf(user.getId())).child(order_fb.getId_order()).setValue(order_fb);
+                    if(dialog.isShowing()==false){
+                        return;
+                    }
+                    dialog.dismiss();
                 }
             }
 

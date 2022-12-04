@@ -6,23 +6,18 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.media.MediaPlayer;
 import android.util.Base64;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.example.fastfooddelivery2023.Model.Food;
-import com.example.fastfooddelivery2023.Model.Order;
 import com.example.fastfooddelivery2023.Model.Order_FB;
 import com.example.fastfooddelivery2023.Model.User;
 import com.example.fastfooddelivery2023.R;
 
 import java.io.ByteArrayOutputStream;
 import java.util.List;
-import java.util.Random;
 
 public class TEMPS {
 

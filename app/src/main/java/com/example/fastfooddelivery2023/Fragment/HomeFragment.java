@@ -118,7 +118,6 @@ public static List<Food> listFoodNew = new ArrayList<>();
 
     private void fliperimage(String image) {
         ImageView imageView = new ImageView(getContext());
-        // imageView.setBackgroundResource(image);
         Picasso.get().load(image).into(imageView);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         viewFlipper.addView(imageView);
@@ -198,9 +197,6 @@ public static List<Food> listFoodNew = new ArrayList<>();
         List<ObjectFood> list = new ArrayList<>();
         rcv_object_food.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
         rcv_object_food.setHasFixedSize(true);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
                 list.add(new ObjectFood("Đề xuất","https://thietbiducthanh.vn/wp-content/uploads/2020/02/th%E1%BB%B1c-%C4%91%C6%A1n-1-711x400.jpg",getListFoodFb()));
                 list.add(new ObjectFood("Đang giảm giá","https://ss-images.saostar.vn/w1200/pc/1663143418617/saostar-pecai6vwmqohghnp.jpg",getListFoodFb()));
                 list.add(new ObjectFood("Ăn vô cực - Khao đến 50%","https://afamilycdn.com/150157425591193600/2022/8/26/4-16614841580711371899482-1661488118094-16614881181784877563.jpg",getListFoodFb()));
@@ -216,8 +212,6 @@ public static List<Food> listFoodNew = new ArrayList<>();
                         });
                         rcv_object_food.setAdapter(objectFoodAdapter);
                         objectFoodAdapter.notifyDataSetChanged();
-            }
-        }).start();
     }
 
     private void ClickEdittext(){
