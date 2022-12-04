@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="800dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:backgroundTint="@color/white_tea"
+    android:background="@drawable/custom_alertdialog"
+    app:cardCornerRadius="20dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <Button
+            android:id="@+id/btn_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:backgroundTint="@color/red"
+            android:text="Liên hệ tài xế"
+            android:textAllCaps="false"
+            android:textStyle="normal"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/custom_button"
+            android:textSize="15dp" />
+
+          <androidx.cardview.widget.CardView
+              android:id="@+id/cartview"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_above="@+id/btn_detail"
+              android:layout_marginBottom="20dp"
+              android:layout_marginLeft="10dp"
+              app:cardCornerRadius="10dp">
+
+
+              <ImageView
+                  android:id="@+id/image_avatar"
+                  android:layout_width="50dp"
+                  android:layout_height="50dp"
+                  android:scaleType="centerCrop"
+                  app:srcCompat="@mipmap/ic_launcher" />
+          </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/txt_phone_driver"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="20dp"
+            android:layout_above="@id/btn_detail"
+            android:layout_toRightOf="@+id/cartview"
+            android:text="0973942530" />
+
+        <TextView
+            android:id="@+id/txt_name_driver"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="5dp"
+            android:textColor="@color/black"
+            android:layout_above="@id/txt_phone_driver"
+            android:layout_toRightOf="@+id/cartview"
+            android:text="Trương Đình Quyền" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cartview1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/btn_detail"
+            android:layout_marginBottom="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:backgroundTint="@color/red"
+            app:cardCornerRadius="10dp">
+
+
+            <ImageView
+                android:id="@+id/image_phone"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:scaleType="centerCrop"
+                app:srcCompat="@android:drawable/stat_sys_speakerphone" />
+        </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

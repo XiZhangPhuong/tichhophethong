@@ -1,9 +1,12 @@
 package com.example.fastfooddelivery2023.Model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 import java.util.List;
 
-public class Food implements Serializable {
+public class Food implements Parcelable {
     private String id_Food;
     private String name_Food;
     private String image_Food;
@@ -30,6 +33,29 @@ public class Food implements Serializable {
         this.quantity = quantity;
         this.price_Food = price_Food;
     }
+
+    protected Food(Parcel in) {
+        id_Food = in.readString();
+        name_Food = in.readString();
+        image_Food = in.readString();
+        category_Food = in.readString();
+        information_Food = in.readString();
+        like = in.readString();
+        quantity = in.readInt();
+        price_Food = in.readDouble();
+    }
+
+    public static final Creator<Food> CREATOR = new Creator<Food>() {
+        @Override
+        public Food createFromParcel(Parcel in) {
+            return new Food(in);
+        }
+
+        @Override
+        public Food[] newArray(int size) {
+            return new Food[size];
+        }
+    };
 
     public String getId_Food() {
         return id_Food;
@@ -101,5 +127,23 @@ public class Food implements Serializable {
 
     public void setPrice_Food(double price_Food) {
         this.price_Food = price_Food;
+    }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(id_Food);
+        parcel.writeString(name_Food);
+        parcel.writeString(image_Food);
+        parcel.writeString(category_Food);
+        parcel.writeString(information_Food);
+        parcel.writeString(like);
+        parcel.writeInt(quantity);
+        parcel.writeDouble(price_Food);
     }
 }

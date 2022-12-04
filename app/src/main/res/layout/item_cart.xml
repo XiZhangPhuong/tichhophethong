@@ -6,10 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="8dp"
     app:cardElevation="12dp"
-    android:layout_marginLeft="12dp"
-    android:layout_marginRight="12dp"
-    android:layout_marginTop="5dp"
-    android:layout_marginBottom="5dp"
+    android:layout_marginTop="1dp"
     android:backgroundTint="@color/white"
     >
 
@@ -48,7 +45,7 @@
                android:id="@+id/tv_name_inf_cart"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
-               android:text="Món này rất ngon"
+               android:text="Cơm"
                android:textSize="15dp"
                android:layout_marginTop="5dp"
                />

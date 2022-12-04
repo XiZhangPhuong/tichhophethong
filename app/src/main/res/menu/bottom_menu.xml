@@ -12,16 +12,12 @@
         app:showAsAction="ifRoom"
         android:icon="@drawable/ic_favorite_24"/>
     <item
-        android:id="@+id/anchor"
-        android:title=""
-        />
-    <item
-        android:id="@+id/menu_user"
+        android:id="@+id/menu_setting"
         android:title="Giỏ hàng"
         app:showAsAction="ifRoom"
         android:icon="@drawable/ic_baseline_add_shopping_cart_24" />
     <item
-        android:id="@+id/menu_setting"
+        android:id="@+id/menu_user"
         android:title="Tài khoản"
         app:showAsAction="ifRoom"
         android:icon="@drawable/ic_user_24"/>

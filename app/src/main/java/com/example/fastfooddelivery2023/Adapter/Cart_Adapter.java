@@ -47,6 +47,7 @@ public class Cart_Adapter extends RecyclerView.Adapter<Cart_Adapter.CartViewHold
         holder.tv_name_cart.setText(food.getName_Food());
         holder.tv_number_cart.setText(String.valueOf(food.getQuantity()));
         holder.tv_total_item.setText(String.valueOf(food.getPrice_Food()));
+        holder.tv_name_inf_cart.setText(food.getCategory_Food());
         holder.imb_minus_cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,7 +74,7 @@ public class Cart_Adapter extends RecyclerView.Adapter<Cart_Adapter.CartViewHold
 
     public class CartViewHolder extends RecyclerView.ViewHolder {
         private ImageView img_cart_photo;
-        private TextView tv_name_cart,tv_total_item,tv_number_cart;
+        private TextView tv_name_cart,tv_total_item,tv_number_cart,tv_name_inf_cart;
         private ImageView imb_minus_cart,imb_plus_cart,imb_delete;
         public CartViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -83,6 +84,7 @@ public class Cart_Adapter extends RecyclerView.Adapter<Cart_Adapter.CartViewHold
             tv_number_cart = itemView.findViewById(R.id.tv_number_cart);
             imb_minus_cart = itemView.findViewById(R.id.imb_minus_cart);
             imb_plus_cart = itemView.findViewById(R.id.imb_plus_cart);
+            tv_name_inf_cart = itemView.findViewById(R.id.tv_name_inf_cart);
 
         }
     }

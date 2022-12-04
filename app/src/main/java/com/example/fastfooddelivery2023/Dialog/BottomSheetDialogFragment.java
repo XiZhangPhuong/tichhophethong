@@ -145,9 +145,9 @@ public class BottomSheetDialogFragment extends com.google.android.material.botto
 
     public static BottomSheetDialogFragment newInstance(Food food){
     BottomSheetDialogFragment bottomSheetDialogFragment = new BottomSheetDialogFragment();
-    Bundle bundle = new Bundle();
-    bundle.putSerializable(OBJECT_FOOD,food);
-    bottomSheetDialogFragment.setArguments(bundle);
+//    Bundle bundle = new Bundle();
+//    bundle.putSerializable(OBJECT_FOOD,food);
+//    bottomSheetDialogFragment.setArguments(bundle);
     return bottomSheetDialogFragment;
   }
 

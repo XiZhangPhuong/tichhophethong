@@ -7,45 +7,6 @@
     android:orientation="vertical"
     tools:context=".Fragment.HomeFragment">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@color/white_tea"
-        >
-        <ImageButton
-            android:id="@+id/btxacnhandiachi"
-            style="?android:attr/borderlessButtonStyle"
-            android:layout_width="66dp"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/google_maps_50px" />
-
-        <AutoCompleteTextView
-            android:id="@+id/txt_search"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:completionThreshold="1"
-            android:drawableStart="@drawable/ic_find_in_page_24"
-            android:hint="Bạn muốn ăn gì hôm nay"
-            android:textColorHint="@color/black"
-            android:dropDownHeight="wrap_content"
-            android:layout_gravity="center"
-            android:drawablePadding="10dp"
-
-            android:text="">
-
-            <requestFocus />
-        </AutoCompleteTextView>
-
-        <MultiAutoCompleteTextView
-            android:id="@+id/mutitextview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:completionThreshold="1"
-            android:ems="10"/>
-
-
-    </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -57,16 +18,43 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
-            <ViewFlipper
-                android:id="@+id/viewflipper"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/edt_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="10dp"
+                    android:focusable="false"
+                    android:background="@drawable/customedittext"
+                    android:ems="10"
+                    android:padding="10dp"
+                    android:drawablePadding="15dp"
+                    android:textColor="@color/black"
+                    android:drawableStart="@android:drawable/ic_menu_search"
+                    android:hint="Bạn muốn ăn gì hôm nay ? "
+                    android:inputType="textPersonName" />
+            </RelativeLayout>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                 >
+                android:layout_marginTop="20dp"
+                app:cardCornerRadius="8dp">
 
-                />
-            </ViewFlipper>
+                <ViewFlipper
+                    android:id="@+id/viewflipper"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_centerHorizontal="true" />
+            </androidx.cardview.widget.CardView>
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -83,88 +71,34 @@
         android:textColor="@color/black"
         android:textStyle="bold"
         android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
         android:text="Danh mục" />
 
-  <RelativeLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content">
 
 
       <androidx.recyclerview.widget.RecyclerView
           android:id="@+id/rcv_category"
           android:layout_width="match_parent"
           android:layout_height="match_parent"
-          android:layout_gravity="center"
+          android:layout_marginTop="10dp"
           android:background="@color/white" />
 
-      <ProgressBar
-          android:id="@+id/progressBar_Home_Food"
-          style="?android:attr/progressBarStyle"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_centerInParent="true"
-          />
-  </RelativeLayout>
 
-    <TextView
-        android:id="@+id/textVidsdsew15"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="15dp"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:text="Có thể bạn thích" />
-
-    <ImageView
-        android:id="@+id/imageVew14"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:scaleType="centerCrop"
-        android:layout_marginTop="10dp"
-        android:src="@drawable/sale" />
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcv_recommend"
+        android:id="@+id/rcv_object_food"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white" />
-
-
-    <TextView
-        android:id="@+id/textVidsdew15"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="15dp"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:text="Đang giảm giá" />
-
-    <ImageView
-        android:id="@+id/imageVew14d"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:scaleType="centerCrop"
-        android:layout_marginTop="10dp"
-        android:src="@drawable/sale" />
+        android:layout_marginTop="15dp"
+        android:layout_height="wrap_content"/>
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcv_sale_food"
+        android:id="@+id/rcv_food"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white" />
+        android:layout_marginTop="15dp"
+        android:layout_height="wrap_content"/>
 
-
-
-    <TextView
-        android:id="@+id/end"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:textSize="15dp"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:text="" />
 
 
 </LinearLayout>

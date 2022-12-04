@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.SearchActivity">
+
+
+    <EditText
+        android:id="@+id/edt_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:ems="10"
+        android:padding="10dp"
+        android:visibility="gone"
+        android:inputType="textPersonName"
+        android:background="@drawable/customedittext"
+        android:layout_alignParentTop="true"
+        android:text="" />
+
+    <SearchView
+        android:id="@+id/search_View"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:queryHint="Tìm kiếm sản phẩm"
+        android:visibility="gone"
+        android:background="@drawable/customedittext"
+        >
+
+    </SearchView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcv_searchFood"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/search_View"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical"/>
+
+</RelativeLayout>

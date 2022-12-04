@@ -48,11 +48,7 @@ public class MyService extends Service {
                     order = ds.getValue(Order.class);
                     listOrder.add(order);
                 }
-                if(TEMPS.checkOrderStatus(listOrder)==2){
-                    TEMPS.showNotification(MyService.this,"Tài xế đang giao",order.getInf_driver());
-                }else if(TEMPS.checkOrderStatus(listOrder)==3){
-                    TEMPS.showNotification(MyService.this,"Giao thành công","Mã ĐH : "+order.getId_Order());
-                }
+
             }
 
             @Override

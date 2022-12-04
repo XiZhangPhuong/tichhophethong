@@ -17,7 +17,7 @@
 
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bottom_bar"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:fabCradleMargin="10sp"
         app:fabCradleVerticalOffset="6sp"
@@ -36,32 +36,7 @@
             app:menu="@menu/bottom_menu"/>
     </com.google.android.material.bottomappbar.BottomAppBar>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btn_cart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:backgroundTint="#03A9F4"
-        android:elevation="6dp"
-        android:tint="@color/white"
-        android:src="@drawable/ic_baseline_add_shopping_cart_24"
-        app:fabSize="normal"
-        app:layout_anchor="@id/bottom_bar" />
 
-    <TextView
-        android:id="@+id/cart_badge"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_gravity="right|end|top"
-        android:background="@drawable/badge_background"
-        android:gravity="center"
-        android:padding="3dp"
-        android:text="3"
-        android:textColor="@android:color/white"
-        android:textSize="10sp"
-        android:textStyle="bold"
-        app:layout_anchor="@+id/btn_cart"
-        app:layout_anchorGravity="end|top" />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

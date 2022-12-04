@@ -2,12 +2,14 @@ package com.example.fastfooddelivery2023.Fragment;
 
 import static com.example.fastfooddelivery2023.Fragment.LoginSignUp.LoginFragment.KEY_USER;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -110,7 +112,7 @@ public class UserFragment extends Fragment {
                       case 1 : startActivity(new Intent(getContext(),HistoryActivity.class));
                          break;
 
-                      case 2 : MainActivity.viewPager2.setCurrentItem(1);
+                      case 2 : //MainActivity.viewPager2.setCurrentItem(1);
 
                           break;
 
@@ -129,9 +131,17 @@ public class UserFragment extends Fragment {
                       case 7:
                           break;
 
-                      case 8: startActivity(new Intent(getContext(), Login_SignUpActivity.class));
-                            DataPreferences.setUser(mainActivity,null,KEY_USER);
-                              mainActivity.finishAffinity();
+                      case 8:
+                          AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                          builder.setTitle("Thông báo").setMessage("Bạn có muốn đăng xuất ? ").setPositiveButton("Yes",
+                                  new DialogInterface.OnClickListener() {
+                                      @Override
+                                      public void onClick(DialogInterface dialogInterface, int i) {
+                                          startActivity(new Intent(getContext(), Login_SignUpActivity.class));
+                                          DataPreferences.setUser(mainActivity,null,KEY_USER);
+                                          mainActivity.finishAffinity();
+                                      }
+                                  }).setNegativeButton("No",null).create().show();
                           break;
                   }
             }

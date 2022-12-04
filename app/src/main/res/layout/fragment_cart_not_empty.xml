@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white_tea"
+    android:id="@+id/view_cart"
+    tools:context=".Fragment.Cart.CartNotEmptyFragment">
+
+    <Button
+        android:id="@+id/btn_addTOCart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:backgroundTint="@color/red"
+        android:text="Xác nhận đặt hàng"
+        android:textAllCaps="false"
+        android:textStyle="normal"
+        android:background="@drawable/custom_button"
+        android:textSize="15dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_above="@id/btn_addTOCart"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="50dp"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:id="@+id/txt_ad_wting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:text="Tổng thanh toán : "
+            android:layout_weight="1"
+            android:textColor="@color/black"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/txt_total_cart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:text="154000 VND"
+            android:gravity="right"
+            android:layout_weight="1"
+            android:textColor="@color/red"
+            android:textSize="20dp" />
+
+    </LinearLayout>
+
+   <ScrollView
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:orientation="vertical">
+
+           <RelativeLayout
+               android:id="@+id/view_cart_not_empty"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginBottom="100dp"
+               >
+
+               <ImageButton
+                   android:id="@+id/image_back"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:background="@color/white_tea"
+                   android:layout_marginTop="10dp"
+                   android:layout_marginLeft="10dp"
+                   android:visibility="gone"
+                   app:srcCompat="@drawable/ic_baseline_keyboard_backspace_24" />
+
+               <TextView
+                   android:id="@+id/txt_giohang"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:textStyle="bold"
+                   android:textColor="@color/black"
+                   android:textSize="20dp"
+                   android:layout_marginLeft="10dp"
+                   android:layout_marginTop="10dp"
+                   android:layout_below="@id/image_back"
+                   android:text="Giỏ hàng của bạn" />
+
+               <TextView
+                   android:id="@+id/txt_giaotoi"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:textStyle="bold"
+                   android:textSize="15dp"
+                   android:layout_marginLeft="10dp"
+                   android:layout_marginTop="10dp"
+                   android:layout_below="@id/txt_giohang"
+                   android:text="Giao tới" />
+
+               <TextView
+                   android:id="@+id/txt_city"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:textSize="15dp"
+                   android:layout_marginLeft="10dp"
+                   android:layout_marginTop="5dp"
+                   android:textColor="@color/black"
+                   android:layout_below="@id/txt_giaotoi"
+                   android:text="Đà Nẵng" />
+
+               <TextView
+                   android:id="@+id/txt_thaydoicity"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:textSize="15dp"
+                   android:layout_marginLeft="10dp"
+                   android:layout_marginTop="5dp"
+                   android:textColor="@color/red"
+                   android:layout_below="@id/txt_giaotoi"
+                   android:layout_alignParentRight="true"
+                   android:layout_marginRight="10dp"
+                   android:text="Thay đổi" />
+
+               <EditText
+                   android:id="@+id/edt_address"
+                   android:layout_width="match_parent"
+                   android:layout_height="35dp"
+                   android:ems="10"
+                   android:inputType="textPersonName"
+                   android:hint="Địa chỉ cụ thể"
+                   android:drawablePadding="10dp"
+                   android:paddingStart="20dp"
+                   android:textSize="15dp"
+                   android:padding="10dp"
+                   android:layout_marginLeft="20dp"
+                   android:layout_marginRight="20dp"
+                   android:layout_below="@id/txt_city"
+                   android:layout_marginTop="10dp"
+                   android:background="@drawable/custom_edt2"
+                   />
+
+               <TextView
+                   android:id="@+id/txt_items"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:textSize="15dp"
+                   android:layout_marginLeft="10dp"
+                   android:layout_marginTop="10dp"
+                   android:layout_below="@id/edt_address"
+                   android:text="Mặt hàng (2)" />
+
+               <TextView
+                   android:id="@+id/txt_delete_items"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+
+                   android:textSize="15dp"
+                   android:layout_marginLeft="10dp"
+                   android:layout_marginTop="10dp"
+                   android:textColor="@color/red"
+                   android:layout_below="@id/edt_address"
+                   android:layout_alignParentRight="true"
+                   android:layout_marginRight="10dp"
+                   android:text="Xóa tất cả" />
+
+               <androidx.recyclerview.widget.RecyclerView
+                   android:id="@+id/rcv_cart"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_marginTop="10dp"
+                   android:layout_below="@id/txt_delete_items"
+                   />
+
+           </RelativeLayout>
+
+
+           <RelativeLayout
+               android:id="@+id/view_cart_empty"
+               android:layout_width="match_parent"
+               android:background="@color/white_tea"
+               android:padding="10dp"
+               android:layout_height="wrap_content">
+
+               <ImageButton
+                   android:id="@+id/image_return"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:background="@color/white_tea"
+                   android:layout_marginTop="20dp"
+                   android:layout_marginLeft="10dp"
+                   app:srcCompat="@drawable/ic_baseline_keyboard_backspace_24" />
+
+
+               <ImageView
+                   android:id="@+id/imageView"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_below="@+id/image_return"
+                   android:layout_marginTop="1dp"
+                   android:background="@color/white_tea"
+                   app:srcCompat="@drawable/giohang" />
+
+               <TextView
+                   android:id="@+id/textView"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:gravity="center"
+                   android:textSize="15dp"
+                   android:layout_below="@+id/imageView"
+                   android:text="Giỏ hàng của bạn trống" />
+
+
+           </RelativeLayout>
+
+       </LinearLayout>
+   </ScrollView>
+</RelativeLayout>

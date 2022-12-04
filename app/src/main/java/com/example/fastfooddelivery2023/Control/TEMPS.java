@@ -16,6 +16,7 @@ import androidx.core.app.NotificationManagerCompat;
 
 import com.example.fastfooddelivery2023.Model.Food;
 import com.example.fastfooddelivery2023.Model.Order;
+import com.example.fastfooddelivery2023.Model.Order_FB;
 import com.example.fastfooddelivery2023.Model.User;
 import com.example.fastfooddelivery2023.R;
 
@@ -55,8 +56,8 @@ public class TEMPS {
         return false;
     }
 
-    public static int checkOrderStatus(List<Order> list){
-        for(Order order : list){
+    public static int checkOrderStatus(List<Order_FB> list){
+        for(Order_FB order : list){
             if(order.getCheck()==1){
                 return 1;
             }else if(order.getCheck()==2){
@@ -85,7 +86,7 @@ public class TEMPS {
     public static void showNotification(Context context, String title, String mess){
         notificationManagerCompat  = NotificationManagerCompat.from(context);
         android.app.Notification notification = new NotificationCompat.Builder(context,CHANNEL_1_ID)
-                .setSmallIcon(R.drawable.ic_like_24)
+                .setSmallIcon(R.drawable.ic_baseline_check_circle_outline_24)
                 .setContentTitle(title)
                 .setContentText(mess)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)

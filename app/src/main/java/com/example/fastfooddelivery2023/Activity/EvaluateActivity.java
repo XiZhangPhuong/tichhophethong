@@ -61,7 +61,7 @@ private int star = 0;
     }
     private void loadDataBundleFood(){
        Food food =(Food) getIntent().getSerializableExtra(OBJECT_FOOD);
-       if(food==null){
+       if(food==null) {
            return;
        }
        tv_name_evaluate.setText(food.getName_Food());
