@@ -32,6 +32,7 @@ import com.example.fastfooddelivery2023.Model.Staff;
 import com.example.fastfooddelivery2023.Model.User;
 import com.example.fastfooddelivery2023.R;
 import com.example.fastfooddelivery2023.SharedPreferences.DataPreferences;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -208,6 +209,7 @@ public class CartNotEmptyFragment extends Fragment {
                                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialogInterface, int i) {
+                                                  checkDriver();
                                                   if(edt_address.length()<=5){
                                                       edt_address.setError("Nhập lại địa chỉ");
                                                       edt_address.setText("");
@@ -221,7 +223,7 @@ public class CartNotEmptyFragment extends Fragment {
                                                   String time= new SimpleDateFormat("dd/MM/yyyy | hh:mm").format(Calendar.getInstance().getTime());
                                                   Double total = Double.parseDouble(txt_total_cart.getText().toString());
                                                   order_fb = new Order_FB(id_order,user,staff,address,listFoodCart,time,total,1);
-                                                  dataOrder.child(String.valueOf(user.getId())).child(id_order).setValue(order_fb);
+                                                  dataOrder.child(id_order).setValue(order_fb);
                                                   Toast.makeText(getContext(),"Đặt hàng thành công",Toast.LENGTH_SHORT).show();
                                                   dataCart.child(String.valueOf(user.getId())).removeValue();
                                                   MainActivity.viewPager2.setCurrentItem(0);
@@ -236,6 +238,35 @@ public class CartNotEmptyFragment extends Fragment {
             }
         });
     }
+    private void checkDriver(){
+        List<Order_FB> list=  new ArrayList<>();
+        dataOrder.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                list.clear();
+                for(DataSnapshot ds : snapshot.getChildren()){
+                    order_fb = ds.getValue(Order_FB.class);
+                }
+                if(order_fb==null){
+                    return;
+                }
+                if(order_fb.getCheck()==1 && order_fb.getUser().getId().equals(user.getId())) {
+                    MainActivity.viewPager2.setCurrentItem(0);
+                    Toast.makeText(getContext(),"Bạn đang trong trạng thái chờ",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(order_fb.getCheck()==2 && order_fb.getUser().getId().equals(user.getId())) {
+                    MainActivity.viewPager2.setCurrentItem(0);
+                    Toast.makeText(getContext(),"Bạn đang trong trạng thái chờ",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+    }
+
     private void initView(View view){
         rcv_cart = view.findViewById(R.id.rcv_cart);
         txt_total_cart = view.findViewById(R.id.txt_total_cart);

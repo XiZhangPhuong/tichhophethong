@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Base64;
 
 import androidx.core.app.NotificationCompat;
@@ -110,6 +112,12 @@ public class TEMPS {
         return bitmap;
     }
 
+   public static boolean checkInternet(Context context){
+       ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+       NetworkInfo nInfo = cm.getActiveNetworkInfo();
+       boolean connected = nInfo != null && nInfo.isAvailable() && nInfo.isConnected();
+       return connected;
+   }
 
 
 }

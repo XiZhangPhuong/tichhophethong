@@ -118,7 +118,7 @@ private int star = 0;
                         dialog = builder.create();
                         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                         dialog.show();
-                        dialog.getWindow().setLayout(600, 800);
+
 
                         clickRatingBar(ratingBar,txt_count);
                         ExitDialog(btn_dismiss);

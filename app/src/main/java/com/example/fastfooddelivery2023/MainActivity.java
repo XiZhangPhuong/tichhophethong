@@ -5,11 +5,16 @@ import static com.example.fastfooddelivery2023.Fragment.LoginSignUp.LoginFragmen
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -46,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     private MainPager adapter;
     private User user;
     private Order_FB order_fb;
+    private FloatingActionButton floating;
     private AlertDialog.Builder builder;
     private AlertDialog dialog;
     private RelativeLayout view_waiting_driver;
@@ -59,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
         txt_waiting_driver = findViewById(R.id.txt_waiting_driver);
         view_waiting_driver = findViewById(R.id.view_waiting_driver);
+        floating = findViewById(R.id.floating);
         bottomNavigationView = findViewById(R.id.bottom_nav);
         viewPager2 = findViewById(R.id.viewpager);
         adapter = new MainPager(this);
@@ -66,7 +73,11 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setBackground(null);
         viewPager2.setUserInputEnabled(false);
 
-        checkDriver();
+        try {
+            checkDriver();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
@@ -107,6 +118,16 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+    private void checkInternet(){
+        if(TEMPS.checkInternet(MainActivity.this)==false){
+            viewPager2.setVisibility(View.GONE);
+            view_waiting_driver.setVisibility(View.VISIBLE);
+            txt_waiting_driver.setText("Không có kết nối Internet");
+        }else{
+            viewPager2.setVisibility(View.VISIBLE);
+            view_waiting_driver.setVisibility(View.GONE);
+        }
+    }
     private void showDialog(){
         builder = new AlertDialog.Builder(MainActivity.this);
         View view = getLayoutInflater().inflate(R.layout.item_waiting_food,null);
@@ -123,11 +144,26 @@ public class MainActivity extends AppCompatActivity {
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
         dialog.getWindow().setLayout(600, 800);
+        //call phone
     }
+    private void ClickFloating_Button(String txt_phone){
+        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.CALL_PHONE},100);
+        }
+        floating.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_CALL);
+                intent.setData(Uri.parse("tel:"+txt_phone));
+                startActivity(intent);
+            }
+        });
+    }
+
     private void checkDriver(){
         final DatabaseReference dataOrder = FirebaseDatabase.getInstance().getReference("Order");
         user = DataPreferences.getUser(MainActivity.this,"KEY_USER");
-        dataOrder.child(user.getId()).addValueEventListener(new ValueEventListener() {
+        dataOrder.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot ds : snapshot.getChildren()){
@@ -136,31 +172,23 @@ public class MainActivity extends AppCompatActivity {
                 if(order_fb==null){
                     return;
                 }
-                if(order_fb.getCheck()==1){
+                if(order_fb.getCheck()==1 && order_fb.getUser().getId().equals(user.getId())){
                     view_waiting_driver.setVisibility(View.VISIBLE);
                     return;
                 }
-                if(order_fb.getCheck()==2){
+                if(order_fb.getCheck()==2 && order_fb.getUser().getId().equals(user.getId()) ){
+                    floating.setVisibility(View.VISIBLE);
+                    // call user
                     view_waiting_driver.setVisibility(View.VISIBLE);
                     txt_waiting_driver.setText("Tài xế "+order_fb.getStaff().getFullName_staff()+" đang giao");
-
-                  //  TEMPS.showNotification(MainActivity.this,"Hoan hô",order_fb.getStaff().getFullName_staff()+" đã nhận đơn");
-                    showDialog();
-                    view_waiting_driver.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            showDialog();
-                        }
-                    });
-                }else if(order_fb.getCheck()==3){
+                    ClickFloating_Button(order_fb.getStaff().getPhoneNumber());
+                }else if(order_fb.getCheck()==3 && order_fb.getUser().getId().equals(user.getId())){
                     view_waiting_driver.setVisibility(View.GONE);
+                    floating.setVisibility(View.GONE);
                     TEMPS.showNotification(MainActivity.this,order_fb.getId_order(),"Giao hàng thành công");
-                    dataOrder.child(String.valueOf(user.getId())).child(order_fb.getId_order()).removeValue();
+                    dataOrder.child(order_fb.getId_order()).removeValue();
                     dataHistory.child(String.valueOf(user.getId())).child(order_fb.getId_order()).setValue(order_fb);
-                    if(dialog.isShowing()==false){
-                        return;
-                    }
-                    dialog.dismiss();
+
                 }
             }
 
@@ -186,6 +214,9 @@ public class MainActivity extends AppCompatActivity {
         }, 2000);
     }
 
-
-
+    @Override
+    protected void onStart() {
+        super.onStart();
+        checkInternet();
+    }
 }

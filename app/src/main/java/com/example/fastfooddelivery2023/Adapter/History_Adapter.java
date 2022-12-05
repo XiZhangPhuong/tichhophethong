@@ -43,6 +43,9 @@ public class History_Adapter extends RecyclerView.Adapter<History_Adapter.Histor
     @Override
     public void onBindViewHolder(@NonNull History_Adapter.HistoryViewHolder holder, int position) {
          Food food = this.listFood.get(position);
+         if(food==null){
+             return;
+         }
          Picasso.get().load(food.getImage_Food()).into(holder.imageView_Food);
          holder.txt_name_food.setText(food.getName_Food());
          holder.txt_category_food.setText(food.getCategory_Food());

@@ -95,6 +95,7 @@ public static List<Food> listFoodFB = new ArrayList<>();
             public void onClick(View view) {
                  if(flag==true){
                      img_like_Food.setImageResource(R.drawable.ic_like_24);
+                     Toast.makeText(InforActivity.this,"Đã thêm vào mục yêu thích",Toast.LENGTH_SHORT).show();
                      dataFavorite.child(String.valueOf(user.getId())).child(food.getId_Food()).setValue(food);
                      flag = false;
                  }else{
@@ -125,7 +126,6 @@ public static List<Food> listFoodFB = new ArrayList<>();
         });
     }
          private void loadDataSimilarFood() {
-
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -156,7 +156,6 @@ public static List<Food> listFoodFB = new ArrayList<>();
                                     }
                                 });
                             }
-
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {
 
