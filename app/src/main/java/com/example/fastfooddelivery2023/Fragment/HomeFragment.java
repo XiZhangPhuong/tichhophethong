@@ -16,16 +16,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 import android.widget.ViewFlipper;
 
 import com.example.fastfooddelivery2023.Activity.CategoryActivity;
@@ -42,6 +46,7 @@ import com.example.fastfooddelivery2023.Model.ObjectFood;
 import com.example.fastfooddelivery2023.Model.User;
 import com.example.fastfooddelivery2023.R;
 import com.example.fastfooddelivery2023.SharedPreferences.DataPreferences;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -53,6 +58,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 
 public class HomeFragment extends Fragment {
 private View mView;
@@ -61,6 +68,8 @@ private MultiAutoCompleteTextView mutiComplete;
 private ViewFlipper viewFlipper;
 private RecyclerView rcv_category,rcv_recommend,rcv_sale_food,rcv_object_food,rcv_food;
 private Category_Adapter category_adapter;
+private ScrollView scrollview;
+private FloatingActionButton floating;
 private EditText edt_search;
 private ProgressBar progressBar_Home_Food;
 public static final String OBJECT_FOOD = "object_food";
@@ -85,7 +94,8 @@ public static List<Food> listFoodNew = new ArrayList<>();
         rcv_object_food = mView.findViewById(R.id.rcv_object_food);
         edt_search = mView.findViewById(R.id.edt_search);
         rcv_food = mView.findViewById(R.id.rcv_food);
-
+        floating = mView.findViewById(R.id.floating);
+        scrollview = mView.findViewById(R.id.scrollview);
 
 
         user = DataPreferences.getUser(getContext(),KEY_USER);
@@ -93,6 +103,7 @@ public static List<Food> listFoodNew = new ArrayList<>();
         // load data cart from firebase
         try {
             setWindow();
+            showFloatingButton();
             ClickEdittext();
             loadDataObjectFood();
             loadDataRcvFood();
@@ -103,9 +114,14 @@ public static List<Food> listFoodNew = new ArrayList<>();
         }
         return mView;
     }
-
-
-
+    private void showFloatingButton(){
+        floating.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View view) {
+                  scrollview.scrollTo(0,0);
+              }
+          });
+    }
     private void ViewFliperAnimation() {
 
         String []images = {"https://thietbiducthanh.vn/wp-content/uploads/2020/02/th%E1%BB%B1c-%C4%91%C6%A1n-1-711x400.jpg",
@@ -115,7 +131,6 @@ public static List<Food> listFoodNew = new ArrayList<>();
             fliperimage(images[i]);
         }
     }
-
     private void fliperimage(String image) {
         ImageView imageView = new ImageView(getContext());
         Picasso.get().load(image).into(imageView);
@@ -126,7 +141,6 @@ public static List<Food> listFoodNew = new ArrayList<>();
         viewFlipper.setInAnimation(getContext(), android.R.anim.slide_in_left);
         viewFlipper.setOutAnimation(getContext(), android.R.anim.slide_out_right);;
     }
-
     private void Category_Food(){
         List<Category> listCategory = new ArrayList<>();
         final DatabaseReference dataCategory = FirebaseDatabase.getInstance().getReference("Category");
@@ -165,7 +179,6 @@ public static List<Food> listFoodNew = new ArrayList<>();
         rcv_category.setHasFixedSize(true);
 
     }
-
     private List<Food> getListFoodFb(){
         List<Food> list = new ArrayList<>();
         final  DatabaseReference dataFood = FirebaseDatabase.getInstance().getReference("Food");
@@ -191,7 +204,6 @@ public static List<Food> listFoodNew = new ArrayList<>();
             }
         }).start();
         return list;
-
     }
     private void loadDataObjectFood(){
         List<ObjectFood> list = new ArrayList<>();
@@ -278,13 +290,8 @@ public static List<Food> listFoodNew = new ArrayList<>();
             window.setNavigationBarColor(getActivity().getResources().getColor(android.R.color.holo_blue_dark));
         }
     }
+    private void swipeBar(){
 
-
-
-
-
-
-
-
+    }
 
 }

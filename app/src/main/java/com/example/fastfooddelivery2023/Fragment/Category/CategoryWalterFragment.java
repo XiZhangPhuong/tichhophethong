@@ -65,11 +65,11 @@ public class CategoryWalterFragment extends Fragment {
                                 startActivity(intent);
                             }
                         });
+                        rcv_rice.setAdapter(searchAdapter);
                     }
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
                     }
                 });
-        rcv_rice.setAdapter(searchAdapter);
     }
 }

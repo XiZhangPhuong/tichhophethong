@@ -11,11 +11,15 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.fastfooddelivery2023.Control.TEMPS;
 import com.example.fastfooddelivery2023.Model.Food;
@@ -44,13 +48,17 @@ public class MainActivity extends AppCompatActivity {
     private Order_FB order_fb;
     private AlertDialog.Builder builder;
     private AlertDialog dialog;
+    private RelativeLayout view_waiting_driver;
+    private TextView txt_waiting_driver;
     private DatabaseReference dataHistory = FirebaseDatabase.getInstance().getReference("History");
+    private boolean flag = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        txt_waiting_driver = findViewById(R.id.txt_waiting_driver);
+        view_waiting_driver = findViewById(R.id.view_waiting_driver);
         bottomNavigationView = findViewById(R.id.bottom_nav);
         viewPager2 = findViewById(R.id.viewpager);
         adapter = new MainPager(this);
@@ -99,7 +107,23 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
+    private void showDialog(){
+        builder = new AlertDialog.Builder(MainActivity.this);
+        View view = getLayoutInflater().inflate(R.layout.item_waiting_food,null);
+        Button btn_detail = view.findViewById(R.id.btn_detail);
+        TextView txt_name_driver = view.findViewById(R.id.txt_name_driver);
+        TextView txt_phone_driver = view.findViewById(R.id.txt_phone_driver);
+        ImageView image_phone = view.findViewById(R.id.image_phone);
+        ImageView image_avatar = view.findViewById(R.id.image_avatar);
+        Picasso.get().load("https://chuyenphucvu.vn/uploads/images/nghe-shipper-nhung-rui-ro-khon-luong.jpg").into(image_avatar);
+        txt_phone_driver.setText(order_fb.getStaff().getPhoneNumber());
+        txt_name_driver.setText(order_fb.getStaff().getFullName_staff());
+        builder.setView(view);
+        dialog = builder.create();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.show();
+        dialog.getWindow().setLayout(600, 800);
+    }
     private void checkDriver(){
         final DatabaseReference dataOrder = FirebaseDatabase.getInstance().getReference("Order");
         user = DataPreferences.getUser(MainActivity.this,"KEY_USER");
@@ -112,24 +136,24 @@ public class MainActivity extends AppCompatActivity {
                 if(order_fb==null){
                     return;
                 }
+                if(order_fb.getCheck()==1){
+                    view_waiting_driver.setVisibility(View.VISIBLE);
+                    return;
+                }
                 if(order_fb.getCheck()==2){
-                    TEMPS.showNotification(MainActivity.this,"Hoan hô",order_fb.getStaff().getFullName_staff()+" đã nhận đơn");
-                    builder = new AlertDialog.Builder(MainActivity.this);
-                    View view = getLayoutInflater().inflate(R.layout.item_waiting_food,null);
-                    Button btn_detail = view.findViewById(R.id.btn_detail);
-                    TextView txt_name_driver = view.findViewById(R.id.txt_name_driver);
-                    TextView txt_phone_driver = view.findViewById(R.id.txt_phone_driver);
-                    ImageView image_phone = view.findViewById(R.id.image_phone);
-                    ImageView image_avatar = view.findViewById(R.id.image_avatar);
-                    Picasso.get().load("https://chuyenphucvu.vn/uploads/images/nghe-shipper-nhung-rui-ro-khon-luong.jpg").into(image_avatar);
-                    txt_phone_driver.setText(order_fb.getStaff().getPhoneNumber());
-                    txt_name_driver.setText(order_fb.getStaff().getFullName_staff());
-                    builder.setView(view);
-                    dialog = builder.create();
-                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                    dialog.show();
-                    dialog.getWindow().setLayout(600, 800);
+                    view_waiting_driver.setVisibility(View.VISIBLE);
+                    txt_waiting_driver.setText("Tài xế "+order_fb.getStaff().getFullName_staff()+" đang giao");
+
+                  //  TEMPS.showNotification(MainActivity.this,"Hoan hô",order_fb.getStaff().getFullName_staff()+" đã nhận đơn");
+                    showDialog();
+                    view_waiting_driver.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            showDialog();
+                        }
+                    });
                 }else if(order_fb.getCheck()==3){
+                    view_waiting_driver.setVisibility(View.GONE);
                     TEMPS.showNotification(MainActivity.this,order_fb.getId_order(),"Giao hàng thành công");
                     dataOrder.child(String.valueOf(user.getId())).child(order_fb.getId_order()).removeValue();
                     dataHistory.child(String.valueOf(user.getId())).child(order_fb.getId_order()).setValue(order_fb);
@@ -146,6 +170,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    @Override
+    public void onBackPressed() {
+        if (flag) {
+            super.onBackPressed();
+            return;
+        }
+        flag = true;
+        Toast.makeText(MainActivity.this,"Nhấn lần nữa để thoát",Toast.LENGTH_SHORT).show();
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                flag = false;
+            }
+        }, 2000);
+    }
+
 
 
 }

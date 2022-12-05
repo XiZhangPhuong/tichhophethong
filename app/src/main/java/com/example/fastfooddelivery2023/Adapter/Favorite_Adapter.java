@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,7 +20,7 @@ public class Favorite_Adapter extends RecyclerView.Adapter<Favorite_Adapter.View
     private List<Food> listFood;
     public interface IClickFavorite{
         void ClickLike(Food food,ImageView img_favorite);
-        void ClickAddToCart(Food food,ImageView img_check);
+        void ClickView(Food food);
     }
     private IClickFavorite iClickFavorite;
 
@@ -38,19 +39,23 @@ public class Favorite_Adapter extends RecyclerView.Adapter<Favorite_Adapter.View
     @Override
     public void onBindViewHolder(@NonNull Favorite_Adapter.ViewHolder holder, int position) {
        Food food = this.listFood.get(position);
-       holder.txt_name_favorite.setText(food.getName_Food());
-       holder.txt_prince_favorite.setText(food.getPrice_Food()+"");
-       Picasso.get().load(food.getImage_Food()).into(holder.img_items_favorite);
+       if(food==null){
+           return;
+       }
+       Picasso.get().load(food.getImage_Food()).into(holder.imageView_Food);
+       holder.txt_name_food.setText(food.getName_Food());
+       holder.txt_category_food.setText(food.getCategory_Food());
+       holder.txt_price_food.setText(food.getPrice_Food()+"");
        holder.img_favorite.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
                iClickFavorite.ClickLike(food,holder.img_favorite);
            }
        });
-       holder.img_add_Cart_favorite.setOnClickListener(new View.OnClickListener() {
+       holder.relative_clickFood.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
-               iClickFavorite.ClickAddToCart(food,holder.img_add_Cart_favorite);
+               iClickFavorite.ClickView(food);
            }
        });
     }
@@ -64,15 +69,17 @@ public class Favorite_Adapter extends RecyclerView.Adapter<Favorite_Adapter.View
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private ImageView  img_items_favorite,img_favorite,img_add_Cart_favorite;
-        private TextView txt_name_favorite,txt_prince_favorite;
+        private ImageView  imageView_Food,img_favorite;
+        private TextView txt_name_food,txt_category_food,txt_price_food;
+        private RelativeLayout relative_clickFood;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            img_items_favorite = itemView.findViewById(R.id.img_items_favorite);
+            imageView_Food = itemView.findViewById(R.id.imageView_Food);
             img_favorite = itemView.findViewById(R.id.img_favorite);
-            img_add_Cart_favorite = itemView.findViewById(R.id.img_add_Cart_favorite);
-            txt_name_favorite = itemView.findViewById(R.id.txt_name_favorite);
-            txt_prince_favorite = itemView.findViewById(R.id.txt_prince_favorite);
+            txt_name_food = itemView.findViewById(R.id.txt_name_food);
+            txt_category_food = itemView.findViewById(R.id.txt_category_food);
+            txt_price_food = itemView.findViewById(R.id.txt_price_food);
+            relative_clickFood = itemView.findViewById(R.id.relative_clickFood);
         }
     }
 }

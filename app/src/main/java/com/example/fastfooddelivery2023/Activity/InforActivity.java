@@ -93,7 +93,15 @@ public static List<Food> listFoodFB = new ArrayList<>();
         img_like_Food.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                 if(flag==true){
+                     img_like_Food.setImageResource(R.drawable.ic_like_24);
+                     dataFavorite.child(String.valueOf(user.getId())).child(food.getId_Food()).setValue(food);
+                     flag = false;
+                 }else{
+                     img_like_Food.setImageResource(R.drawable.ic_favorite_24);
+                     dataFavorite.child(String.valueOf(user.getId())).child(food.getId_Food()).removeValue();
+                     flag = true;
+                 }
             }
         });
     }
@@ -127,8 +135,10 @@ public static List<Food> listFoodFB = new ArrayList<>();
                                 listFoodFB.clear();
                                 for (DataSnapshot ds : snapshot.getChildren()) {
                                     Food f = ds.getValue(Food.class);
-                                        listFoodFB.add(f);
-                                        Collections.shuffle(listFoodFB);
+                                        if(f.getCategory_Food().toLowerCase().contains(food.getCategory_Food().toLowerCase())){
+                                            listFoodFB.add(f);
+                                            Collections.shuffle(listFoodFB);
+                                        }
                                 }
                                 runOnUiThread(new Runnable() {
                                     @Override
@@ -156,9 +166,6 @@ public static List<Food> listFoodFB = new ArrayList<>();
                 }).start();
 
             }
-
-
-
             private void initView() {
                 img_return = findViewById(R.id.img_return);
                 img_getImageFood = findViewById(R.id.img_getImageFood);

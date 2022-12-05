@@ -40,4 +40,5 @@ public class CategoryViewPager extends FragmentStateAdapter {
     public int getItemCount() {
         return 8;
     }
+
 }
