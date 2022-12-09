@@ -161,6 +161,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void checkDriver(){
+        view_waiting_driver.setVisibility(View.GONE);
+        floating.setVisibility(View.GONE);
         final DatabaseReference dataOrder = FirebaseDatabase.getInstance().getReference("Order");
         user = DataPreferences.getUser(MainActivity.this,"KEY_USER");
         dataOrder.addValueEventListener(new ValueEventListener() {
@@ -188,7 +190,6 @@ public class MainActivity extends AppCompatActivity {
                     TEMPS.showNotification(MainActivity.this,order_fb.getId_order(),"Giao hàng thành công");
                     dataOrder.child(order_fb.getId_order()).removeValue();
                     dataHistory.child(String.valueOf(user.getId())).child(order_fb.getId_order()).setValue(order_fb);
-
                 }
             }
 

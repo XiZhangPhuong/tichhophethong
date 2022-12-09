@@ -13,6 +13,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,7 +55,7 @@ public class CartNotEmptyFragment extends Fragment {
     private Button btn_addTOCart;
     private RelativeLayout view_cart_not_empty,view_cart_empty,view_cart;
     private Cart_Adapter cartAdapter;
-    private TextView txt_total_cart,txt_delete_items,txt_items,txt_city;
+    private TextView txt_total_cart,txt_delete_items,txt_items,txt_city,txt_temp_cart,txt_ship_cart;
     private EditText edt_address;
     public static List<Food> listFoodCart ;
     private double sum = 0;
@@ -87,7 +89,16 @@ public class CartNotEmptyFragment extends Fragment {
         for(Food food: listFoodCart){
             sum+=food.getQuantity()*food.getPrice_Food();
         }
-        txt_total_cart.setText(sum+" ");
+        txt_temp_cart.setText(sum+" ");
+        if(sum<=100000){
+            double ship = 15000;
+            txt_ship_cart.setText(ship+"");
+            sum = sum + (double)15000;
+            txt_total_cart.setText(sum+"");
+        }else{
+            txt_ship_cart.setText("Free");
+            txt_total_cart.setText(sum+"");
+        }
     }
     private void loadDataCart(){
         new Thread(new Runnable() {
@@ -102,6 +113,7 @@ public class CartNotEmptyFragment extends Fragment {
                              f = ds.getValue(Food.class);
                              listFoodCart.add(f);
                          }
+
                          getActivity().runOnUiThread(new Runnable() {
                              @Override
                              public void run() {
@@ -127,7 +139,16 @@ public class CartNotEmptyFragment extends Fragment {
                                          tv_number_cart.setText(i+"");
                                          tv_total_item.setText(i*food.getPrice_Food()+"");
                                          sum = sum + food.getPrice_Food();
-                                         txt_total_cart.setText(sum + "");
+                                         txt_temp_cart.setText(sum + "");
+
+                                         if(sum<=100000){
+                                             txt_ship_cart.setText("15000");
+                                             sum = sum + (double)15000;
+                                             txt_total_cart.setText(sum+"");
+                                         }else{
+                                             txt_ship_cart.setText("Free");
+                                             txt_total_cart.setText(sum+"");
+                                         }
                                      }
 
                                      @Override
@@ -138,14 +159,26 @@ public class CartNotEmptyFragment extends Fragment {
                                          food.setQuantity(i);
                                          tv_total_item.setText(i*food.getPrice_Food()+"");
                                          sum = sum - food.getPrice_Food();
-                                         txt_total_cart.setText(sum+" ");
-
+                                         txt_temp_cart.setText(sum+" ");
+                                         if(sum<=100000){
+                                             double ship = 15000;
+                                             txt_ship_cart.setText(ship+"");
+                                             sum = sum + (double)15000;
+                                             txt_total_cart.setText(sum+"");
+                                         }else{
+                                             txt_ship_cart.setText("Free");
+                                             txt_total_cart.setText(sum+"");
+                                         }
                                          if(i==0){
                                              listFoodCart.remove(food);
-                                             //sum = sum - food.getPrice_Food();
+                                             sum = 0;
+                                             dataCart.child(String.valueOf(user.getId())).child(f.getId_Food()).removeValue();
                                              cartAdapter.notifyDataSetChanged();
                                              txt_total_cart.setText(sum + " ");
                                              tv_number_cart.setText(i+"");
+                                         }else if(listFoodCart.size()==0){
+                                             MainActivity.viewPager2.setCurrentItem(0);
+                                             dataCart.child(String.valueOf(user.getId())).removeValue();
                                          }
                                      }
                                  });
@@ -209,14 +242,14 @@ public class CartNotEmptyFragment extends Fragment {
                                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialogInterface, int i) {
-                                                  checkDriver();
+
                                                   if(edt_address.length()<=5){
                                                       edt_address.setError("Nhập lại địa chỉ");
                                                       edt_address.setText("");
                                                       edt_address.requestFocus();
                                                       return;
                                                   }
-                                                  String id_order = "Order"+TEMPS.ranDomCODE();
+                                                  String id_order = dataOrder.push().getKey();
                                                   user = DataPreferences.getUser(getContext(),"KEY_USER");
                                                   Staff staff = new Staff("","","");
                                                   String address = edt_address.getText().toString() + " "+txt_city.getText().toString();
@@ -238,34 +271,6 @@ public class CartNotEmptyFragment extends Fragment {
             }
         });
     }
-    private void checkDriver(){
-        List<Order_FB> list=  new ArrayList<>();
-        dataOrder.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                list.clear();
-                for(DataSnapshot ds : snapshot.getChildren()){
-                    order_fb = ds.getValue(Order_FB.class);
-                }
-                if(order_fb==null){
-                    return;
-                }
-                if(order_fb.getCheck()==1 && order_fb.getUser().getId().equals(user.getId())) {
-                    MainActivity.viewPager2.setCurrentItem(0);
-                    Toast.makeText(getContext(),"Bạn đang trong trạng thái chờ",Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if(order_fb.getCheck()==2 && order_fb.getUser().getId().equals(user.getId())) {
-                    MainActivity.viewPager2.setCurrentItem(0);
-                    Toast.makeText(getContext(),"Bạn đang trong trạng thái chờ",Toast.LENGTH_SHORT).show();
-                    return;
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
-    }
 
     private void initView(View view){
         rcv_cart = view.findViewById(R.id.rcv_cart);
@@ -278,6 +283,8 @@ public class CartNotEmptyFragment extends Fragment {
         view_cart = view.findViewById(R.id.view_cart);
         edt_address = view.findViewById(R.id.edt_address);
         txt_city = view.findViewById(R.id.txt_city);
+        txt_temp_cart = view.findViewById(R.id.txt_temp_cart);
+        txt_ship_cart = view.findViewById(R.id.txt_ship_cart);
     }
 
     @Override

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -80,7 +81,10 @@ private EditText edt_search;
         searchAdapter = new SearchAdapter(SearchActivity.this, getListFoodFb(), new SearchAdapter.ClickSearchFood() {
             @Override
             public void Click(Food food) {
-
+                Intent intent = new Intent(SearchActivity.this, InforActivity.class);
+                intent.putExtra("KEY_FOOD",food);
+                startActivity(intent);
+                finish();
             }
         });
         rcv_searchFood.setAdapter(searchAdapter);

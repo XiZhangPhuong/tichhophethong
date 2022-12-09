@@ -79,5 +79,7 @@
             android:text="Đánh giá"
             android:textAllCaps="false"
             app:backgroundTint="#ff4d4d" />
+
+
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

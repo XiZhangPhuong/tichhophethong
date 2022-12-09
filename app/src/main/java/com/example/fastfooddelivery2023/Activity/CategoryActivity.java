@@ -11,11 +11,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TableLayout;
 
 import com.example.fastfooddelivery2023.MainActivity;
 import com.example.fastfooddelivery2023.R;
 import com.example.fastfooddelivery2023.Viewpager.CategoryViewPager;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -23,11 +25,15 @@ public class CategoryActivity extends AppCompatActivity {
 private TabLayout tabLayout_category;
 public static ViewPager2 viewPager2;
 private ImageView image_back;
+private ScrollView scrollview;
+private FloatingActionButton floating;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
         image_back = findViewById(R.id.image_back);
+        scrollview = findViewById(R.id.scrollview);
+        floating = findViewById(R.id.floating);
         tabLayout_category = findViewById(R.id.tabLayout_category);
         tabLayout_category.setTabTextColors(Color.parseColor("#000000"),Color.parseColor("#ff4d4d"));
         tabLayout_category.setSelectedTabIndicatorColor(Color.parseColor("#ff4d4d"));
@@ -36,6 +42,7 @@ private ImageView image_back;
         viewPager2 = findViewById(R.id.viewpager2_category);
         setWindow();
         clickReturn();
+        clickFloatingButton();
         CategoryViewPager adapterViewPager2 = new CategoryViewPager(this);
         viewPager2.setAdapter(adapterViewPager2);
 
@@ -73,13 +80,6 @@ private ImageView image_back;
         viewItemCategory();
     }
 
-    private void setWindow(){
-        if(Build.VERSION.SDK_INT>=21){
-            Window window = CategoryActivity.this.getWindow();
-            window.setStatusBarColor(CategoryActivity.this.getResources().getColor(android.R.color.holo_blue_dark));
-            window.setNavigationBarColor(CategoryActivity.this.getResources().getColor(android.R.color.holo_blue_dark));
-        }
-    }
     private void viewItemCategory(){
         String str = getIntent().getStringExtra("KEY_CATEGORY");
         switch (str){
@@ -101,5 +101,20 @@ private ImageView image_back;
                 startActivity(new Intent(CategoryActivity.this, MainActivity.class));
             }
         });
+    }
+    private void clickFloatingButton(){
+        floating.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                scrollview.scrollTo(0,0);
+            }
+        });
+    }
+    private void setWindow(){
+        if(Build.VERSION.SDK_INT>=21){
+            Window window = CategoryActivity.this.getWindow();
+            window.setStatusBarColor(CategoryActivity.this.getResources().getColor(android.R.color.holo_blue_dark));
+            window.setNavigationBarColor(CategoryActivity.this.getResources().getColor(android.R.color.holo_blue_dark));
+        }
     }
 }

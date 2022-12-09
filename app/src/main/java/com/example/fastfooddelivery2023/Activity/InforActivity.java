@@ -21,8 +21,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.fastfooddelivery2023.Adapter.Comment_Adapter;
 import com.example.fastfooddelivery2023.Adapter_New.FoodAdapter;
 import com.example.fastfooddelivery2023.MainActivity;
+import com.example.fastfooddelivery2023.Model.Comment;
+import com.example.fastfooddelivery2023.Model.Comment_FB;
 import com.example.fastfooddelivery2023.Model.Food;
 import com.example.fastfooddelivery2023.Model.User;
 import com.example.fastfooddelivery2023.R;
@@ -44,11 +47,12 @@ private ImageView img_return,img_getImageFood,img_like_Food;
 private TextView txt_getNameFood,txt_getCategory_Food,txt_getPriceFood,txt_getInForFood;
 private Button btn_addTOCart;
 private User user;
-private RecyclerView rcv_similar_product;
+private RecyclerView rcv_similar_product,rcv_comment;
 public static List<Food> listFoodToCart = new ArrayList<>();
 private FoodAdapter foodAdapter ;
 private Food food;
 private boolean flag = true;
+private Comment_Adapter comment_adapter;
 private DatabaseReference dataFavorite = FirebaseDatabase.getInstance().getReference("Favorite");
 private DatabaseReference data = FirebaseDatabase.getInstance().getReference("Cart");
 final DatabaseReference dataFood = FirebaseDatabase.getInstance().getReference("Food");
@@ -63,6 +67,7 @@ public static List<Food> listFoodFB = new ArrayList<>();
             setWindow();
             initView();
             loadDataFood();
+            loadDataComment();
             loadDataSimilarFood();
             clickBack();
             clickFavoriteFood();
@@ -79,6 +84,8 @@ public static List<Food> listFoodFB = new ArrayList<>();
         txt_getCategory_Food.setText(food.getCategory_Food());
         txt_getInForFood.setText(food.getInformation_Food());
         txt_getPriceFood.setText(food.getPrice_Food()+" đ");
+
+
     }
     private void clickBack(){
         img_return.setOnClickListener(new View.OnClickListener() {
@@ -95,7 +102,6 @@ public static List<Food> listFoodFB = new ArrayList<>();
             public void onClick(View view) {
                  if(flag==true){
                      img_like_Food.setImageResource(R.drawable.ic_like_24);
-                     Toast.makeText(InforActivity.this,"Đã thêm vào mục yêu thích",Toast.LENGTH_SHORT).show();
                      dataFavorite.child(String.valueOf(user.getId())).child(food.getId_Food()).setValue(food);
                      flag = false;
                  }else{
@@ -135,10 +141,12 @@ public static List<Food> listFoodFB = new ArrayList<>();
                                 listFoodFB.clear();
                                 for (DataSnapshot ds : snapshot.getChildren()) {
                                     Food f = ds.getValue(Food.class);
-                                        if(f.getCategory_Food().toLowerCase().contains(food.getCategory_Food().toLowerCase())){
+                                        if(f.getCategory_Food().toLowerCase().contains(food.getCategory_Food().toLowerCase())
+                                                && !f.getName_Food().equals(txt_getNameFood.getText().toString())){
                                             listFoodFB.add(f);
                                             Collections.shuffle(listFoodFB);
                                         }
+
                                 }
                                 runOnUiThread(new Runnable() {
                                     @Override
@@ -165,6 +173,41 @@ public static List<Food> listFoodFB = new ArrayList<>();
                 }).start();
 
             }
+
+            private void loadDataComment(){
+                final DatabaseReference dataCMT = FirebaseDatabase.getInstance().getReference("Comment");
+                List<Comment_FB> list = new ArrayList<>();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        dataCMT.child(food.getId_Food()).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                list.clear();
+                                for(DataSnapshot ds : snapshot.getChildren()){
+                                    Comment_FB c = ds.getValue(Comment_FB.class);
+                                    if(c.getId_Food().equals(food.getId_Food())){
+                                        list.add(c);
+                                    }else{
+                                        return;
+                                    }
+                                }
+                                rcv_comment.setLayoutManager(new LinearLayoutManager(InforActivity.this,LinearLayoutManager.VERTICAL,false));
+                                rcv_comment.setHasFixedSize(true);
+                                comment_adapter = new Comment_Adapter(list);
+                                rcv_comment.setAdapter(comment_adapter);
+                                comment_adapter.notifyDataSetChanged();
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+                    }
+                }).start();
+            }
+
             private void initView() {
                 img_return = findViewById(R.id.img_return);
                 img_getImageFood = findViewById(R.id.img_getImageFood);
@@ -175,6 +218,7 @@ public static List<Food> listFoodFB = new ArrayList<>();
                 txt_getInForFood = findViewById(R.id.txt_getInForFood);
                 btn_addTOCart = findViewById(R.id.btn_addTOCart);
                 rcv_similar_product = findViewById(R.id.rcv_similar_product);
+                rcv_comment = findViewById(R.id.rcv_comment);
             }
 
             private void setWindow() {

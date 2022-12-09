@@ -10,20 +10,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fastfooddelivery2023.Model.Comment;
+import com.example.fastfooddelivery2023.Model.Comment_FB;
 import com.example.fastfooddelivery2023.R;
 
 import java.util.List;
 
 public class Comment_Adapter extends RecyclerView.Adapter<Comment_Adapter.CommentViewHolder> {
-    private List<Comment> listComment;
-    public interface ClickCmtFood{
-        void ClickLike(Comment comment);
-    }
-    private ClickCmtFood clickCmtFood;
+    private List<Comment_FB> listComment;
 
-    public Comment_Adapter(List<Comment> listComment, ClickCmtFood clickCmtFood) {
+
+    public Comment_Adapter(List<Comment_FB> listComment) {
         this.listComment = listComment;
-        this.clickCmtFood = clickCmtFood;
         notifyDataSetChanged();
     }
 
@@ -35,18 +32,12 @@ public class Comment_Adapter extends RecyclerView.Adapter<Comment_Adapter.Commen
 
     @Override
     public void onBindViewHolder(@NonNull Comment_Adapter.CommentViewHolder holder, int position) {
-       Comment cmt = this.listComment.get(position);
-       holder.txt_name_Comment.setText(cmt.getName());
-       holder.txt_Comment.setText(cmt.getComment());
+       Comment_FB cmt = this.listComment.get(position);
+       holder.txt_name_Comment.setText(cmt.getUser().getFullName());
+       holder.txt_Comment.setText(cmt.getInformation());
        holder.txt_date_cmt.setText(cmt.getDate());
-      // holder.txt_countLikeCMT.setText(cmt.getQuantityLike());
-       holder.ratingBar.setRating(cmt.getQuantityLike());
-       holder.txt_likeComment.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-               clickCmtFood.ClickLike(cmt);
-           }
-       });
+       holder.ratingBar.setRating(cmt.getLike());
+      // holder.ratingBar.setNumStars(cmt.getLike());
     }
 
     @Override
@@ -68,7 +59,6 @@ public class Comment_Adapter extends RecyclerView.Adapter<Comment_Adapter.Commen
             txt_date_cmt = itemView.findViewById(R.id.txt_date_cmt);
             txt_likeComment = itemView.findViewById(R.id.txt_likeComment);
             txt_repcmt = itemView.findViewById(R.id.txt_repcmt);
-            txt_countLikeCMT = itemView.findViewById(R.id.txt_countLikeCMT);
             ratingBar = itemView.findViewById(R.id.ratingBar);
         }
     }

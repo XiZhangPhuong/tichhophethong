@@ -159,12 +159,7 @@ public class BottomSheetDialogFragment extends com.google.android.material.botto
        txt_getLikeFood.setText(food.getLike());
        txt_getPriceFood.setText(food.getPrice_Food()+" VND");
 
-       comment_adapter = new Comment_Adapter(food.getListComment(), new Comment_Adapter.ClickCmtFood() {
-           @Override
-           public void ClickLike(Comment comment) {
 
-           }
-       });
        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false);
        rcv_comment_Food.setLayoutManager(linearLayoutManager);
        rcv_comment_Food.setAdapter(comment_adapter);

@@ -29,6 +29,7 @@ import com.example.fastfooddelivery2023.Adapter.History_Adapter;
 import com.example.fastfooddelivery2023.Adapter_New.ObjectHistoryAdapter;
 import com.example.fastfooddelivery2023.Control.TEMPS;
 import com.example.fastfooddelivery2023.MainActivity;
+import com.example.fastfooddelivery2023.Model.Comment;
 import com.example.fastfooddelivery2023.Model.Food;
 import com.example.fastfooddelivery2023.Model.Order_FB;
 import com.example.fastfooddelivery2023.Model.User;
@@ -42,7 +43,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.security.spec.EllipticCurve;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class HistoryActivity extends AppCompatActivity {
@@ -52,10 +55,13 @@ private TextView txt_items_history,txt_delete_history;
 private RecyclerView rcv_history_food;
 private ObjectHistoryAdapter history_adapter;
 private final DatabaseReference dataHistory = FirebaseDatabase.getInstance().getReference("History");
+private final DatabaseReference dataFood = FirebaseDatabase.getInstance().getReference("Food");
 private User user;
 private AlertDialog.Builder builder;
 private AlertDialog dialog;
+private Order_FB o;
 private int star = 0;
+private int rating ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,7 +86,7 @@ private int star = 0;
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 list.clear();
                 for(DataSnapshot ds : snapshot.getChildren()){
-                    Order_FB  o  = ds.getValue(Order_FB.class);
+                    o  = ds.getValue(Order_FB.class);
                     list.add(o);
                 }
                 if(list.size()==0){
@@ -96,33 +102,9 @@ private int star = 0;
                 history_adapter = new ObjectHistoryAdapter(HistoryActivity.this, list, new ObjectHistoryAdapter.ClickHistoryFood() {
                     @Override
                     public void Click(Food food) {
-                        builder = new AlertDialog.Builder(HistoryActivity.this);
-                        View view = getLayoutInflater().inflate(R.layout.item_evaluate,null);
-                        ImageView imageview_back = view.findViewById(R.id.imageview_back);
-                        ImageView imageView_Food = view.findViewById(R.id.imageView_Food);
-                        TextView txt_name_food = view.findViewById(R.id.txt_name_food);
-                        TextView txt_category_food = view.findViewById(R.id.txt_category_food);
-                        TextView txt_price_food = view.findViewById(R.id.txt_price_food);
-                        TextView txt_count = view.findViewById(R.id.txt_count);
-                        RatingBar ratingBar = view.findViewById(R.id.ratingBar);
-                        EditText edt_evaluate = view.findViewById(R.id.edt_evaluate);
-                        Button btn_evaluate = view.findViewById(R.id.btn_evaluate);
-                        Button btn_dismiss = view.findViewById(R.id.btn_dismiss);
-
-                        Picasso.get().load(food.getImage_Food()).into(imageView_Food);
-                        txt_name_food.setText(food.getName_Food());
-                        txt_category_food.setText(food.getCategory_Food());
-                        txt_price_food.setText(food.getPrice_Food()+"");
-
-                        builder.setView(view);
-                        dialog = builder.create();
-                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                        dialog.show();
-
-
-                        clickRatingBar(ratingBar,txt_count);
-                        ExitDialog(btn_dismiss);
-                        clickEvaluate(btn_evaluate);
+                        Intent intent = new Intent(HistoryActivity.this,EvaluateActivity.class);
+                        intent.putExtra("KEY_HISTORY",food);
+                        startActivity(intent);
                     }
                 });
                 rcv_history_food.setAdapter(history_adapter);
@@ -136,51 +118,9 @@ private int star = 0;
             }
         });
     }
-    private void clickRatingBar(RatingBar ratingBar,TextView textView){
-        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-            @Override
-            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
-                int rating = (int) v;
-                String mess= " ";
-                star =  (int)ratingBar.getRating();
-                switch (rating){
-                    case 1 : mess = "Bạn đã đánh giá 1 sao";
-                        break;
-                    case 2 : mess = "Bạn đã đánh giá 2 sao";
-                        break;
-                    case 3 : mess = "Bạn đã đánh giá 3 sao";
-                        break;
-                    case 4 : mess = "Bạn đã đánh giá 4 sao";
-                        break;
-                    case 5 : mess = "Bạn đã đánh giá 5 sao";
-                        break;
 
-                }
-                textView.setText(mess);
-            }
-        });
-    }
-    private void ExitDialog(Button button){
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(dialog.isShowing()){
-                    dialog.dismiss();
-                }
-            }
-        });
-    }
-    private void clickEvaluate(Button button){
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                TEMPS.showNotification(HistoryActivity.this,"FastFoodDelivery","Cảm ơn bạn đã đánh giá");
-                dialog.dismiss();
-                startActivity(new Intent(HistoryActivity.this,MainActivity.class));
-                finish();
-            }
-        });
-    }
+
+
     private void deleteItems(){
         txt_delete_history.setOnClickListener(new View.OnClickListener() {
             @Override

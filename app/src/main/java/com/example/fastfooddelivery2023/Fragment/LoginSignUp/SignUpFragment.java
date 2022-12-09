@@ -41,7 +41,7 @@ public class SignUpFragment extends Fragment {
     private View mView;
     private LinearLayout linear_SignUp;
     private ProgressBar progressBar;
-    private DatabaseReference dataUser = FirebaseDatabase.getInstance().getReference("USER");
+    private DatabaseReference dataUser = FirebaseDatabase.getInstance().getReference("User");
     private List<User> listUser;
     @Nullable
     @Override
@@ -78,7 +78,7 @@ public class SignUpFragment extends Fragment {
                             edt_Phone.setText("");
                             edt_Phone.requestFocus();
                             edt_Phone.setError("Vui lòng đổi số điện thoại");
-                        }else{
+                        }else {
                             Intent intent = new Intent(getContext(), OTPActivity.class);
                             intent.putExtra("key_name",edt_Name.getText().toString());
                             intent.putExtra("key_phone",edt_Phone.getText().toString());
@@ -102,25 +102,6 @@ public class SignUpFragment extends Fragment {
         return mView;
     }
 
-    private List<User> listFireBaseUser(){
-        listUser = new ArrayList<>();
-        dataUser.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot ds : snapshot.getChildren()){
-                    User user  = ds.getValue(User.class);
-                    listUser.add(user);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-
-        });
-        return listUser;
-    }
     private TextWatcher loginTextWatcher  = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -133,13 +114,22 @@ public class SignUpFragment extends Fragment {
             String phone = edt_Phone.getText().toString();
             String pass = edt_password.getText().toString();
             String confirm_pass = edt_conf.getText().toString();
-
-
-
-            edt_Name.setError(name.isEmpty() ? "Họ tên trống": null);
-            edt_Phone.setError(phone.isEmpty() ? "SĐT trống" : phone.length()<10 ? "SĐT phải 10 số" : null);
-            edt_password.setError(pass.length()<6 ? "Mật khẩu phải 6 ký tự trở lên" : null);
-            edt_conf.setError(!confirm_pass.equals(pass) ? "Chưa khớp mật khẩu" : null);
+            btn_Signup.setEnabled(false);
+            if(edt_Name.length()<3){
+                edt_Name.setError("Nhập lại họ tên");
+            }else if(phone.length()!=0){
+                edt_Phone.setError("Số điện thoại phải 10 số");
+            }else if(pass.length()<6){
+                edt_password.setError("Mật khẩu phải 6 kí tự trở lên");
+            }else  if(!confirm_pass.equals(pass)){
+                edt_conf.setError("Mật khẩu không khớp");
+            }else {
+                edt_Name.setError(null);
+                edt_Phone.setError(null);
+                edt_password.setError(null);
+                edt_conf.setError(null);
+                btn_Signup.setEnabled(true);
+            }
         }
 
         @Override

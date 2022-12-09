@@ -5,6 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:padding="6sp"
+    android:layout_marginLeft="45dp"
+    android:layout_marginRight="45dp"
     tools:context=".Activity.Login_SignUpActivity">
 
     <!-- TODO: Update blank fragment layout -->
@@ -13,7 +16,7 @@
    <LinearLayout
        android:id="@+id/linear_SignUp"
        android:layout_width="match_parent"
-       android:layout_height="wrap_content"
+       android:layout_height="match_parent"
        android:orientation="vertical">
 
        <EditText

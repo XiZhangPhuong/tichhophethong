@@ -23,6 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.fastfooddelivery2023.Activity.ChangeUserActivity;
 import com.example.fastfooddelivery2023.Activity.HistoryActivity;
 import com.example.fastfooddelivery2023.Activity.Login_SignUpActivity;
 import com.example.fastfooddelivery2023.Adapter.FunctionUser_Adapter;
@@ -44,7 +45,7 @@ import java.util.List;
 
 public class UserFragment extends Fragment {
     private View mView;
-    private TextView txt_name_user,txt_phone_user,txt_id_user;
+    private TextView txt_name_user,txt_phone_user,txt_id_user,txt_update;
     private TabLayout tabLayout;
     private ViewPager2 viewPager2;
     private ImageView img_back;
@@ -109,20 +110,21 @@ public class UserFragment extends Fragment {
             public void Click(FunctionUser functionUser) {
                   int index = Integer.parseInt(functionUser.getId());
                   switch (index){
-                      case 1 : startActivity(new Intent(getContext(),HistoryActivity.class));
+                      case 1 :
                          break;
 
                       case 2 : //MainActivity.viewPager2.setCurrentItem(1);
 
                           break;
 
-                      case 3 :
+                      case 3 :startActivity(new Intent(getContext(),HistoryActivity.class));
                           break;
 
                       case 4 :
                           break;
 
-                      case 5:
+                      case 5:  Intent intent = new Intent(getContext(), ChangeUserActivity.class);
+                               startActivity(intent);
                           break;
 
                       case 6:
@@ -160,6 +162,7 @@ public class UserFragment extends Fragment {
         txt_id_user = view.findViewById(R.id.tv_id_user);
         txt_phone_user = view.findViewById(R.id.tv_phone_user);
         rcv_function_user = view.findViewById(R.id.rcv_function_user);
+
     }
 
 

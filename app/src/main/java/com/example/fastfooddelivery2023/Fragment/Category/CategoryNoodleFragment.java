@@ -47,22 +47,22 @@ public class CategoryNoodleFragment extends Fragment {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                dataFood.addValueEventListener(new ValueEventListener() {
+                getActivity().runOnUiThread(new Runnable() {
                     @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        list.clear();
-                        for(DataSnapshot ds : snapshot.getChildren()) {
-                            Food f = ds.getValue(Food.class);
-                            if(f.getCategory_Food().equals("Bún|Mì")){
-                                list.add(f);
-                                Collections.shuffle(list);
-                            }
-                        }
-                        getActivity().runOnUiThread(new Runnable() {
+                    public void run() {
+                        dataFood.addValueEventListener(new ValueEventListener() {
                             @Override
-                            public void run() {
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 rcv_rice.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
                                 rcv_rice.setHasFixedSize(true);
+                                list.clear();
+                                for(DataSnapshot ds : snapshot.getChildren()) {
+                                    Food f = ds.getValue(Food.class);
+                                    if(f.getCategory_Food().equals("Bún|Mì")){
+                                        list.add(f);
+                                        Collections.shuffle(list);
+                                    }
+                                }
                                 searchAdapter = new SearchAdapter(getContext(), list, new SearchAdapter.ClickSearchFood() {
                                     @Override
                                     public void Click(Food food) {
@@ -73,11 +73,10 @@ public class CategoryNoodleFragment extends Fragment {
                                 });
                                 rcv_rice.setAdapter(searchAdapter);
                             }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                            }
                         });
-                    }
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
                     }
                 });
             }

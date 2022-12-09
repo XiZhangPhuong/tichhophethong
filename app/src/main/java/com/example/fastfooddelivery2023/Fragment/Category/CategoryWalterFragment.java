@@ -44,32 +44,42 @@ public class CategoryWalterFragment extends Fragment {
     private void loadData(){
         List<Food> list = new ArrayList<>();
         final DatabaseReference dataFood = FirebaseDatabase.getInstance().getReference("Food");
-                dataFood.addValueEventListener(new ValueEventListener() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                getActivity().runOnUiThread(new Runnable() {
                     @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        rcv_rice.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
-                        rcv_rice.setHasFixedSize(true);
-                        list.clear();
-                        for(DataSnapshot ds : snapshot.getChildren()) {
-                            Food f = ds.getValue(Food.class);
-                            if(f.getCategory_Food().equals("Đồ uống")){
-                                list.add(f);
-                                Collections.shuffle(list);
-                            }
-                        }
-                        searchAdapter = new SearchAdapter(getContext(), list, new SearchAdapter.ClickSearchFood() {
+                    public void run() {
+                        dataFood.addValueEventListener(new ValueEventListener() {
                             @Override
-                            public void Click(Food food) {
-                                Intent intent = new Intent(getContext(), InforActivity.class);
-                                intent.putExtra("KEY_FOOD",food);
-                                startActivity(intent);
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                rcv_rice.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
+                                rcv_rice.setHasFixedSize(true);
+                                list.clear();
+                                for(DataSnapshot ds : snapshot.getChildren()) {
+                                    Food f = ds.getValue(Food.class);
+                                    if(f.getCategory_Food().equals("Đồ uống")){
+                                        list.add(f);
+                                        Collections.shuffle(list);
+                                    }
+                                }
+                                searchAdapter = new SearchAdapter(getContext(), list, new SearchAdapter.ClickSearchFood() {
+                                    @Override
+                                    public void Click(Food food) {
+                                        Intent intent = new Intent(getContext(), InforActivity.class);
+                                        intent.putExtra("KEY_FOOD",food);
+                                        startActivity(intent);
+                                    }
+                                });
+                                rcv_rice.setAdapter(searchAdapter);
+                            }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
                             }
                         });
-                        rcv_rice.setAdapter(searchAdapter);
-                    }
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
                     }
                 });
+            }
+        }).start();
     }
 }

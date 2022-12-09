@@ -1,113 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:layout_marginTop="10dp"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
+    android:padding="10dp"
+    android:background="@color/white"
+    android:layout_marginTop="1dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
 
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_weight="1"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         app:srcCompat="@drawable/ic_user_24" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
+
+    <TextView
+        android:id="@+id/txt_name_Comment"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
+        android:text="Nguyễn Hoài Long Nhật"
+        android:textSize="15dp"
+        android:layout_toRightOf="@id/imageView3"
+        android:layout_marginLeft="15dp"
+        android:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/txt_date_cmt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="11-7-2022 | 12:12"
+        android:textSize="15dp"
+        android:layout_alignParentRight="true"
         android:layout_marginRight="10dp"
-        android:layout_weight="5"
-        android:orientation="vertical">
+        />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:numStars="5"
+        android:scaleX=".5"
+        android:scaleY=".5"
+        android:stepSize="1"
+        android:theme="@style/RatingBar"
+        android:isIndicator="true"
+        android:transformPivotX="0dp"
+        android:transformPivotY="0dp"
+        android:layout_marginLeft="38dp"
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/txt_name_Comment"
+        />
 
-            <TextView
-                android:id="@+id/txt_name_Comment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Lê Thành Đạt"
-                android:layout_marginTop="10dp"
-                android:textSize="17dp"
-                android:layout_weight="2"
-                android:textColor="@color/black" />
+    <TextView
+        android:id="@+id/txt_Comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ratingBar"
+        android:textSize="15dp"
+        android:layout_marginLeft="38dp"
+        android:layout_marginTop="-10dp"
+        android:text="Món này rất ngon nha" />
 
-            <TextView
-                android:id="@+id/txt_date_cmt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="11-7-2022 | 12:12"
-                android:layout_marginTop="10dp"
-                android:textSize="15dp"
-                android:gravity="right"
-                android:layout_weight="1"
- />
-        </LinearLayout>
+    <TextView
+        android:id="@+id/txt_likeComment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Thích"
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/txt_Comment"
+        android:layout_marginLeft="38dp"
+        android:textColor="@color/black"
+        />
 
-        <RatingBar
-            android:id="@+id/ratingBar"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:numStars="5"
-            android:scaleX=".5"
-            android:scaleY=".5"
-            android:stepSize="1"
-            android:theme="@style/RatingBar"
-            android:isIndicator="true"
-            android:transformPivotX="0dp"
-            android:transformPivotY="0dp"
-
-
-            />
-
-        <TextView
-            android:id="@+id/txt_Comment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:textSize="15dp"
-            android:layout_weight="1"
-            android:text="Món này rất ngon nha" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/txt_likeComment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Thích"
-                android:layout_marginTop="10dp"
-                android:textColor="@color/black"
-                />
-
-            <TextView
-                android:id="@+id/txt_repcmt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Trả lời"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="20dp"
-                android:textColor="@color/black"/>
+    <TextView
+        android:id="@+id/txt_repcmt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Trả lời"
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/txt_Comment"
+        android:layout_marginLeft="100dp"
+        android:textColor="@color/black"/>
 
 
-            <TextView
-                android:id="@+id/txt_countLikeCMT"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="1 lượt thích"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="40dp"
-                android:textColor="@color/black"/>
-        </LinearLayout>
-    </LinearLayout>
-</LinearLayout>
+</RelativeLayout>

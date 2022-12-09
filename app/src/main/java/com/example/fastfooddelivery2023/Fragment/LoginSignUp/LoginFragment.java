@@ -7,6 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,7 +55,7 @@ public class LoginFragment extends Fragment {
         txt_forgot_password = mView.findViewById(R.id.forgotpassword);
         progressBar.setVisibility(View.GONE);
 
-
+        showButton();
 
         txt_forgot_password.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,6 +105,37 @@ public class LoginFragment extends Fragment {
             }
         });
     }
+
+    private void showButton(){
+        edt_username.addTextChangedListener(textWatcher);
+        edt_password.addTextChangedListener(textWatcher);
+    }
+    private TextWatcher textWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            String phone = edt_username.getText().toString().trim();
+            String pass = edt_password.getText().toString();
+            btn_login.setEnabled(false);
+            if(phone.length()!=10){
+                edt_username.setError("Số ĐT phải 10 số");
+            }else if(pass.length()<6){
+                edt_password.setError("Mật khẩu phải 6 ký tự trở lên");
+            }else{
+                edt_username.setError(null);
+                edt_password.setError(null);
+                btn_login.setEnabled(true);
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+
+        }
+    };
 
 
     private  User checkUser(String phone,String pass){

@@ -123,7 +123,6 @@ public static List<Food> listFoodNew = new ArrayList<>();
           });
     }
     private void ViewFliperAnimation() {
-
         String []images = {"https://thietbiducthanh.vn/wp-content/uploads/2020/02/th%E1%BB%B1c-%C4%91%C6%A1n-1-711x400.jpg",
                 "https://ss-images.saostar.vn/w1200/pc/1663143418617/saostar-pecai6vwmqohghnp.jpg",
                 "https://afamilycdn.com/150157425591193600/2022/8/26/4-16614841580711371899482-1661488118094-16614881181784877563.jpg"};
@@ -209,21 +208,26 @@ public static List<Food> listFoodNew = new ArrayList<>();
         List<ObjectFood> list = new ArrayList<>();
         rcv_object_food.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
         rcv_object_food.setHasFixedSize(true);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
                 list.add(new ObjectFood("Đề xuất","https://thietbiducthanh.vn/wp-content/uploads/2020/02/th%E1%BB%B1c-%C4%91%C6%A1n-1-711x400.jpg",getListFoodFb()));
                 list.add(new ObjectFood("Đang giảm giá","https://ss-images.saostar.vn/w1200/pc/1663143418617/saostar-pecai6vwmqohghnp.jpg",getListFoodFb()));
                 list.add(new ObjectFood("Ăn vô cực - Khao đến 50%","https://afamilycdn.com/150157425591193600/2022/8/26/4-16614841580711371899482-1661488118094-16614881181784877563.jpg",getListFoodFb()));
                 list.add(new ObjectFood("Quán mới phải thử","https://ss-images.saostar.vn/w1200/pc/1663143418617/saostar-pecai6vwmqohghnp.jpg",getListFoodFb()));
                 list.add(new ObjectFood("Đang gần bạn","https://bizweb.dktcdn.net/100/090/383/files/01-doitac-now-20-percentage-1920x1080-01-percentage-percentage-percentage-percentage-haisancua-com-copy-2-copy.jpg?v=1623431451380",getListFoodFb()));
-                   objectFoodAdapter = new ObjectFoodAdapter(getContext(), list, new ObjectFoodAdapter.ClickObjectFood() {
-                            @Override
-                            public void Click(Food food) {
-                                Intent intent = new Intent(getContext(), InforActivity.class);
-                                intent.putExtra("KEY_FOOD",food);
-                                startActivity(intent);
-                            }
-                        });
-                        rcv_object_food.setAdapter(objectFoodAdapter);
-                        objectFoodAdapter.notifyDataSetChanged();
+                objectFoodAdapter = new ObjectFoodAdapter(getContext(), list, new ObjectFoodAdapter.ClickObjectFood() {
+                    @Override
+                    public void Click(Food food) {
+                        Intent intent = new Intent(getContext(), InforActivity.class);
+                        intent.putExtra("KEY_FOOD",food);
+                        startActivity(intent);
+                    }
+                });
+                rcv_object_food.setAdapter(objectFoodAdapter);
+                objectFoodAdapter.notifyDataSetChanged();
+            }
+        }).start();
     }
 
     private void ClickEdittext(){

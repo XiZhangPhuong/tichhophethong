@@ -17,41 +17,9 @@
         android:text="Xác nhận đặt hàng"
         android:textAllCaps="false"
         android:textStyle="normal"
+        android:padding="10dp"
         android:background="@drawable/custom_button"
         android:textSize="15dp" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_above="@id/btn_addTOCart"
-        android:layout_marginBottom="15dp"
-        android:layout_marginTop="50dp"
-        android:orientation="horizontal"
-        >
-        <TextView
-            android:id="@+id/txt_ad_wting"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:text="Tổng thanh toán : "
-            android:layout_weight="1"
-            android:textColor="@color/black"
-            android:textSize="20dp" />
-
-        <TextView
-            android:id="@+id/txt_total_cart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:text="154000 VND"
-            android:gravity="right"
-            android:layout_weight="1"
-            android:textColor="@color/red"
-            android:textSize="20dp" />
-
-    </LinearLayout>
 
    <ScrollView
        android:layout_width="match_parent"
@@ -66,7 +34,8 @@
                android:id="@+id/view_cart_not_empty"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
-               android:layout_marginBottom="100dp"
+               android:layout_marginBottom="50dp"
+               android:visibility="visible"
                >
 
                <ImageButton
@@ -176,6 +145,118 @@
                    android:layout_below="@id/txt_delete_items"
                    />
 
+               <LinearLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_below="@+id/rcv_cart"
+                   android:layout_marginTop="10dp"
+                   android:orientation="vertical">
+
+
+                   <LinearLayout
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:layout_marginLeft="10dp"
+                       android:layout_marginRight="10dp"
+                       android:layout_marginBottom="5dp"
+                       android:orientation="horizontal"
+                       >
+                       <TextView
+                           android:id="@+id/txt_ad_wting5"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_gravity="left"
+                           android:text="Tạm tính : "
+                           android:layout_weight="1"
+                           android:textColor="@color/black"
+                           android:textSize="15dp" />
+
+                       <TextView
+                           android:id="@+id/txt_temp_cart"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_gravity="right"
+                           android:text="154000 VND"
+                           android:gravity="right"
+                           android:layout_weight="1"
+                           android:textColor="@color/black"
+                           android:textSize="15dp" />
+
+                   </LinearLayout>
+
+                   <LinearLayout
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:layout_marginLeft="10dp"
+                       android:layout_marginRight="10dp"
+                       android:layout_marginBottom="5dp"
+                       android:orientation="horizontal"
+                       >
+                       <TextView
+                           android:id="@+id/txt_ad_wting1"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_gravity="left"
+                           android:text="Phí ship : "
+                           android:layout_weight="1"
+                           android:textColor="@color/black"
+                           android:textSize="15dp" />
+
+                       <TextView
+                           android:id="@+id/txt_ship_cart"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_gravity="right"
+                           android:text="154000 VND"
+                           android:gravity="right"
+                           android:layout_weight="1"
+                           android:textColor="@color/black"
+                           android:textSize="15dp" />
+
+                   </LinearLayout>
+
+                   <LinearLayout
+                       android:layout_width="match_parent"
+                       android:layout_height="3dp"
+                       android:background="@drawable/custom_text"
+                       android:orientation="vertical">
+
+                   </LinearLayout>
+
+                   <LinearLayout
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:layout_marginLeft="10dp"
+                       android:layout_marginRight="10dp"
+                       android:layout_marginBottom="15dp"
+                       android:orientation="horizontal"
+                       >
+                       <TextView
+                           android:id="@+id/txt_ad_wting2"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_gravity="left"
+                           android:text="Tổng thanh toán : "
+                           android:layout_weight="1"
+                           android:textColor="@color/black"
+                           android:textSize="18dp" />
+
+                       <TextView
+                           android:id="@+id/txt_total_cart"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_gravity="right"
+                           android:text="154000 VND"
+                           android:gravity="right"
+                           android:layout_weight="1"
+                           android:textColor="@color/red"
+                           android:textSize="18dp" />
+
+                   </LinearLayout>
+               </LinearLayout>
+
+
+
            </RelativeLayout>
 
 
@@ -184,6 +265,7 @@
                android:layout_width="match_parent"
                android:background="@color/white_tea"
                android:padding="10dp"
+               android:visibility="visible"
                android:layout_height="wrap_content">
 
                <ImageButton

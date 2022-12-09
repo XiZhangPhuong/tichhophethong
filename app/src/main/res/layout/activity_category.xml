@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,51 +7,85 @@
     android:orientation="vertical"
     tools:context=".Activity.CategoryActivity">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@android:color/holo_blue_dark"
-        >
-
-        <ImageView
-            android:id="@+id/image_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="15dp"
-            app:srcCompat="@drawable/ic_back_24" />
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="18dp"
-            android:textColor="@color/white"
-            android:layout_centerInParent="true"
-            android:text="Lọc theo danh mục" />
-    </RelativeLayout>
-
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabLayout_category"
-        android:layout_width="match_parent"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        app:tabIndicatorColor="@android:color/white"
-        app:tabIndicatorHeight="2dp"
-        app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
-        app:tabSelectedTextColor="@color/red"
-        app:tabMaxWidth="0dp"
-        app:tabGravity="fill"
-        app:tabMode="scrollable"
-        android:stretchColumns="0"
-        app:tabTextColor="@color/black"/>
-
-
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewpager2_category"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerInParent="true"
-        android:layout_below="@id/tabLayout_category"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        app:backgroundTint="@color/red"
+        android:id="@+id/floating"
+        android:visibility="gone"
+        app:srcCompat="@drawable/ic_baseline_north_24"
         />
-</LinearLayout>
+
+    <ScrollView
+        android:id="@+id/scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:background="@android:color/holo_blue_dark"
+                >
+
+                <ImageView
+                    android:id="@+id/image_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    app:srcCompat="@drawable/ic_back_24" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="Lọc theo danh mục"
+                    android:textColor="@color/white"
+                    android:textSize="18dp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tabLayout_category"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    app:tabIndicatorColor="@android:color/white"
+                    app:tabIndicatorHeight="2dp"
+                    app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
+                    app:tabSelectedTextColor="@color/red"
+                    app:tabMaxWidth="0dp"
+                    app:tabGravity="fill"
+                    app:tabMode="scrollable"
+                    android:stretchColumns="0"
+                    app:tabTextColor="@color/black"/>
+
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/viewpager2_category"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:layout_below="@id/tabLayout_category"
+                    />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+
+</RelativeLayout>

@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white_tea"
+    android:orientation="vertical"
+    tools:context=".Activity.ChangeUserActivity">
+
+
+    <Button
+        android:id="@+id/btn_change"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:text="Cập nhập"
+        android:textAllCaps="false"
+        android:textSize="15dp"
+       android:background="@drawable/custom_button"
+        android:enabled="false"
+        app:backgroundTint="@color/red" />
+
+    <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="vertical">
+
+       <RelativeLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:background="@android:color/holo_blue_dark"
+           android:padding="10dp">
+
+           <TextView
+               android:id="@+id/img_back11"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_centerInParent="true"
+               android:text="Thay đổi thông tin"
+               android:textColor="@color/white"
+               android:textSize="15dp" />
+
+           <ImageView
+               android:id="@+id/img_back"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_centerVertical="true"
+               android:layout_marginLeft="15dp"
+               app:srcCompat="@drawable/ic_back_24" />
+       </RelativeLayout>
+
+       <ScrollView
+           android:layout_width="match_parent"
+           android:layout_height="match_parent">
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="vertical">
+
+
+               <RelativeLayout
+                   android:id="@+id/rel"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_marginTop="10dp"
+                   android:background="@drawable/custom_edt2"
+                   android:backgroundTint="@color/white">
+                   <TextView
+                       android:id="@+id/tv"
+                       android:layout_marginLeft="6sp"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:textStyle="bold"
+                       android:text="Thông tin cá nhân"
+                       android:textSize="20sp"
+                       android:visibility="invisible"
+                       android:textColor="#A028B5"/>
+
+                   <ImageView
+                       android:id="@+id/img_photo_user"
+                       android:layout_width="100sp"
+                       android:layout_height="100sp"
+                       android:layout_below="@id/tv"
+                       android:layout_marginLeft="10sp"
+                       android:layout_marginTop="0dp"
+                       android:paddingBottom="6sp"
+                       android:src="@drawable/img" />
+                   <TextView
+                       android:id="@+id/tv_name_user"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:text="Phạm Văn Phương"
+                       android:textSize="20sp"
+                       android:layout_toRightOf="@id/img_photo_user"
+                       android:layout_marginTop="30dp"
+                       android:paddingStart="10sp"
+                       android:textColor="@color/black"/>
+                   <TextView
+                       android:id="@+id/tv_phone_user"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:text="0359203218"
+                       android:textSize="20sp"
+                       android:textColor="@color/black"
+                       android:layout_marginTop="6sp"
+                       android:layout_toRightOf="@id/img_photo_user"
+                       android:paddingStart="10sp"
+                       android:layout_below="@id/tv_name_user"
+                       />
+                   <TextView
+                       android:id="@+id/tv_id_user"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:text="ID: User123456"
+                       android:textSize="20sp"
+                       android:textColor="@color/black"
+                       android:layout_marginTop="6sp"
+                       android:layout_toRightOf="@id/img_photo_user"
+                       android:paddingStart="10sp"
+                       android:layout_below="@id/tv_phone_user"
+                       />
+
+
+               </RelativeLayout>
+               <EditText
+                   android:id="@+id/edt_fullname"
+                   android:layout_width="match_parent"
+                   android:layout_height="50dp"
+                   android:layout_gravity="center"
+                   android:layout_marginTop="30dp"
+                   android:layout_marginLeft="30dp"
+                   android:layout_marginRight="30dp"
+                   android:background="@drawable/customedittext"
+                   android:drawableStart="@drawable/ic_user_24"
+                   android:drawablePadding="10dp"
+                   android:hint="FullName"
+                   android:paddingStart="20dp"
+                   android:paddingEnd="20dp" />
+
+               <EditText
+                   android:id="@+id/edt_phonenumber"
+                   android:layout_width="match_parent"
+                   android:layout_height="50dp"
+                   android:layout_gravity="center"
+                   android:layout_marginTop="12dp"
+                   android:layout_marginLeft="30dp"
+                   android:layout_marginRight="30dp"
+                   android:background="@drawable/customedittext"
+                   android:drawableStart="@drawable/ic_phone_24"
+                   android:drawablePadding="10dp"
+                   android:hint="Phone Number"
+                   android:inputType="phone"
+                   android:paddingStart="20dp"
+                   android:paddingEnd="20dp" />
+
+               <EditText
+                   android:id="@+id/edt_password"
+                   android:layout_width="match_parent"
+                   android:layout_height="50dp"
+                   android:layout_gravity="center"
+                   android:layout_marginTop="12dp"
+                   android:layout_marginLeft="30dp"
+                   android:layout_marginRight="30dp"
+                   android:background="@drawable/customedittext"
+                   android:drawableStart="@drawable/ic_lock_24"
+                   android:drawablePadding="10dp"
+                   android:hint="Password"
+                   android:inputType="textPassword"
+                   android:paddingStart="20dp"
+                   android:paddingEnd="20dp" />
+
+               <EditText
+                   android:id="@+id/edt_confirmpassword"
+                   android:layout_width="match_parent"
+                   android:layout_height="50dp"
+                   android:layout_gravity="center"
+                   android:layout_marginTop="12dp"
+                   android:layout_marginLeft="30dp"
+                   android:layout_marginRight="30dp"
+                   android:background="@drawable/customedittext"
+                   android:drawableStart="@drawable/ic_lock_24"
+                   android:drawablePadding="10dp"
+                   android:hint="Confirm Password"
+                   android:inputType="textPassword"
+                   android:paddingStart="20dp"
+                   android:paddingEnd="20dp" />
+
+           </LinearLayout>
+       </ScrollView>
+   </LinearLayout>
+</RelativeLayout>

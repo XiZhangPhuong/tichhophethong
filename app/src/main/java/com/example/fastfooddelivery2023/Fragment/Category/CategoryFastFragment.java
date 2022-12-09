@@ -43,9 +43,6 @@ public class CategoryFastFragment extends Fragment {
     private void loadData(){
         List<Food> list = new ArrayList<>();
         final DatabaseReference dataFood = FirebaseDatabase.getInstance().getReference("Food");
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
                 rcv_rice.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
                 rcv_rice.setHasFixedSize(true);
                 dataFood.addValueEventListener(new ValueEventListener() {
@@ -59,9 +56,6 @@ public class CategoryFastFragment extends Fragment {
                                 Collections.shuffle(list);
                             }
                         }
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
                                 searchAdapter = new SearchAdapter(getContext(), list, new SearchAdapter.ClickSearchFood() {
                                     @Override
                                     public void Click(Food food) {
@@ -70,8 +64,6 @@ public class CategoryFastFragment extends Fragment {
                                         startActivity(intent);
                                     }
                                 });
-                            }
-                        });
                         rcv_rice.setAdapter(searchAdapter);
                     }
                     @Override
@@ -79,8 +71,6 @@ public class CategoryFastFragment extends Fragment {
 
                     }
                 });
-            }
-        }).start();
 
     }
 }
