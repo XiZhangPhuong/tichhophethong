@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white_tea"
+    tools:context=".Fragment.Cart.WaitingFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <Button
+        android:id="@+id/btn_dismiss"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:backgroundTint="@color/red"
+        android:padding="15dp"
+        android:text="Hủy bỏ đơn hàng"
+        android:textAllCaps="false"
+        android:layout_alignParentBottom="true"
+        android:textSize="15dp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_marginBottom="80dp"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/view_empty"
+                android:layout_width="match_parent"
+                android:padding="10dp"
+                android:visibility="gone"
+                android:layout_height="match_parent">
+
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    android:background="@color/white_tea"
+                    android:layout_centerInParent="true"
+                    app:srcCompat="@drawable/giohang" />
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="15dp"
+                    android:layout_below="@+id/imageView"
+                    android:text="Chưa có đơn hàng nào" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/view_waiting"
+                >
+                <RelativeLayout
+                    android:id="@+id/view1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="15dp"
+                    android:layout_marginTop="5dp"
+                    android:background="#595959"
+                    >
+
+
+                    <ImageView
+                        android:id="@+id/imageView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_baseline_check_circle_outline_24" />
+
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="18dp"
+                        android:textColor="@color/white"
+                        android:layout_marginLeft="15dp"
+                        android:layout_toRightOf="@id/imageView2"
+                        android:text="Chờ xác nhận" />
+
+                    <TextView
+                        android:id="@+id/textview3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15dp"
+                        android:layout_below="@id/textView2"
+                        android:textColor="@color/white"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_toRightOf="@id/imageView2"
+                        android:text="Tài xế sẽ liên hệ và nhận đơn.Bạn có thể hủy đơn hàng này !" />
+
+                    <TextView
+                        android:id="@+id/txt_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15dp"
+                        android:layout_below="@id/textview3"
+                        android:textColor="@color/white"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_toRightOf="@id/imageView2"
+                        android:text="32-12-2022 | 14:25" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/view2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/view1"
+                    android:background="@color/white"
+                    android:layout_marginTop="1dp"
+                    android:padding="15dp"
+                    >
+
+
+                    <ImageView
+                        android:id="@+id/imageView8"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/google_maps_50px" />
+
+                    <TextView
+                        android:id="@+id/txt_choxacnhan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="18dp"
+                        android:textColor="@color/black"
+                        android:layout_marginLeft="15dp"
+                        android:layout_toRightOf="@id/imageView8"
+                        android:text="Thông tin liên hệ" />
+
+                    <TextView
+                        android:id="@+id/txt_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15dp"
+                        android:layout_below="@id/txt_choxacnhan"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_toRightOf="@id/imageView8"
+                        android:text="Thu Phượng" />
+
+                    <TextView
+                        android:id="@+id/txt_phone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15dp"
+                        android:layout_below="@id/txt_name"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_toRightOf="@id/imageView8"
+                        android:text="0973942530" />
+
+                    <TextView
+                        android:id="@+id/txt_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15dp"
+                        android:layout_below="@id/txt_phone"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_toRightOf="@id/imageView8"
+                        android:text="Sơn Đông - Hà Nội" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/white"
+                    android:padding="10dp"
+                    android:layout_below="@id/view2"
+                    >
+                    <TextView
+                        android:id="@+id/txt_madh"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/black"
+                        android:text="Mã ĐH : " />
+
+                    <TextView
+                        android:id="@+id/txt_id_order"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/black"
+                        android:layout_alignParentRight="true"
+                        android:text="Order123443434343 " />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/txt_id_order"
+                        android:id="@+id/rcv_order"/>
+                    <TextView
+                        android:id="@+id/txt_tongcong"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_below="@id/rcv_order"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:text="Tổng tiền  :" />
+
+                    <TextView
+                        android:id="@+id/txt_total_order"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/red"
+                        android:layout_below="@id/rcv_order"
+                        android:layout_alignParentRight="true"
+                        android:text="Order123443434343 " />
+
+                </RelativeLayout>
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
+</RelativeLayout>

@@ -53,7 +53,7 @@ private final DatabaseReference dataCMT = FirebaseDatabase.getInstance().getRefe
         setContentView(R.layout.activity_evaluate);
         try {
             user = DataPreferences.getUser(EvaluateActivity.this,"KEY_USER");
-            time = new SimpleDateFormat("dd/MM/yyyy | hh:mm").format(Calendar.getInstance().getTime());
+            time = new SimpleDateFormat("dd-MM-yyyy | hh:mm").format(Calendar.getInstance().getTime());
             setWindow();
             initView();
             clickBack();

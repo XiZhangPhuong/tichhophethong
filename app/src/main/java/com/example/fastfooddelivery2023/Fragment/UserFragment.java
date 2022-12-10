@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.example.fastfooddelivery2023.Activity.ChangeUserActivity;
 import com.example.fastfooddelivery2023.Activity.HistoryActivity;
 import com.example.fastfooddelivery2023.Activity.Login_SignUpActivity;
+import com.example.fastfooddelivery2023.Activity.WaitingActivity;
 import com.example.fastfooddelivery2023.Adapter.FunctionUser_Adapter;
 import com.example.fastfooddelivery2023.MainActivity;
 import com.example.fastfooddelivery2023.Model.FunctionUser;
@@ -110,7 +111,7 @@ public class UserFragment extends Fragment {
             public void Click(FunctionUser functionUser) {
                   int index = Integer.parseInt(functionUser.getId());
                   switch (index){
-                      case 1 :
+                      case 1 : startActivity(new Intent(getContext(), WaitingActivity.class));
                          break;
 
                       case 2 : //MainActivity.viewPager2.setCurrentItem(1);

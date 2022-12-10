@@ -77,6 +77,7 @@ private FloatingActionButton floating;
                 }
             }
         }).attach();
+
         viewItemCategory();
     }
 

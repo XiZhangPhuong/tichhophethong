@@ -4,6 +4,7 @@ import static com.example.fastfooddelivery2023.Fragment.LoginSignUp.LoginFragmen
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -77,6 +78,7 @@ public class CartNotEmptyFragment extends Fragment {
 
         try {
             initView(mView);
+            checkOrder();
             loadDataCart();
             deleteItem();
 
@@ -113,7 +115,6 @@ public class CartNotEmptyFragment extends Fragment {
                              f = ds.getValue(Food.class);
                              listFoodCart.add(f);
                          }
-
                          getActivity().runOnUiThread(new Runnable() {
                              @Override
                              public void run() {
@@ -271,7 +272,39 @@ public class CartNotEmptyFragment extends Fragment {
             }
         });
     }
+    private void checkOrder(){
+        List<Order_FB> list = new ArrayList<>();
+        dataOrder.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                list.clear();
+                for(DataSnapshot ds : snapshot.getChildren()){
+                    Order_FB or = ds.getValue(Order_FB.class);
+                    list.add(or);
+                }
+                if(list.size()==0){
+                    return;
+                }
+                for(Order_FB or : list){
+                    if(or.getUser().getId().equals(user.getId()) && or.getCheck()==1){
+                        btn_addTOCart.setBackgroundColor(Color.parseColor("#ff8080"));
+                        btn_addTOCart.setEnabled(false);
+                    }else if(or.getUser().getId().equals(user.getId()) && or.getCheck()==2){
+                        btn_addTOCart.setBackgroundColor(Color.parseColor("#ff8080"));
+                        btn_addTOCart.setEnabled(false);
+                    }else{
+                        btn_addTOCart.setBackgroundColor(Color.parseColor("#ff0000"));
+                        btn_addTOCart.setEnabled(true);
+                    }
+                }
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
     private void initView(View view){
         rcv_cart = view.findViewById(R.id.rcv_cart);
         txt_total_cart = view.findViewById(R.id.txt_total_cart);

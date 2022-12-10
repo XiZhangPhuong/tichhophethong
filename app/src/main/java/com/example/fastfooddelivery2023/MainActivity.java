@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -26,6 +27,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.fastfooddelivery2023.Activity.WaitingActivity;
 import com.example.fastfooddelivery2023.Control.TEMPS;
 import com.example.fastfooddelivery2023.Model.Food;
 import com.example.fastfooddelivery2023.Model.Order_FB;
@@ -51,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
     private MainPager adapter;
     private User user;
     private Order_FB order_fb;
-    private FloatingActionButton floating;
     private AlertDialog.Builder builder;
     private AlertDialog dialog;
     private RelativeLayout view_waiting_driver;
@@ -65,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
 
         txt_waiting_driver = findViewById(R.id.txt_waiting_driver);
         view_waiting_driver = findViewById(R.id.view_waiting_driver);
-        floating = findViewById(R.id.floating);
         bottomNavigationView = findViewById(R.id.bottom_nav);
         viewPager2 = findViewById(R.id.viewpager);
         adapter = new MainPager(this);
@@ -146,23 +146,10 @@ public class MainActivity extends AppCompatActivity {
         dialog.getWindow().setLayout(600, 800);
         //call phone
     }
-    private void ClickFloating_Button(String txt_phone){
-        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.CALL_PHONE},100);
-        }
-        floating.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_CALL);
-                intent.setData(Uri.parse("tel:"+txt_phone));
-                startActivity(intent);
-            }
-        });
-    }
+
 
     private void checkDriver(){
         view_waiting_driver.setVisibility(View.GONE);
-        floating.setVisibility(View.GONE);
         final DatabaseReference dataOrder = FirebaseDatabase.getInstance().getReference("Order");
         user = DataPreferences.getUser(MainActivity.this,"KEY_USER");
         dataOrder.addValueEventListener(new ValueEventListener() {
@@ -170,26 +157,37 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot ds : snapshot.getChildren()){
                     order_fb = ds.getValue(Order_FB.class);
-                }
-                if(order_fb==null){
-                    return;
-                }
-                if(order_fb.getCheck()==1 && order_fb.getUser().getId().equals(user.getId())){
-                    view_waiting_driver.setVisibility(View.VISIBLE);
-                    return;
-                }
-                if(order_fb.getCheck()==2 && order_fb.getUser().getId().equals(user.getId()) ){
-                    floating.setVisibility(View.VISIBLE);
-                    // call user
-                    view_waiting_driver.setVisibility(View.VISIBLE);
-                    txt_waiting_driver.setText("Tài xế "+order_fb.getStaff().getFullName_staff()+" đang giao");
-                    ClickFloating_Button(order_fb.getStaff().getPhoneNumber());
-                }else if(order_fb.getCheck()==3 && order_fb.getUser().getId().equals(user.getId())){
-                    view_waiting_driver.setVisibility(View.GONE);
-                    floating.setVisibility(View.GONE);
-                    TEMPS.showNotification(MainActivity.this,order_fb.getId_order(),"Giao hàng thành công");
-                    dataOrder.child(order_fb.getId_order()).removeValue();
-                    dataHistory.child(String.valueOf(user.getId())).child(order_fb.getId_order()).setValue(order_fb);
+
+                    if(order_fb==null){
+                        return;
+                    }
+                    if(order_fb.getCheck()==1 && order_fb.getUser().getId().equals(user.getId())){
+                        view_waiting_driver.setVisibility(View.VISIBLE);
+                        txt_waiting_driver.setText("Đơn hàng của bạn đang chờ tài xế xác nhận");
+                        view_waiting_driver.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                startActivity(new Intent(MainActivity.this, WaitingActivity.class));
+                            }
+                        });
+                        return;
+                    }
+                    if(order_fb.getCheck()==2 && order_fb.getUser().getId().equals(user.getId()) ){
+                        // call user
+                        view_waiting_driver.setVisibility(View.VISIBLE);
+                        txt_waiting_driver.setText("Tài xế "+order_fb.getStaff().getFullName_staff()+" đang giao");
+                        view_waiting_driver.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                startActivity(new Intent(MainActivity.this, WaitingActivity.class));
+                            }
+                        });
+                    }else if(order_fb.getCheck()==3 && order_fb.getUser().getId().equals(user.getId())){
+                        view_waiting_driver.setVisibility(View.GONE);
+                        TEMPS.showNotification(MainActivity.this,order_fb.getId_order(),"Giao hàng thành công");
+                        dataOrder.child(order_fb.getId_order()).removeValue();
+                        dataHistory.child(String.valueOf(user.getId())).child(order_fb.getId_order()).setValue(order_fb);
+                    }
                 }
             }
 

@@ -110,6 +110,7 @@ public class History_Adapter extends RecyclerView.Adapter<History_Adapter.Histor
                 for(Comment_FB c : list){
                     if(c.getUser().getId().equals(user.getId())){
                         bt_review.setBackgroundColor(Color.parseColor("#ff8080"));
+                        bt_review.setText("Đánh giá");
                         bt_review.setEnabled(false);
                     }else{
                         bt_review.setText("Đánh giá");
