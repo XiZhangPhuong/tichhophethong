@@ -106,6 +106,12 @@ private int rating ;
                         intent.putExtra("KEY_HISTORY",food);
                         startActivity(intent);
                     }
+                    @Override
+                    public void ClickImage(Food food){
+                        Intent intent = new Intent(HistoryActivity.this,InforActivity.class);
+                        intent.putExtra("KEY_FOOD",food);
+                        startActivity(intent);
+                    }
                 });
                 rcv_history_food.setAdapter(history_adapter);
                 clickReturn();

@@ -23,7 +23,7 @@ import java.util.List;
 public class ObjectFoodAdapter extends RecyclerView.Adapter<ObjectFoodAdapter.ViewHolder> {
     private Context context;
     private List<ObjectFood> list_objectFood;
-    public static interface ClickObjectFood{
+    public  interface ClickObjectFood{
         void Click(Food food);
     }
     private ClickObjectFood clickObjectFood;
@@ -58,7 +58,7 @@ public class ObjectFoodAdapter extends RecyclerView.Adapter<ObjectFoodAdapter.Vi
         FoodAdapter foodAdapter = new FoodAdapter(context, listFood, new FoodAdapter.ClickItemFood() {
             @Override
             public void Click(Food food) {
-                 clickObjectFood.Click(food);
+                clickObjectFood.Click(food);
             }
         });
         holder.rcv_category.setAdapter(foodAdapter);

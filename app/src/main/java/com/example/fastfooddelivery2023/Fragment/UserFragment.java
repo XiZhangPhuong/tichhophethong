@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.fastfooddelivery2023.Activity.ChangeUserActivity;
+import com.example.fastfooddelivery2023.Activity.ContactAdminActivity;
 import com.example.fastfooddelivery2023.Activity.HistoryActivity;
 import com.example.fastfooddelivery2023.Activity.Login_SignUpActivity;
 import com.example.fastfooddelivery2023.Activity.WaitingActivity;
@@ -131,7 +132,8 @@ public class UserFragment extends Fragment {
                       case 6:
                           break;
 
-                      case 7:
+                      case 7:  Intent intent1 = new Intent(getContext(), ContactAdminActivity.class);
+                               startActivity(intent1);
                           break;
 
                       case 8:

@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -115,12 +116,23 @@ public static List<Food> listFoodNew = new ArrayList<>();
         return mView;
     }
     private void showFloatingButton(){
-        floating.setOnClickListener(new View.OnClickListener() {
-              @Override
-              public void onClick(View view) {
-                  scrollview.scrollTo(0,0);
-              }
-          });
+        floating.setVisibility(View.GONE);
+        scrollview.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+           @Override
+           public void onScrollChanged() {
+               if(scrollview.getScrollY()>1000){
+                   floating.setVisibility(View.VISIBLE);
+                   floating.setOnClickListener(new View.OnClickListener() {
+                       @Override
+                       public void onClick(View view) {
+                           scrollview.scrollTo(0,0);
+                       }
+                   });
+               }else{
+                   floating.setVisibility(View.GONE);
+               }
+           }
+       });
     }
     private void ViewFliperAnimation() {
         String []images = {"https://thietbiducthanh.vn/wp-content/uploads/2020/02/th%E1%BB%B1c-%C4%91%C6%A1n-1-711x400.jpg",

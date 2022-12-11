@@ -39,6 +39,7 @@ public class History_Adapter extends RecyclerView.Adapter<History_Adapter.Histor
     User user ;
     public interface ClickEvaluateFood{
         void Click(Food food);
+        void ClickImage(Food food);
     }
     private ClickEvaluateFood clickEvaluateFood;
 
@@ -71,6 +72,12 @@ public class History_Adapter extends RecyclerView.Adapter<History_Adapter.Histor
              @Override
              public void onClick(View view) {
                  clickEvaluateFood.Click(food);
+             }
+         });
+         holder.imageView_Food.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
+                 clickEvaluateFood.ClickImage(food);
              }
          });
     }
@@ -107,15 +114,16 @@ public class History_Adapter extends RecyclerView.Adapter<History_Adapter.Histor
                     Comment_FB cmt = ds.getValue(Comment_FB.class);
                     list.add(cmt);
                 }
-                for(Comment_FB c : list){
-                    if(c.getUser().getId().equals(user.getId())){
-                        bt_review.setBackgroundColor(Color.parseColor("#ff8080"));
-                        bt_review.setText("Đánh giá");
-                        bt_review.setEnabled(false);
-                    }else{
-                        bt_review.setText("Đánh giá");
-                        bt_review.setEnabled(true);
-                    }
+                if(list.size()==0){
+                    return;
+                }
+                if(check(list,user.getId())==true){
+                    bt_review.setBackgroundColor(Color.parseColor("#ff8080"));
+                    bt_review.setText("Đánh giá");
+                    bt_review.setEnabled(false);
+                }else{
+                    bt_review.setText("Đánh giá");
+                    bt_review.setEnabled(true);
                 }
             }
 
@@ -125,6 +133,14 @@ public class History_Adapter extends RecyclerView.Adapter<History_Adapter.Histor
             }
         });
 
+    }
+    private boolean check(List<Comment_FB> list,String id){
+        for(Comment_FB cmt : list){
+            if (cmt.getUser().getId().equals(id)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

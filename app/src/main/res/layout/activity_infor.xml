@@ -23,6 +23,19 @@
         android:textSize="15dp" />
 
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/floating"
+        android:visibility="gone"
+        android:layout_alignParentRight="true"
+        android:backgroundTint="@color/white"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_above="@id/btn_addTOCart"
+        android:src="@drawable/ic_baseline_add_shopping_cart_24"
+        />
+
 
 
 

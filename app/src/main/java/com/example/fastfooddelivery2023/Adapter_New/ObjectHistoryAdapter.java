@@ -23,6 +23,7 @@ public class ObjectHistoryAdapter extends RecyclerView.Adapter<ObjectHistoryAdap
      private List<Order_FB> listOrder;
      public interface  ClickHistoryFood{
          void Click(Food food);
+         void ClickImage(Food food);
      }
      private ClickHistoryFood clickHistoryFood;
 
@@ -54,6 +55,11 @@ public class ObjectHistoryAdapter extends RecyclerView.Adapter<ObjectHistoryAdap
             @Override
             public void Click(Food food) {
                 clickHistoryFood.Click(food);
+            }
+
+            @Override
+            public void ClickImage(Food food) {
+                clickHistoryFood.ClickImage(food);
             }
         });
         holder.rcv_history.setAdapter(history_adapter);

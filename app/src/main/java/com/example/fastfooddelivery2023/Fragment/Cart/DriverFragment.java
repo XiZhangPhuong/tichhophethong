@@ -82,7 +82,6 @@ private String time = "";
                 }
                 for(Order_FB or : list){
                     if(or.getUser().getId().equals(user.getId()) && or.getCheck()==2){
-                        view_main.setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.map));
                         view_empty.setVisibility(View.GONE);
                         view_driver.setVisibility(View.VISIBLE);
                         txt_time.setText(time);

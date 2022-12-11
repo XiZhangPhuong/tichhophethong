@@ -21,8 +21,22 @@
         android:background="@drawable/custom_button"
         android:textSize="15dp" />
 
-   <ScrollView
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/floating"
+        android:visibility="gone"
+        android:layout_alignParentRight="true"
+        android:backgroundTint="@color/white"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_above="@id/btn_addTOCart"
+        android:src="@drawable/ic_baseline_preview_24"
+        />
+
+    <ScrollView
        android:layout_width="match_parent"
+       android:layout_marginBottom="55dp"
        android:layout_height="match_parent">
 
        <LinearLayout
@@ -34,7 +48,6 @@
                android:id="@+id/view_cart_not_empty"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
-               android:layout_marginBottom="50dp"
                android:visibility="visible"
                >
 
@@ -265,7 +278,7 @@
                android:layout_width="match_parent"
                android:background="@color/white_tea"
                android:padding="10dp"
-               android:visibility="visible"
+               android:visibility="gone"
                android:layout_height="wrap_content">
 
                <ImageButton

@@ -10,6 +10,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,6 +27,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.fastfooddelivery2023.Activity.InforActivity;
+import com.example.fastfooddelivery2023.Activity.WaitingActivity;
 import com.example.fastfooddelivery2023.Adapter.Cart_Adapter;
 import com.example.fastfooddelivery2023.Control.TEMPS;
 import com.example.fastfooddelivery2023.MainActivity;
@@ -35,6 +38,7 @@ import com.example.fastfooddelivery2023.Model.Staff;
 import com.example.fastfooddelivery2023.Model.User;
 import com.example.fastfooddelivery2023.R;
 import com.example.fastfooddelivery2023.SharedPreferences.DataPreferences;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -54,6 +58,7 @@ public class CartNotEmptyFragment extends Fragment {
     private User user;
     private ImageView image_back;
     private Button btn_addTOCart;
+    private FloatingActionButton floating;
     private RelativeLayout view_cart_not_empty,view_cart_empty,view_cart;
     private Cart_Adapter cartAdapter;
     private TextView txt_total_cart,txt_delete_items,txt_items,txt_city,txt_temp_cart,txt_ship_cart;
@@ -182,6 +187,12 @@ public class CartNotEmptyFragment extends Fragment {
                                              dataCart.child(String.valueOf(user.getId())).removeValue();
                                          }
                                      }
+                                     @Override
+                                     public void ClickImage(Food food){
+                                         Intent intent = new Intent(getContext(), InforActivity.class);
+                                         intent.putExtra("KEY_FOOD",food);
+                                         startActivity(intent);
+                                     }
                                  });
                                  rcv_cart.setAdapter(cartAdapter);
                                  cartAdapter.notifyDataSetChanged();
@@ -243,7 +254,6 @@ public class CartNotEmptyFragment extends Fragment {
                                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialogInterface, int i) {
-
                                                   if(edt_address.length()<=5){
                                                       edt_address.setError("Nhập lại địa chỉ");
                                                       edt_address.setText("");
@@ -288,13 +298,19 @@ public class CartNotEmptyFragment extends Fragment {
                 for(Order_FB or : list){
                     if(or.getUser().getId().equals(user.getId()) && or.getCheck()==1){
                         btn_addTOCart.setBackgroundColor(Color.parseColor("#ff8080"));
+                        btn_addTOCart.setText("Đang trong trạng thái chờ");
                         btn_addTOCart.setEnabled(false);
+                        ClickFloating();
                     }else if(or.getUser().getId().equals(user.getId()) && or.getCheck()==2){
                         btn_addTOCart.setBackgroundColor(Color.parseColor("#ff8080"));
+                        btn_addTOCart.setText("Đang trong trạng thái chờ");
                         btn_addTOCart.setEnabled(false);
-                    }else{
+                        ClickFloating();
+                    }else if(or.getUser().getId().equals(user.getId()) && or.getCheck()!=1 && or.getCheck()!=2) {
                         btn_addTOCart.setBackgroundColor(Color.parseColor("#ff0000"));
+                        btn_addTOCart.setText("Xác nhận đặt hàng");
                         btn_addTOCart.setEnabled(true);
+                        floating.setVisibility(View.GONE);
                     }
                 }
             }
@@ -302,6 +318,16 @@ public class CartNotEmptyFragment extends Fragment {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
+            }
+        });
+    }
+    private void ClickFloating(){
+        floating.setVisibility(View.VISIBLE);
+        floating.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(),WaitingActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -318,6 +344,7 @@ public class CartNotEmptyFragment extends Fragment {
         txt_city = view.findViewById(R.id.txt_city);
         txt_temp_cart = view.findViewById(R.id.txt_temp_cart);
         txt_ship_cart = view.findViewById(R.id.txt_ship_cart);
+        floating = view.findViewById(R.id.floating);
     }
 
     @Override

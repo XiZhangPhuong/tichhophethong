@@ -46,10 +46,24 @@ private DatabaseReference dataUser = FirebaseDatabase.getInstance().getReference
             setWindow();
             setUser();
             edittext();
+            back();
             changeUser();
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+    private void back(){
+        img_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                img_back.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        finish();
+                    }
+                });
+            }
+        });
     }
     private void initView(){
         img_back = findViewById(R.id.img_back);

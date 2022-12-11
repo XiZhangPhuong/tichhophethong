@@ -23,6 +23,7 @@ public class Cart_Adapter extends RecyclerView.Adapter<Cart_Adapter.CartViewHold
     public interface IClickCart {
         void ClickPlusCart(TextView tv_number_cart,TextView tv_total_item, Food food);
         void ClickMinusCart(TextView tv_number_cart, TextView tv_total_item, Food food);
+        void ClickImage(Food food);
     }
 
     public Cart_Adapter(List<Food> mList, IClickCart mIClickCart) {
@@ -60,7 +61,12 @@ public class Cart_Adapter extends RecyclerView.Adapter<Cart_Adapter.CartViewHold
                 mIClickCart.ClickPlusCart(holder.tv_number_cart, holder.tv_total_item, food);
             }
         });
-
+        holder.img_cart_photo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mIClickCart.ClickImage(food);
+            }
+        });
 
     }
 

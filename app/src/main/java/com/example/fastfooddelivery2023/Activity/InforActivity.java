@@ -6,11 +6,14 @@ import static com.example.fastfooddelivery2023.Fragment.LoginSignUp.LoginFragmen
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -23,13 +26,16 @@ import android.widget.Toast;
 
 import com.example.fastfooddelivery2023.Adapter.Comment_Adapter;
 import com.example.fastfooddelivery2023.Adapter_New.FoodAdapter;
+import com.example.fastfooddelivery2023.Fragment.Cart.CartNotEmptyFragment;
 import com.example.fastfooddelivery2023.MainActivity;
 import com.example.fastfooddelivery2023.Model.Comment;
 import com.example.fastfooddelivery2023.Model.Comment_FB;
 import com.example.fastfooddelivery2023.Model.Food;
+import com.example.fastfooddelivery2023.Model.Order_FB;
 import com.example.fastfooddelivery2023.Model.User;
 import com.example.fastfooddelivery2023.R;
 import com.example.fastfooddelivery2023.SharedPreferences.DataPreferences;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -47,10 +53,11 @@ private ImageView img_return,img_getImageFood,img_like_Food;
 private TextView txt_getNameFood,txt_getCategory_Food,txt_getPriceFood,txt_getInForFood;
 private Button btn_addTOCart;
 private User user;
+private FloatingActionButton floating;
 private RecyclerView rcv_similar_product,rcv_comment;
 public static List<Food> listFoodToCart = new ArrayList<>();
 private FoodAdapter foodAdapter ;
-private Food food;
+private Food food = null;
 private boolean flag = true;
 private Comment_Adapter comment_adapter;
 private DatabaseReference dataFavorite = FirebaseDatabase.getInstance().getReference("Favorite");
@@ -67,10 +74,12 @@ public static List<Food> listFoodFB = new ArrayList<>();
             setWindow();
             initView();
             loadDataFood();
+            pushComment();
             loadDataComment();
             loadDataSimilarFood();
             clickBack();
             clickFavoriteFood();
+            checkOrder();
             click_add_cart();
         }catch (Exception e){
             e.printStackTrace();
@@ -84,8 +93,6 @@ public static List<Food> listFoodFB = new ArrayList<>();
         txt_getCategory_Food.setText(food.getCategory_Food());
         txt_getInForFood.setText(food.getInformation_Food());
         txt_getPriceFood.setText(food.getPrice_Food()+" đ");
-
-
     }
     private void clickBack(){
         img_return.setOnClickListener(new View.OnClickListener() {
@@ -142,7 +149,7 @@ public static List<Food> listFoodFB = new ArrayList<>();
                                 for (DataSnapshot ds : snapshot.getChildren()) {
                                     Food f = ds.getValue(Food.class);
                                         if(f.getCategory_Food().toLowerCase().contains(food.getCategory_Food().toLowerCase())
-                                                && !f.getName_Food().equals(txt_getNameFood.getText().toString())){
+                                                && !f.getId_Food().equals(food.getId_Food())){
                                             listFoodFB.add(f);
                                             Collections.shuffle(listFoodFB);
                                         }
@@ -207,7 +214,56 @@ public static List<Food> listFoodFB = new ArrayList<>();
                     }
                 }).start();
             }
+    private void checkOrder(){
+        List<Food> list = new ArrayList<>();
+        data.child(String.valueOf(user.getId())).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                 list.clear();
+                 for(DataSnapshot ds : snapshot.getChildren()){
+                     Food f  = ds.getValue(Food.class);
+                     list.add(f);
+                 }
+                 if(list.size()==0){
+                     return;
+                 }
+                 if(checkCart(list,food.getId_Food())==true){
+                     btn_addTOCart.setBackgroundColor(Color.parseColor("#ff8080"));
+                     btn_addTOCart.setText("Đã có trong giỏ hàng");
+                     btn_addTOCart.setEnabled(false);
+                 }else{
+                     btn_addTOCart.setBackgroundColor(Color.parseColor("#ff0000"));
+                     btn_addTOCart.setText("Thêm vào giỏ hàng");
+                     btn_addTOCart.setEnabled(true);
+                     floating.setVisibility(View.GONE);
+                 }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
+            }
+        });
+    }
+    private void pushComment(){
+        List<Comment_FB> list = new ArrayList<>();
+        final DatabaseReference data = FirebaseDatabase.getInstance().getReference("Comment");
+        for(int i = 1;i<=20;i++){
+            User u = new User("User "+i,"Username "+i,"","");
+            Comment_FB cmt = new Comment_FB(food.getId_Food(),u,"Món này rất ngon","12:12:2022 | 14:25",5);
+            list.add(cmt);
+        }
+        for(Comment_FB cmt : list){
+            data.child(cmt.getId_Food()).child(cmt.getUser().getId()).setValue(cmt);
+        }
+    }
+    private boolean checkCart(List<Food> list,String id){
+        for(Food food : list){
+            if(food.getId_Food().equals(id)){
+                return true;
+            }
+        }
+        return false;
+    }
             private void initView() {
                 img_return = findViewById(R.id.img_return);
                 img_getImageFood = findViewById(R.id.img_getImageFood);
@@ -219,6 +275,7 @@ public static List<Food> listFoodFB = new ArrayList<>();
                 btn_addTOCart = findViewById(R.id.btn_addTOCart);
                 rcv_similar_product = findViewById(R.id.rcv_similar_product);
                 rcv_comment = findViewById(R.id.rcv_comment);
+                floating = findViewById(R.id.floating);
             }
 
             private void setWindow() {

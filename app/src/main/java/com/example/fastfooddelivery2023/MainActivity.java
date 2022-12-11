@@ -37,6 +37,7 @@ import com.example.fastfooddelivery2023.Viewpager.MainPager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -64,8 +65,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        txt_waiting_driver = findViewById(R.id.txt_waiting_driver);
-        view_waiting_driver = findViewById(R.id.view_waiting_driver);
         bottomNavigationView = findViewById(R.id.bottom_nav);
         viewPager2 = findViewById(R.id.viewpager);
         adapter = new MainPager(this);
@@ -121,11 +120,8 @@ public class MainActivity extends AppCompatActivity {
     private void checkInternet(){
         if(TEMPS.checkInternet(MainActivity.this)==false){
             viewPager2.setVisibility(View.GONE);
-            view_waiting_driver.setVisibility(View.VISIBLE);
-            txt_waiting_driver.setText("Không có kết nối Internet");
         }else{
             viewPager2.setVisibility(View.VISIBLE);
-            view_waiting_driver.setVisibility(View.GONE);
         }
     }
     private void showDialog(){
@@ -162,20 +158,32 @@ public class MainActivity extends AppCompatActivity {
                         return;
                     }
                     if(order_fb.getCheck()==1 && order_fb.getUser().getId().equals(user.getId())){
-                        view_waiting_driver.setVisibility(View.VISIBLE);
-                        txt_waiting_driver.setText("Đơn hàng của bạn đang chờ tài xế xác nhận");
+                        View parentLayout = findViewById(android.R.id.content);
+                        Snackbar.make(parentLayout,"Đơn hàng của bạn đang chờ tài xế xác nhận",Snackbar.LENGTH_LONG)
+                                        .setAction("Xem", new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+                                                startActivity(new Intent(MainActivity.this, WaitingActivity.class));
+                                            }
+                                        }).show();
                         view_waiting_driver.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
                                 startActivity(new Intent(MainActivity.this, WaitingActivity.class));
                             }
                         });
-                        return;
-                    }
+                    }else
+
                     if(order_fb.getCheck()==2 && order_fb.getUser().getId().equals(user.getId()) ){
                         // call user
-                        view_waiting_driver.setVisibility(View.VISIBLE);
-                        txt_waiting_driver.setText("Tài xế "+order_fb.getStaff().getFullName_staff()+" đang giao");
+                        View parentLayout = findViewById(android.R.id.content);
+                        Snackbar.make(parentLayout,"Tài xế "+order_fb.getStaff().getFullName_staff()+" đang giao",Snackbar.LENGTH_LONG)
+                                .setAction("Xem", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        startActivity(new Intent(MainActivity.this, WaitingActivity.class));
+                                    }
+                                }).show();
                         view_waiting_driver.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
