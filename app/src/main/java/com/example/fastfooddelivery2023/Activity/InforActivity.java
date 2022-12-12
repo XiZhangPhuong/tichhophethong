@@ -17,10 +17,12 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,6 +55,7 @@ private ImageView img_return,img_getImageFood,img_like_Food;
 private TextView txt_getNameFood,txt_getCategory_Food,txt_getPriceFood,txt_getInForFood;
 private Button btn_addTOCart;
 private User user;
+private ScrollView scrollView;
 private FloatingActionButton floating;
 private RecyclerView rcv_similar_product,rcv_comment;
 public static List<Food> listFoodToCart = new ArrayList<>();
@@ -73,6 +76,7 @@ public static List<Food> listFoodFB = new ArrayList<>();
         try {
             setWindow();
             initView();
+            showFloatingButton();
             loadDataFood();
             pushComment();
             loadDataComment();
@@ -93,6 +97,25 @@ public static List<Food> listFoodFB = new ArrayList<>();
         txt_getCategory_Food.setText(food.getCategory_Food());
         txt_getInForFood.setText(food.getInformation_Food());
         txt_getPriceFood.setText(food.getPrice_Food()+" đ");
+    }
+    private void showFloatingButton(){
+        floating.setVisibility(View.GONE);
+        scrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+            @Override
+            public void onScrollChanged() {
+                if(scrollView.getScrollY()>1000){
+                    floating.setVisibility(View.VISIBLE);
+                    floating.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            scrollView.scrollTo(0,0);
+                        }
+                    });
+                }else{
+                    floating.setVisibility(View.GONE);
+                }
+            }
+        });
     }
     private void clickBack(){
         img_return.setOnClickListener(new View.OnClickListener() {
@@ -276,6 +299,7 @@ public static List<Food> listFoodFB = new ArrayList<>();
                 rcv_similar_product = findViewById(R.id.rcv_similar_product);
                 rcv_comment = findViewById(R.id.rcv_comment);
                 floating = findViewById(R.id.floating);
+                scrollView = findViewById(R.id.scrollView);
             }
 
             private void setWindow() {
