@@ -94,6 +94,8 @@
                     android:layout_marginRight="10dp"
                     app:srcCompat="@drawable/ic_favorite_24" />
 
+
+
                 <TextView
                     android:id="@+id/txt_getCategory_Food"
                     android:layout_width="wrap_content"

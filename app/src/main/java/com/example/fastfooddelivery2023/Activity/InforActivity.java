@@ -51,7 +51,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class InforActivity extends AppCompatActivity {
-private ImageView img_return,img_getImageFood,img_like_Food;
+private ImageView img_return,img_getImageFood,img_like_Food,img_dislike_Food;
 private TextView txt_getNameFood,txt_getCategory_Food,txt_getPriceFood,txt_getInForFood;
 private Button btn_addTOCart;
 private User user;
@@ -77,6 +77,7 @@ public static List<Food> listFoodFB = new ArrayList<>();
             setWindow();
             initView();
             showFloatingButton();
+
             loadDataFood();
             pushComment();
             loadDataComment();
@@ -98,6 +99,7 @@ public static List<Food> listFoodFB = new ArrayList<>();
         txt_getInForFood.setText(food.getInformation_Food());
         txt_getPriceFood.setText(food.getPrice_Food()+" đ");
     }
+
     private void showFloatingButton(){
         floating.setVisibility(View.GONE);
         scrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
@@ -147,8 +149,8 @@ public static List<Food> listFoodFB = new ArrayList<>();
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(InforActivity.this);
-                builder.setTitle("Thêm sản phẩm")
-                        .setMessage("")
+                builder.setTitle("Thông báo")
+                        .setMessage("Xác nhận thêm sản phẩm ? ")
                         .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
@@ -291,6 +293,7 @@ public static List<Food> listFoodFB = new ArrayList<>();
                 img_return = findViewById(R.id.img_return);
                 img_getImageFood = findViewById(R.id.img_getImageFood);
                 img_like_Food = findViewById(R.id.img_like_Food);
+
                 txt_getNameFood = findViewById(R.id.txt_getNameFood);
                 txt_getCategory_Food = findViewById(R.id.txt_getCategory_Food);
                 txt_getPriceFood = findViewById(R.id.txt_getPriceFood);
