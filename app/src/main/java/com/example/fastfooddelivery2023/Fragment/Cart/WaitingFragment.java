@@ -20,6 +20,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.fastfooddelivery2023.Activity.InforActivity;
+import com.example.fastfooddelivery2023.Activity.VideoActivity;
+import com.example.fastfooddelivery2023.Activity.WaitingActivity;
 import com.example.fastfooddelivery2023.Adapter_New.RcvOrderAdapter;
 import com.example.fastfooddelivery2023.Adapter_New.SearchAdapter;
 import com.example.fastfooddelivery2023.Control.TEMPS;
@@ -29,6 +31,7 @@ import com.example.fastfooddelivery2023.Model.Order_FB;
 import com.example.fastfooddelivery2023.Model.User;
 import com.example.fastfooddelivery2023.R;
 import com.example.fastfooddelivery2023.SharedPreferences.DataPreferences;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -116,6 +119,15 @@ private String time = "";
                         });
                         rcv_order.setAdapter(orderAdapter);
                         clickButton(or);
+
+                        Snackbar.make(getActivity().findViewById(android.R.id.content),
+                                "Xem review đồ ăn", Snackbar.LENGTH_LONG).setAction("Xem", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                startActivity(new Intent(getContext(), VideoActivity.class));
+                            }
+                        }).show();
+
                     }else if(or.getUser().getId().equals(user.getId()) && or.getCheck()!=1){
                         view_empty.setVisibility(View.VISIBLE);
                         view_waiting.setVisibility(View.GONE);

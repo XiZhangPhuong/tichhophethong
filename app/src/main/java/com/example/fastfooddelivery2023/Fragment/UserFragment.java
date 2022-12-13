@@ -27,6 +27,7 @@ import com.example.fastfooddelivery2023.Activity.ChangeUserActivity;
 import com.example.fastfooddelivery2023.Activity.ContactAdminActivity;
 import com.example.fastfooddelivery2023.Activity.HistoryActivity;
 import com.example.fastfooddelivery2023.Activity.Login_SignUpActivity;
+import com.example.fastfooddelivery2023.Activity.VideoActivity;
 import com.example.fastfooddelivery2023.Activity.WaitingActivity;
 import com.example.fastfooddelivery2023.Adapter.FunctionUser_Adapter;
 import com.example.fastfooddelivery2023.MainActivity;
@@ -129,7 +130,7 @@ public class UserFragment extends Fragment {
                                startActivity(intent);
                           break;
 
-                      case 6:
+                      case 6:  startActivity(new Intent(getContext(), VideoActivity.class));
                           break;
 
                       case 7:  Intent intent1 = new Intent(getContext(), ContactAdminActivity.class);

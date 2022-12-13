@@ -36,7 +36,6 @@
             android:layout_toRightOf="@id/cartview"
             android:layout_marginLeft="20dp"
             android:textSize="15dp"
-
             android:textColor="@color/black"
             android:text="Cơm chiên trứng" />
 

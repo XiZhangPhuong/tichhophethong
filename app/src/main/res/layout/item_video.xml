@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
-    >
+    android:background="@color/black">
+
 
     <VideoView
-        android:id="@+id/videoView"
+        android:id="@+id/videoView_tiktok"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
 
     <ProgressBar
         android:id="@+id/progressBar2"
@@ -19,26 +20,146 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true" />
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/img_avatar_tiktok"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="300dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:src="@drawable/googleg_standard_color_18"
+        app:civ_border_color="#FFFFFF"
+        app:civ_border_width="1dp" />
+
     <ImageView
-        android:id="@+id/imageview_like"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/imageView_like"
+        android:layout_width="50dp"
+        android:layout_height="35dp"
+        android:layout_below="@id/img_avatar_tiktok"
         android:layout_alignParentRight="true"
         android:layout_centerInParent="true"
-        android:layout_marginRight="20dp"
-        app:srcCompat="@drawable/ic_baseline_favorite_50_red" />
+        android:layout_marginTop="25dp"
+        android:layout_marginRight="10dp"
+        android:src="@drawable/ic_like_24" />
+
+    <TextView
+        android:id="@+id/txt_like_tiktok"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageView_like"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:gravity="center"
+        android:text="335.0K"
+        android:textColor="@color/white"
+        android:textSize="15dp" />
+
+
+    <ImageView
+        android:id="@+id/imageView_comment"
+        android:layout_width="50dp"
+        android:layout_height="35dp"
+        android:layout_below="@id/txt_like_tiktok"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        app:srcCompat="@drawable/ic_baseline_mode_comment_24" />
+
+    <TextView
+        android:id="@+id/txt_comment"
+        android:layout_width="50dp"
+        android:layout_height="35dp"
+        android:layout_below="@id/imageView_comment"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:gravity="center"
+        android:text="104"
+        android:textColor="@color/white"
+        android:textSize="15dp" />
+
+    <ImageView
+        android:id="@+id/imageView_share"
+        android:layout_width="50dp"
+        android:layout_height="35dp"
+        android:layout_below="@id/txt_comment"
+        android:layout_alignParentRight="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        app:srcCompat="@drawable/ic_baseline_file_download_24" />
+
+    <TextView
+        android:id="@+id/txt_share"
+        android:layout_width="50dp"
+        android:layout_height="35dp"
+        android:layout_below="@id/imageView_share"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:gravity="center"
+        android:text="104"
+        android:textColor="@color/white"
+        android:textSize="15dp" />
+
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/img_music_tiktok"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="20dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:src="@drawable/ic_launcher_background"
+        app:civ_border_color="#FFFFFF"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="50dp"
+        />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/ic_launcher_background"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="60dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="10dp"
+        android:visibility="gone"
+        />
+
+    <TextView
+        android:text="Lay All Your Love On Me - ABBA Lay All Your Love On Me - ABBA"
+        android:id="@+id/txt_music_tiktok"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:singleLine="true"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:scrollHorizontally="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:freezesText="true"
+        android:paddingLeft="15dip"
+        android:paddingRight="15dip"
+
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="60dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="25dp"
+        />
 
 
     <TextView
-        android:id="@+id/txt_like"
-        android:layout_width="100dp"
+        android:id="@+id/txt_view_tiktok"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/imageview_like"
-        android:layout_alignParentRight="true"
-        android:layout_centerInParent="true"
-        android:text="1"
-        android:gravity="center"
-        android:textColor="@color/white" />
-
+        android:textSize="15dp"
+        android:textColor="@color/white"
+        android:text=""
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="53dp"
+        android:layout_marginLeft="40dp"
+        />
 
 </RelativeLayout>

@@ -42,7 +42,14 @@ private ImageView imageView;
         imageView = findViewById(R.id.imageView3);
         User user = DataPreferences.getUser(IntroActivity.this,"KEY_USER");
 
-
+        final DatabaseReference dataVideo = FirebaseDatabase.getInstance().getReference("Video");
+        List<VideoShort> list = new ArrayList<>();
+        for(int i  = 1;i<=5;i++){
+            list.add(new VideoShort(i,""));
+        }
+        for(VideoShort video : list){
+            dataVideo.child(String.valueOf(video.getId())).setValue(video);
+        }
 
         new Handler().postDelayed(new Runnable() {
             @Override

@@ -159,37 +159,25 @@ public class MainActivity extends AppCompatActivity {
                     }
                     if(order_fb.getCheck()==1 && order_fb.getUser().getId().equals(user.getId())){
                         View parentLayout = findViewById(android.R.id.content);
-                        Snackbar.make(parentLayout,"Đơn hàng của bạn đang chờ tài xế xác nhận",Snackbar.LENGTH_LONG)
+                        Snackbar.make(parentLayout,"Đơn hàng của bạn đang chờ tài xế xác nhận",Snackbar.LENGTH_SHORT)
                                         .setAction("Xem", new View.OnClickListener() {
                                             @Override
                                             public void onClick(View view) {
                                                 startActivity(new Intent(MainActivity.this, WaitingActivity.class));
                                             }
                                         }).show();
-                        view_waiting_driver.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                startActivity(new Intent(MainActivity.this, WaitingActivity.class));
-                            }
-                        });
                     }else
 
                     if(order_fb.getCheck()==2 && order_fb.getUser().getId().equals(user.getId()) ){
                         // call user
                         View parentLayout = findViewById(android.R.id.content);
-                        Snackbar.make(parentLayout,"Tài xế "+order_fb.getStaff().getFullName_staff()+" đang giao",Snackbar.LENGTH_LONG)
+                        Snackbar.make(parentLayout,"Tài xế "+order_fb.getStaff().getFullName_staff()+" đang giao",Snackbar.LENGTH_SHORT)
                                 .setAction("Xem", new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
                                         startActivity(new Intent(MainActivity.this, WaitingActivity.class));
                                     }
                                 }).show();
-                        view_waiting_driver.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                startActivity(new Intent(MainActivity.this, WaitingActivity.class));
-                            }
-                        });
                     }else if(order_fb.getCheck()==3 && order_fb.getUser().getId().equals(user.getId())){
                         view_waiting_driver.setVisibility(View.GONE);
                         TEMPS.showNotification(MainActivity.this,order_fb.getId_order(),"Giao hàng thành công");

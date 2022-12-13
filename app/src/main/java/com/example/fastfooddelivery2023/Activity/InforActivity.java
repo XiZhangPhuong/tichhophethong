@@ -188,7 +188,9 @@ public static List<Food> listFoodFB = new ArrayList<>();
                                         foodAdapter = new FoodAdapter(InforActivity.this, listFoodFB, new FoodAdapter.ClickItemFood() {
                                             @Override
                                             public void Click(Food food) {
-                                                Toast.makeText(InforActivity.this,food.getId_Food(),Toast.LENGTH_SHORT).show();
+                                                Intent intent = new Intent(InforActivity.this, InforActivity.class);
+                                                intent.putExtra("KEY_FOOD",food);
+                                                startActivity(intent);
                                             }
                                         });
                                         rcv_similar_product.setAdapter(foodAdapter);
@@ -281,6 +283,7 @@ public static List<Food> listFoodFB = new ArrayList<>();
             data.child(cmt.getId_Food()).child(cmt.getUser().getId()).setValue(cmt);
         }
     }
+
     private boolean checkCart(List<Food> list,String id){
         for(Food food : list){
             if(food.getId_Food().equals(id)){
@@ -289,6 +292,7 @@ public static List<Food> listFoodFB = new ArrayList<>();
         }
         return false;
     }
+
             private void initView() {
                 img_return = findViewById(R.id.img_return);
                 img_getImageFood = findViewById(R.id.img_getImageFood);

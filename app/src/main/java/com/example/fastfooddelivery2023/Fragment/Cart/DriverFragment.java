@@ -23,10 +23,12 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.fastfooddelivery2023.Activity.VideoActivity;
 import com.example.fastfooddelivery2023.Model.Order_FB;
 import com.example.fastfooddelivery2023.Model.User;
 import com.example.fastfooddelivery2023.R;
 import com.example.fastfooddelivery2023.SharedPreferences.DataPreferences;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -90,7 +92,13 @@ private String time = "";
                         Picasso.get().load("https://thumbs.dreamstime.com/b/phone-vector-icon-isolated-illustration-handset-flat-style-eps-file-available-166354863.jpg").into(img_phone);
                         Picasso.get().load("https://img.freepik.com/premium-vector/female-user-profile-avatar-is-woman-character-screen-saver-with-emotions_505620-617.jpg?w=2000").into(img_driver);
                         clickCallPhone(btn_call,img_phone,txt_phone.getText().toString());
-
+                        Snackbar.make(getActivity().findViewById(android.R.id.content),
+                                "Xem review đồ ăn", Snackbar.LENGTH_LONG).setAction("Xem", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                startActivity(new Intent(getContext(), VideoActivity.class));
+                            }
+                        }).show();
                     }else if(or.getUser().getId().equals(user.getId()) && or.getCheck()!=2){
                         view_main.setBackground(null);
                         view_main.setBackgroundColor(Color.parseColor("#f2f2f2"));
