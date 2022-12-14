@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -56,6 +57,7 @@ public class CartNotEmptyFragment extends Fragment {
     private View mView;
     private RecyclerView rcv_cart;
     private User user;
+    private ProgressBar progressBar3;
     private ImageView image_back;
     private Button btn_addTOCart;
     private FloatingActionButton floating;
@@ -128,6 +130,8 @@ public class CartNotEmptyFragment extends Fragment {
                                      view_cart_empty.setVisibility(View.VISIBLE);
                                      view_cart_not_empty.setVisibility(View.GONE);
                                      btn_addTOCart.setVisibility(View.GONE);
+                                     floating.setVisibility(View.GONE);
+                                     progressBar3.setVisibility(View.GONE);
                                      return;
                                  }
                                  view_cart_empty.setVisibility(View.GONE);
@@ -176,15 +180,17 @@ public class CartNotEmptyFragment extends Fragment {
                                              txt_total_cart.setText(sum+"");
                                          }
                                          if(i==0){
-                                             listFoodCart.remove(food);
+                                            // listFoodCart.remove(food);
                                              sum = 0;
-                                             dataCart.child(String.valueOf(user.getId())).child(f.getId_Food()).removeValue();
+                                             dataCart.child(String.valueOf(user.getId())).child(food.getId_Food()).removeValue();
                                              cartAdapter.notifyDataSetChanged();
                                              txt_total_cart.setText(sum + " ");
                                              tv_number_cart.setText(i+"");
+                                             floating.setVisibility(View.GONE);
                                          }else if(listFoodCart.size()==0){
                                              MainActivity.viewPager2.setCurrentItem(0);
                                              dataCart.child(String.valueOf(user.getId())).removeValue();
+                                             floating.setVisibility(View.GONE);
                                          }
                                      }
                                      @Override
@@ -196,6 +202,7 @@ public class CartNotEmptyFragment extends Fragment {
                                  });
                                  rcv_cart.setAdapter(cartAdapter);
                                  cartAdapter.notifyDataSetChanged();
+                                 progressBar3.setVisibility(View.GONE);
                                  total_cart();
                                  confirm_Cart();
                              }
@@ -345,6 +352,7 @@ public class CartNotEmptyFragment extends Fragment {
         txt_temp_cart = view.findViewById(R.id.txt_temp_cart);
         txt_ship_cart = view.findViewById(R.id.txt_ship_cart);
         floating = view.findViewById(R.id.floating);
+        progressBar3 = view.findViewById(R.id.progressBar3);
     }
 
     @Override

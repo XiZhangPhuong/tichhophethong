@@ -62,6 +62,7 @@ public static List<Food> listFoodToCart = new ArrayList<>();
 private FoodAdapter foodAdapter ;
 private Food food = null;
 private boolean flag = true;
+private boolean flag1 = true;
 private Comment_Adapter comment_adapter;
 private DatabaseReference dataFavorite = FirebaseDatabase.getInstance().getReference("Favorite");
 private DatabaseReference data = FirebaseDatabase.getInstance().getReference("Cart");
@@ -128,19 +129,20 @@ public static List<Food> listFoodFB = new ArrayList<>();
             }
         });
     }
+
     private void clickFavoriteFood(){
         img_like_Food.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                 if(flag==true){
-                     img_like_Food.setImageResource(R.drawable.ic_like_24);
-                     dataFavorite.child(String.valueOf(user.getId())).child(food.getId_Food()).setValue(food);
-                     flag = false;
-                 }else{
-                     img_like_Food.setImageResource(R.drawable.ic_favorite_24);
-                     dataFavorite.child(String.valueOf(user.getId())).child(food.getId_Food()).removeValue();
-                     flag = true;
-                 }
+                if(flag==true){
+                    img_like_Food.setImageResource(R.drawable.ic_like_24);
+                    dataFavorite.child(String.valueOf(user.getId())).child(food.getId_Food()).setValue(food);
+                    flag = false;
+                }else{
+                    img_like_Food.setImageResource(R.drawable.ic_favorite_24);
+                    dataFavorite.child(String.valueOf(user.getId())).child(food.getId_Food()).removeValue();
+                    flag = true;
+                }
             }
         });
     }

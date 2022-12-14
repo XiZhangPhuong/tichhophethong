@@ -142,7 +142,6 @@
         android:freezesText="true"
         android:paddingLeft="15dip"
         android:paddingRight="15dip"
-
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="60dp"
         android:layout_alignParentLeft="true"
@@ -150,16 +149,6 @@
         />
 
 
-    <TextView
-        android:id="@+id/txt_view_tiktok"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="15dp"
-        android:textColor="@color/white"
-        android:text=""
-        android:layout_alignParentLeft="true"
-        android:layout_marginTop="53dp"
-        android:layout_marginLeft="40dp"
-        />
+
 
 </RelativeLayout>

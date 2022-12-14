@@ -80,7 +80,6 @@ public class FavoriteFragment extends Fragment {
 
         return mView;
     }
-
     private void loadDataFavorite(){
                 List<Food> list = new ArrayList<>();
                 data.child(String.valueOf(user.getId())).addValueEventListener(new ValueEventListener() {

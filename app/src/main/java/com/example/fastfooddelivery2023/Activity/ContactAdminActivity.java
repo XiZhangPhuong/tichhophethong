@@ -64,23 +64,23 @@ public class ContactAdminActivity extends AppCompatActivity {
         if (ContextCompat.checkSelfPermission(ContactAdminActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(ContactAdminActivity.this,new String[]{Manifest.permission.CALL_PHONE},100);
 
-            img_call.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(ContactAdminActivity.this);
-                    builder.setTitle("Thông báo")
-                            .setMessage("Xác nhận gọi Admin ? ")
-                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    Intent intent = new Intent(Intent.ACTION_CALL);
-                                    intent.setData(Uri.parse("tel:"+"0123456784"));
-                                    startActivity(intent);
-                                }
-                            }).setNegativeButton("No",null).create().show();
-                }
-            });
         }
+        img_call.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(ContactAdminActivity.this);
+                builder.setTitle("Thông báo")
+                        .setMessage("Xác nhận gọi Admin ? ")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Intent intent = new Intent(Intent.ACTION_CALL);
+                                intent.setData(Uri.parse("tel:"+"0123456784"));
+                                startActivity(intent);
+                            }
+                        }).setNegativeButton("No",null).create().show();
+            }
+        });
 
     }
     private void initView() {

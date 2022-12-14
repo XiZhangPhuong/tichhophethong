@@ -94,6 +94,17 @@
                     android:layout_marginRight="10dp"
                     app:srcCompat="@drawable/ic_favorite_24" />
 
+                <ImageView
+                    android:id="@+id/img_likeRed_Food"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_below="@id/img_getImageFood"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/ic_baseline_favorite_50_red" />
+
 
 
                 <TextView

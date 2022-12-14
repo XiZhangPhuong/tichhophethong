@@ -23,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
     private User user;
     private Order_FB order_fb;
     private AlertDialog.Builder builder;
+    private ProgressBar progressBar5;
     private AlertDialog dialog;
     private RelativeLayout view_waiting_driver;
     private TextView txt_waiting_driver;
@@ -64,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        progressBar5 = findViewById(R.id.progressBar5);
         bottomNavigationView = findViewById(R.id.bottom_nav);
         viewPager2 = findViewById(R.id.viewpager);
         adapter = new MainPager(this);
@@ -114,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
+        progressBar5.setVisibility(View.GONE);
 
     }
     private void checkInternet(){
@@ -192,6 +194,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        progressBar5.setVisibility(View.GONE);
     }
     @Override
     public void onBackPressed() {
