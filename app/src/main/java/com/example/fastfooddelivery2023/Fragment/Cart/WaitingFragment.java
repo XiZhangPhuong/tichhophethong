@@ -24,6 +24,7 @@ import com.example.fastfooddelivery2023.Activity.VideoActivity;
 import com.example.fastfooddelivery2023.Activity.WaitingActivity;
 import com.example.fastfooddelivery2023.Adapter_New.RcvOrderAdapter;
 import com.example.fastfooddelivery2023.Adapter_New.SearchAdapter;
+import com.example.fastfooddelivery2023.Control.Control_Order;
 import com.example.fastfooddelivery2023.Control.TEMPS;
 import com.example.fastfooddelivery2023.MainActivity;
 import com.example.fastfooddelivery2023.Model.Food;
@@ -80,6 +81,7 @@ private String time = "";
         txt_id_order=  mView.findViewById(R.id.txt_id_order);
         txt_total_order=  mView.findViewById(R.id.txt_total_order);
     }
+
     private void checkView(){
         List<Order_FB> list= new ArrayList<>();
         dataOrder.addValueEventListener(new ValueEventListener() {
@@ -97,7 +99,7 @@ private String time = "";
                     return;
                 }
                 for(Order_FB or : list){
-                    if(or.getUser().getId().equals(user.getId()) && or.getCheck()==1){
+                    if(or.getUser().getId().equals(user.getId()) && or.getCheck()==1 ){
                         view_empty.setVisibility(View.GONE);
                         view_waiting.setVisibility(View.VISIBLE);
                         btn_dismiss.setVisibility(View.VISIBLE);
@@ -128,10 +130,14 @@ private String time = "";
                             }
                         }).show();
 
-                    }else if(or.getUser().getId().equals(user.getId()) && or.getCheck()!=1){
+                    }else if(or.getUser().getId().equals(user.getId()) && or.getCheck()==2){
                         view_empty.setVisibility(View.VISIBLE);
                         view_waiting.setVisibility(View.GONE);
                         btn_dismiss.setVisibility(View.GONE);
+                    }else if(or.getUser().getId().equals(user.getId()) && or.getCheck()!=2 &&or.getCheck()!=1){
+                        view_empty.setVisibility(View.GONE);
+                        view_waiting.setVisibility(View.VISIBLE);
+                        btn_dismiss.setVisibility(View.VISIBLE);
                     }
                 }
             }
@@ -142,6 +148,7 @@ private String time = "";
             }
         });
     }
+
 
     private void clickButton(Order_FB or){
         btn_dismiss.setOnClickListener(new View.OnClickListener() {

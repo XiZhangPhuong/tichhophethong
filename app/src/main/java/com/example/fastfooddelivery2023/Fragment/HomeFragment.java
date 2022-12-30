@@ -64,14 +64,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class HomeFragment extends Fragment {
 private View mView;
-private AutoCompleteTextView singleComplete;
-private MultiAutoCompleteTextView mutiComplete;
 private ViewFlipper viewFlipper;
 private RecyclerView rcv_category,rcv_recommend,rcv_sale_food,rcv_object_food,rcv_food;
 private Category_Adapter category_adapter;
 private ScrollView scrollview;
-private FloatingActionButton floating;
 private EditText edt_search;
+private FloatingActionButton floating;
 private ProgressBar progressBar_Home_Food;
 public static final String OBJECT_FOOD = "object_food";
 private User user;
@@ -93,10 +91,10 @@ public static List<Food> listFoodNew = new ArrayList<>();
         viewFlipper = mView.findViewById(R.id.viewflipper);
         rcv_category = mView.findViewById(R.id.rcv_category);
         rcv_object_food = mView.findViewById(R.id.rcv_object_food);
-        edt_search = mView.findViewById(R.id.edt_search);
         rcv_food = mView.findViewById(R.id.rcv_food);
         floating = mView.findViewById(R.id.floating);
         scrollview = mView.findViewById(R.id.scrollview);
+        edt_search = mView.findViewById(R.id.edt_searchFood);
 
 
         user = DataPreferences.getUser(getContext(),KEY_USER);
@@ -105,11 +103,11 @@ public static List<Food> listFoodNew = new ArrayList<>();
         try {
             setWindow();
             showFloatingButton();
-            ClickEdittext();
             loadDataObjectFood();
             loadDataRcvFood();
             ViewFliperAnimation();
             Category_Food();
+            searchFood();
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -133,6 +131,14 @@ public static List<Food> listFoodNew = new ArrayList<>();
                }
            }
        });
+    }
+    private void searchFood(){
+        edt_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(),SearchActivity.class));
+            }
+        });
     }
     private void ViewFliperAnimation() {
         String []images = {"https://thietbiducthanh.vn/wp-content/uploads/2020/02/th%E1%BB%B1c-%C4%91%C6%A1n-1-711x400.jpg",
@@ -168,7 +174,6 @@ public static List<Food> listFoodNew = new ArrayList<>();
                         }
                         category_adapter.notifyDataSetChanged();
                     }
-
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
                         Toast.makeText(getContext(),error.toString(),Toast.LENGTH_SHORT).show();
@@ -220,9 +225,6 @@ public static List<Food> listFoodNew = new ArrayList<>();
         List<ObjectFood> list = new ArrayList<>();
         rcv_object_food.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
         rcv_object_food.setHasFixedSize(true);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
                 list.add(new ObjectFood("Đề xuất","https://thietbiducthanh.vn/wp-content/uploads/2020/02/th%E1%BB%B1c-%C4%91%C6%A1n-1-711x400.jpg",getListFoodFb()));
                 list.add(new ObjectFood("Đang giảm giá","https://ss-images.saostar.vn/w1200/pc/1663143418617/saostar-pecai6vwmqohghnp.jpg",getListFoodFb()));
                 list.add(new ObjectFood("Ăn vô cực - Khao đến 50%","https://afamilycdn.com/150157425591193600/2022/8/26/4-16614841580711371899482-1661488118094-16614881181784877563.jpg",getListFoodFb()));
@@ -238,24 +240,9 @@ public static List<Food> listFoodNew = new ArrayList<>();
                 });
                 rcv_object_food.setAdapter(objectFoodAdapter);
                 objectFoodAdapter.notifyDataSetChanged();
-            }
-        }).start();
     }
 
-    private void ClickEdittext(){
-       edt_search.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Intent intent = new Intent(getContext(), SearchActivity.class);
-                        startActivity(intent);
-                    }
-                }).start();
-           }
-       });
-    }
+
 
     private List<Food> getFoodFB(){
         List<Food> list = new ArrayList<>();

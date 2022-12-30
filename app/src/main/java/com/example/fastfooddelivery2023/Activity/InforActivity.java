@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -62,7 +63,7 @@ public static List<Food> listFoodToCart = new ArrayList<>();
 private FoodAdapter foodAdapter ;
 private Food food = null;
 private boolean flag = true;
-private boolean flag1 = true;
+private boolean flag_cmt = true;
 private Comment_Adapter comment_adapter;
 private DatabaseReference dataFavorite = FirebaseDatabase.getInstance().getReference("Favorite");
 private DatabaseReference data = FirebaseDatabase.getInstance().getReference("Cart");
@@ -80,7 +81,6 @@ public static List<Food> listFoodFB = new ArrayList<>();
             showFloatingButton();
 
             loadDataFood();
-            pushComment();
             loadDataComment();
             loadDataSimilarFood();
             clickBack();
@@ -124,8 +124,7 @@ public static List<Food> listFoodFB = new ArrayList<>();
         img_return.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(InforActivity.this, MainActivity.class);
-                startActivity(intent);
+                finish();
             }
         });
     }
@@ -230,7 +229,13 @@ public static List<Food> listFoodFB = new ArrayList<>();
                                 }
                                 rcv_comment.setLayoutManager(new LinearLayoutManager(InforActivity.this,LinearLayoutManager.VERTICAL,false));
                                 rcv_comment.setHasFixedSize(true);
-                                comment_adapter = new Comment_Adapter(list);
+                                comment_adapter = new Comment_Adapter(list, new Comment_Adapter.clickComment() {
+                                    @Override
+                                    public void click(Comment_FB comment_fb, TextView textView) {
+                                            textView.setTextColor(Color.parseColor("#ff0000"));
+                                            textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
+                                    }
+                                });
                                 rcv_comment.setAdapter(comment_adapter);
                                 comment_adapter.notifyDataSetChanged();
                             }
@@ -273,18 +278,7 @@ public static List<Food> listFoodFB = new ArrayList<>();
             }
         });
     }
-    private void pushComment(){
-        List<Comment_FB> list = new ArrayList<>();
-        final DatabaseReference data = FirebaseDatabase.getInstance().getReference("Comment");
-        for(int i = 1;i<=20;i++){
-            User u = new User("User "+i,"Username "+i,"","");
-            Comment_FB cmt = new Comment_FB(food.getId_Food(),u,"Món này rất ngon","12:12:2022 | 14:25",5);
-            list.add(cmt);
-        }
-        for(Comment_FB cmt : list){
-            data.child(cmt.getId_Food()).child(cmt.getUser().getId()).setValue(cmt);
-        }
-    }
+
 
     private boolean checkCart(List<Food> list,String id){
         for(Food food : list){

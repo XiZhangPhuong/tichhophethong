@@ -43,6 +43,7 @@ public class SignUpFragment extends Fragment {
     private ProgressBar progressBar;
     private DatabaseReference dataUser = FirebaseDatabase.getInstance().getReference("User");
     private List<User> listUser;
+    int check = 0;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -65,7 +66,9 @@ public class SignUpFragment extends Fragment {
         edt_password.addTextChangedListener(loginTextWatcher);
         edt_conf.addTextChangedListener(loginTextWatcher);
 
-
+        if(check==1){
+            Toast.makeText(getContext(), "Số điện thoại đã được đăng ký", Toast.LENGTH_SHORT).show();
+        }
 
         btn_Signup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,7 +77,7 @@ public class SignUpFragment extends Fragment {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if(snapshot.child(edt_Phone.getText().toString()).exists()){
-                            Toast.makeText(getContext(), "Số điện thoại đã được đăng ký", Toast.LENGTH_SHORT).show();
+                            check = 1;
                             edt_Phone.setText("");
                             edt_Phone.requestFocus();
                             edt_Phone.setError("Vui lòng đổi số điện thoại");
@@ -117,7 +120,7 @@ public class SignUpFragment extends Fragment {
             btn_Signup.setEnabled(false);
             if(edt_Name.length()<3){
                 edt_Name.setError("Nhập lại họ tên");
-            }else if(phone.length()!=0){
+            }else if(phone.length()!=10){
                 edt_Phone.setError("Số điện thoại phải 10 số");
             }else if(pass.length()<6){
                 edt_password.setError("Mật khẩu phải 6 kí tự trở lên");

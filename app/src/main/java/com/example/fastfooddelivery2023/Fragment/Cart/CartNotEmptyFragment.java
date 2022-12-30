@@ -313,7 +313,7 @@ public class CartNotEmptyFragment extends Fragment {
                         btn_addTOCart.setText("Đang trong trạng thái chờ");
                         btn_addTOCart.setEnabled(false);
                         ClickFloating();
-                    }else if(or.getUser().getId().equals(user.getId()) && or.getCheck()!=1 && or.getCheck()!=2) {
+                    }else if(or.getUser().getId().equals(user.getId()) && or.getCheck()!=1 || or.getCheck()!=2) {
                         btn_addTOCart.setBackgroundColor(Color.parseColor("#ff0000"));
                         btn_addTOCart.setText("Xác nhận đặt hàng");
                         btn_addTOCart.setEnabled(true);

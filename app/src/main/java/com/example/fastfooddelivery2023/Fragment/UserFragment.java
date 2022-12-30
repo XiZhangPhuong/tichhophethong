@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,6 +58,8 @@ public class UserFragment extends Fragment {
     private DatabaseReference data_Function_user ;
     private MainActivity mainActivity;
     private List<FunctionUser> listFun = new ArrayList<>();
+    private Thread t_f_user;
+    private ProgressBar progressBar4;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -87,7 +90,7 @@ public class UserFragment extends Fragment {
     }
     private void loadDataFunction_User(){
         data_Function_user = FirebaseDatabase.getInstance().getReference("Function_User");
-        new Thread(new Runnable() {
+        t_f_user = new Thread(new Runnable() {
             @Override
             public void run() {
                 data_Function_user.addValueEventListener(new ValueEventListener() {
@@ -105,9 +108,9 @@ public class UserFragment extends Fragment {
                     public void onCancelled(@NonNull DatabaseError error) {
                     }
                 });
-
             }
-        }).start();
+        });
+        t_f_user.start();
         functionUser_adapter = new FunctionUser_Adapter(listFun, new FunctionUser_Adapter.ClickFunction() {
             @Override
             public void Click(FunctionUser functionUser) {
@@ -156,9 +159,8 @@ public class UserFragment extends Fragment {
         rcv_function_user.setLayoutManager(linearLayoutManager);
         rcv_function_user.setAdapter(functionUser_adapter);
         rcv_function_user.setHasFixedSize(true);
-
-
-
+        progressBar4.setVisibility(View.GONE);
+        t_f_user.destroy();
     }
 
     private void initView(View view){
@@ -166,7 +168,7 @@ public class UserFragment extends Fragment {
         txt_id_user = view.findViewById(R.id.tv_id_user);
         txt_phone_user = view.findViewById(R.id.tv_phone_user);
         rcv_function_user = view.findViewById(R.id.rcv_function_user);
-
+        progressBar4 = view.findViewById(R.id.progressBar4);
     }
 
 

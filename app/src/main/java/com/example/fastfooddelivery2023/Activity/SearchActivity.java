@@ -10,8 +10,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -33,8 +35,10 @@ import java.util.Locale;
 public class SearchActivity extends AppCompatActivity {
 private RecyclerView rcv_searchFood;
 private SearchAdapter searchAdapter;
-private SearchView search_View;
+private RelativeLayout view_rcv,view_history_search,view_rc_search;
 private EditText edt_search;
+private final DatabaseReference dataFood = FirebaseDatabase.getInstance().getReference("Food");
+private List<Food> list = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,58 +47,99 @@ private EditText edt_search;
         try {
             setWindow();
             initView();
-            loadDataRcvFood();
+            loadData();
+            my_searchFood();
         }catch (Exception e){
             e.printStackTrace();
         }
 
     }
-    private List<Food> getListFoodFb(){
-        List<Food> list = new ArrayList<>();
-        final DatabaseReference dataFood = FirebaseDatabase.getInstance().getReference("Food");
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                dataFood.addValueEventListener(new ValueEventListener() {
+    private void loadData(){
+        view_rc_search.setVisibility(View.VISIBLE);
+        view_rcv.setVisibility(View.GONE);
+        view_history_search.setVisibility(View.VISIBLE);
+    }
+    private void my_searchFood(){
+         dataFood.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         list.clear();
                         for(DataSnapshot ds : snapshot.getChildren()) {
                             Food f = ds.getValue(Food.class);
-                                list.add(f);
-                                Collections.shuffle(list);
+                            list.add(f);
+                            Collections.shuffle(list);
                         }
-                        searchAdapter.notifyDataSetChanged();
+                        loadDataRcvFood();
+                        searchFood();
                     }
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
 
                     }
                 });
-            }
-        }).start();
-        return list;
+
     }
+
+
     private void loadDataRcvFood(){
         rcv_searchFood.setLayoutManager(new LinearLayoutManager(SearchActivity.this,LinearLayoutManager.VERTICAL,false));
         rcv_searchFood.setHasFixedSize(true);
-        searchAdapter = new SearchAdapter(SearchActivity.this, getListFoodFb(), new SearchAdapter.ClickSearchFood() {
+        searchAdapter = new SearchAdapter(SearchActivity.this, list, new SearchAdapter.ClickSearchFood() {
             @Override
             public void Click(Food food) {
                 Intent intent = new Intent(SearchActivity.this, InforActivity.class);
                 intent.putExtra("KEY_FOOD",food);
                 startActivity(intent);
-                finish();
             }
         });
         rcv_searchFood.setAdapter(searchAdapter);
         searchAdapter.notifyDataSetChanged();
     }
+
+    private void searchFood(){
+        edt_search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                  if(edt_search.length()==0){
+                      loadData();
+                      return;
+                  }
+                  filter(editable.toString());
+            }
+        });
+    }
+    private void filter(String text){
+       List<Food> listSearch = new ArrayList<>();
+       for(Food f : list){
+           if(f.getName_Food().toLowerCase().contains(text.toLowerCase())
+            || f.getCategory_Food().toLowerCase().contains(text.toLowerCase())){
+               listSearch.add(f);
+           }
+       }
+        searchAdapter.filterList(listSearch);
+        view_rc_search.setVisibility(View.GONE);
+        view_rcv.setVisibility(View.VISIBLE);
+        view_history_search.setVisibility(View.GONE);
+    }
+
     private void initView(){
         rcv_searchFood = findViewById(R.id.rcv_searchFood);
-        search_View = findViewById(R.id.search_View);
-        edt_search = findViewById(R.id.edt_search);
+        edt_search = findViewById(R.id.esearch_Viewdt_search);
+        view_rcv = findViewById(R.id.view_rcv);
+        view_rc_search = findViewById(R.id.view_rc_search);
+        view_history_search = findViewById(R.id.view_history_search);
     }
+
     private void setWindow(){
         if(Build.VERSION.SDK_INT>=21){
             Window window = SearchActivity.this.getWindow();

@@ -1,5 +1,6 @@
 package com.example.fastfooddelivery2023.Activity;
 
+import static com.example.fastfooddelivery2023.Control.TEMPS.stringToBase64;
 import static com.example.fastfooddelivery2023.Fragment.LoginSignUp.LoginFragment.KEY_USER;
 
 import androidx.annotation.NonNull;
@@ -9,6 +10,7 @@ import android.content.Intent;
 import android.hardware.camera2.TotalCaptureResult;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.ContactsContract;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -22,6 +24,7 @@ import com.example.fastfooddelivery2023.Model.FunctionUser;
 import com.example.fastfooddelivery2023.Model.User;
 import com.example.fastfooddelivery2023.Model.VideoShort;
 import com.example.fastfooddelivery2023.R;
+import com.example.fastfooddelivery2023.Service.MyService;
 import com.example.fastfooddelivery2023.SharedPreferences.DataPreferences;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -42,14 +45,9 @@ private ImageView imageView;
         imageView = findViewById(R.id.imageView3);
         User user = DataPreferences.getUser(IntroActivity.this,"KEY_USER");
 
-        final DatabaseReference dataVideo = FirebaseDatabase.getInstance().getReference("Video");
-        List<VideoShort> list = new ArrayList<>();
-        for(int i  = 1;i<=5;i++){
-            list.add(new VideoShort(i,""));
-        }
-        for(VideoShort video : list){
-            dataVideo.child(String.valueOf(video.getId())).setValue(video);
-        }
+
+
+
 
         new Handler().postDelayed(new Runnable() {
             @Override

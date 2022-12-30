@@ -17,10 +17,14 @@ import java.util.List;
 
 public class Comment_Adapter extends RecyclerView.Adapter<Comment_Adapter.CommentViewHolder> {
     private List<Comment_FB> listComment;
+    public interface clickComment{
+        void click(Comment_FB comment_fb,TextView  textView);
+    }
+    private clickComment clickComment;
 
-
-    public Comment_Adapter(List<Comment_FB> listComment) {
+    public Comment_Adapter(List<Comment_FB> listComment, Comment_Adapter.clickComment clickComment) {
         this.listComment = listComment;
+        this.clickComment = clickComment;
         notifyDataSetChanged();
     }
 
@@ -37,7 +41,14 @@ public class Comment_Adapter extends RecyclerView.Adapter<Comment_Adapter.Commen
        holder.txt_Comment.setText(cmt.getInformation());
        holder.txt_date_cmt.setText(cmt.getDate());
        holder.ratingBar.setRating(cmt.getLike());
-      // holder.ratingBar.setNumStars(cmt.getLike());
+       holder.txt_likeComment.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+              clickComment.click(cmt,holder.txt_likeComment);
+           }
+       });
+    // holder.ratingBar.setNumStars(cmt.getLike());
+
     }
 
     @Override

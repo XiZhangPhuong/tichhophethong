@@ -33,6 +33,7 @@ import com.example.fastfooddelivery2023.Control.TEMPS;
 import com.example.fastfooddelivery2023.Model.Food;
 import com.example.fastfooddelivery2023.Model.Order_FB;
 import com.example.fastfooddelivery2023.Model.User;
+import com.example.fastfooddelivery2023.Service.MyService;
 import com.example.fastfooddelivery2023.SharedPreferences.DataPreferences;
 import com.example.fastfooddelivery2023.Viewpager.MainPager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -62,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView txt_waiting_driver;
     private DatabaseReference dataHistory = FirebaseDatabase.getInstance().getReference("History");
     private boolean flag = false;
+    public static int check = 0;
+    List<Order_FB>  list;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,7 +77,9 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setBackground(null);
         viewPager2.setUserInputEnabled(false);
 
+        user = DataPreferences.getUser(MainActivity.this,"KEY_USER");
         try {
+            startService(new Intent(MainActivity.this,MyService.class));
             checkDriver();
         }catch (Exception e){
             e.printStackTrace();
@@ -142,58 +147,14 @@ public class MainActivity extends AppCompatActivity {
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
         dialog.getWindow().setLayout(600, 800);
+
+
         //call phone
     }
 
 
     private void checkDriver(){
-        view_waiting_driver.setVisibility(View.GONE);
-        final DatabaseReference dataOrder = FirebaseDatabase.getInstance().getReference("Order");
-        user = DataPreferences.getUser(MainActivity.this,"KEY_USER");
-        dataOrder.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot ds : snapshot.getChildren()){
-                    order_fb = ds.getValue(Order_FB.class);
 
-                    if(order_fb==null){
-                        return;
-                    }
-                    if(order_fb.getCheck()==1 && order_fb.getUser().getId().equals(user.getId())){
-                        View parentLayout = findViewById(android.R.id.content);
-                        Snackbar.make(parentLayout,"Đơn hàng của bạn đang chờ tài xế xác nhận",Snackbar.LENGTH_SHORT)
-                                        .setAction("Xem", new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View view) {
-                                                startActivity(new Intent(MainActivity.this, WaitingActivity.class));
-                                            }
-                                        }).show();
-                    }else
-
-                    if(order_fb.getCheck()==2 && order_fb.getUser().getId().equals(user.getId()) ){
-                        // call user
-                        View parentLayout = findViewById(android.R.id.content);
-                        Snackbar.make(parentLayout,"Tài xế "+order_fb.getStaff().getFullName_staff()+" đang giao",Snackbar.LENGTH_SHORT)
-                                .setAction("Xem", new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        startActivity(new Intent(MainActivity.this, WaitingActivity.class));
-                                    }
-                                }).show();
-                    }else if(order_fb.getCheck()==3 && order_fb.getUser().getId().equals(user.getId())){
-                        view_waiting_driver.setVisibility(View.GONE);
-                        TEMPS.showNotification(MainActivity.this,order_fb.getId_order(),"Giao hàng thành công");
-                        dataOrder.child(order_fb.getId_order()).removeValue();
-                        dataHistory.child(String.valueOf(user.getId())).child(order_fb.getId_order()).setValue(order_fb);
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
         progressBar5.setVisibility(View.GONE);
     }
     @Override

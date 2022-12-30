@@ -77,17 +77,20 @@ private int rating ;
         }
 
     }
+
     private void loadDataHistory(){
         view_history_empty.setVisibility(View.GONE);
         view_history.setVisibility(View.GONE);
         List<Order_FB> list = new ArrayList<>();
-        dataHistory.child(String.valueOf(user.getId())).addValueEventListener(new ValueEventListener() {
+        dataHistory.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 list.clear();
                 for(DataSnapshot ds : snapshot.getChildren()){
-                    o  = ds.getValue(Order_FB.class);
-                    list.add(o);
+                    Order_FB o   = ds.getValue(Order_FB.class);
+                    if(o.getUser().getId().equals(user.getId())){
+                        list.add(o);
+                    }
                 }
                 if(list.size()==0){
                     view_history_empty.setVisibility(View.VISIBLE);
@@ -114,6 +117,7 @@ private int rating ;
                     }
                 });
                 rcv_history_food.setAdapter(history_adapter);
+                history_adapter.notifyDataSetChanged();
                 clickReturn();
                 deleteItems();
             }
@@ -152,7 +156,7 @@ private int rating ;
         image_quick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(HistoryActivity.this, MainActivity.class));
+                finish();
             }
         });
     }

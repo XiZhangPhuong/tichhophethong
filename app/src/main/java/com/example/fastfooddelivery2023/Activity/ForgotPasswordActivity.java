@@ -62,10 +62,11 @@ private int OTP;
 
 
         final DatabaseReference dataUser = FirebaseDatabase.getInstance().getReference("User");
+        listUser = new ArrayList<>();
         dataUser.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                listUser = new ArrayList<>();
+                listUser.clear();
                 for(DataSnapshot ds : snapshot.getChildren()){
                     User user = ds.getValue(User.class);
                     listUser.add(user);

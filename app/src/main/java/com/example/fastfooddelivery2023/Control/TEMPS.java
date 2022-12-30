@@ -19,6 +19,7 @@ import com.example.fastfooddelivery2023.Model.User;
 import com.example.fastfooddelivery2023.R;
 
 import java.io.ByteArrayOutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public class TEMPS {
@@ -91,7 +92,6 @@ public class TEMPS {
                 .setAutoCancel(true)
                 .build();
         notificationManagerCompat.notify(1,notification);
-
     }
 
     public static Bitmap convertBase64ToImage(String str){
@@ -106,6 +106,18 @@ public class TEMPS {
         String encodeToString = Base64.encodeToString(bytes,Base64.DEFAULT);
         return encodeToString;
     }
+    public static String stringToBase64(String str){
+        byte[] data = str.getBytes(StandardCharsets.UTF_8);
+        String base64 = Base64.encodeToString(data, Base64.DEFAULT);
+        return base64;
+    }
+
+
+    public static String base64ToString(String str){
+        byte[] data = Base64.decode(str, Base64.DEFAULT);
+        String text = new String(data, StandardCharsets.UTF_8);
+        return text;
+    }
 
     public static Bitmap convertImageResourceToBitMap(int image){
         Bitmap bitmap = BitmapFactory.decodeResource(Resources.getSystem(),image);
@@ -118,6 +130,7 @@ public class TEMPS {
        boolean connected = nInfo != null && nInfo.isAvailable() && nInfo.isConnected();
        return connected;
    }
+
 
 
 }

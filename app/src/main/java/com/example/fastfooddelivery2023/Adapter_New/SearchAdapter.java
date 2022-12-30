@@ -84,5 +84,10 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         }
     }
 
+    public void filterList(List<Food> filterList){
+        listFood = filterList;
+        notifyDataSetChanged();
+    }
+
 
 }

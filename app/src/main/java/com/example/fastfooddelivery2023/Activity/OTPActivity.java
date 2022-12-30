@@ -83,7 +83,7 @@ public class OTPActivity extends AppCompatActivity {
                   }
                   if(Integer.parseInt(edt_code_verify.getText().toString())==OTP){
                       User user = new User("User"+ranDomCODE(),name,phone,pass);
-                      dataUser.child(user.getId()).setValue(user);
+                      dataUser.child(user.getPhoneNumber()).setValue(user);
                       startActivity(new Intent(OTPActivity.this,Login_SignUpActivity.class));
                       finishAffinity();
                       Toast.makeText(OTPActivity.this,"Đăng ký tài khoản thành công",Toast.LENGTH_SHORT).show();

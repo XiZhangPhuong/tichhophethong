@@ -62,6 +62,7 @@ public class FavoriteFragment extends Fragment {
     private final DatabaseReference dataFood = FirebaseDatabase.getInstance().getReference("Food");
     private Food foodFB = null;
     private String m = "";
+    private Thread th_favorite;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -80,53 +81,56 @@ public class FavoriteFragment extends Fragment {
 
         return mView;
     }
+
     private void loadDataFavorite(){
-                List<Food> list = new ArrayList<>();
-                data.child(String.valueOf(user.getId())).addValueEventListener(new ValueEventListener() {
+        List<Food> list = new ArrayList<>();
+        data.child(String.valueOf(user.getId())).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                linear_Favorite_Empty.setVisibility(View.GONE);
+                linear_favorite.setVisibility(View.GONE);
+                list.clear();
+                for(DataSnapshot ds : snapshot.getChildren()){
+                    Food food = ds.getValue(Food.class);
+                    list.add(food);
+                }
+                if(list.size()==0){
+                    linear_Favorite_Empty.setVisibility(View.VISIBLE);
+                    linear_favorite.setVisibility(View.GONE);
+                    return;
+                }
+                linear_Favorite_Empty.setVisibility(View.GONE);
+                linear_favorite.setVisibility(View.VISIBLE);
+                txt_sizeList.setText("Items ("+list.size()+")");
+                clickDelete();
+                rcv_favorite.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
+                rcv_favorite.setHasFixedSize(true);
+                favorite_adapter = new Favorite_Adapter(list, new Favorite_Adapter.IClickFavorite() {
                     @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        linear_Favorite_Empty.setVisibility(View.GONE);
-                        linear_favorite.setVisibility(View.GONE);
-                        list.clear();
-                        for(DataSnapshot ds : snapshot.getChildren()){
-                            Food food = ds.getValue(Food.class);
-                            list.add(food);
-                        }
-                        if(list.size()==0){
-                            linear_Favorite_Empty.setVisibility(View.VISIBLE);
-                            linear_favorite.setVisibility(View.GONE);
-                            return;
-                        }
-                        linear_Favorite_Empty.setVisibility(View.GONE);
-                        linear_favorite.setVisibility(View.VISIBLE);
-                        txt_sizeList.setText("Items ("+list.size()+")");
-                        clickDelete();
-                        rcv_favorite.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
-                        rcv_favorite.setHasFixedSize(true);
-                        favorite_adapter = new Favorite_Adapter(list, new Favorite_Adapter.IClickFavorite() {
-                            @Override
-                            public void ClickLike(Food food, ImageView img_favorite) {
-                                data.child(String.valueOf(user.getId())).child(food.getId_Food()).removeValue();
-                                Toast.makeText(getContext(),"Đã xóa khỏi mục yêu thích",Toast.LENGTH_SHORT).show();
-                            }
-
-                            @Override
-                            public void ClickView(Food food) {
-                                Intent intent = new Intent(getContext(), InforActivity.class);
-                                intent.putExtra("KEY_FOOD",food);
-                                startActivity(intent);
-                            }
-                        });
-                        rcv_favorite.setAdapter(favorite_adapter);
-                        favorite_adapter.notifyDataSetChanged();
+                    public void ClickLike(Food food, ImageView img_favorite) {
+                        data.child(String.valueOf(user.getId())).child(food.getId_Food()).removeValue();
+                        Toast.makeText(getContext(),"Đã xóa khỏi mục yêu thích",Toast.LENGTH_SHORT).show();
                     }
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
 
+                    @Override
+                    public void ClickView(Food food) {
+                        Intent intent = new Intent(getContext(), InforActivity.class);
+                        intent.putExtra("KEY_FOOD",food);
+                        startActivity(intent);
                     }
                 });
+                rcv_favorite.setAdapter(favorite_adapter);
+                favorite_adapter.notifyDataSetChanged();
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
     }
+
+
     private String listCategory(){
         List<String> list  = new ArrayList<>();
         data.child(user.getId()).addValueEventListener(new ValueEventListener() {
