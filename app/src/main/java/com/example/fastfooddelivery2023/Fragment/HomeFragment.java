@@ -156,7 +156,7 @@ public static List<Food> listFoodNew = new ArrayList<>();
         viewFlipper.setFlipInterval(4000);
         viewFlipper.setAutoStart(true);
         viewFlipper.setInAnimation(getContext(), android.R.anim.slide_in_left);
-        viewFlipper.setOutAnimation(getContext(), android.R.anim.slide_out_right);;
+        viewFlipper.setOutAnimation(getContext(), android.R.anim.slide_out_right);
     }
     private void Category_Food(){
         List<Category> listCategory = new ArrayList<>();

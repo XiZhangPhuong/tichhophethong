@@ -115,6 +115,7 @@
                     android:text="Gợi ý cho bạn" />
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcv_recommend"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/textView8"/>

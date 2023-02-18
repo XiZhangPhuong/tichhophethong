@@ -8,19 +8,41 @@
     android:id="@+id/view_cart"
     tools:context=".Fragment.Cart.CartNotEmptyFragment">
 
-    <Button
-        android:id="@+id/btn_addTOCart"
+    <LinearLayout
+        android:id="@+id/buttonPanel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        app:backgroundTint="@color/red"
-        android:text="Xác nhận đặt hàng"
-        android:textAllCaps="false"
-        android:textStyle="normal"
-        android:padding="10dp"
-        android:visibility="gone"
-        android:background="@drawable/custom_button"
-        android:textSize="15dp" />
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_addTOCart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:backgroundTint="@color/red"
+            android:text="Thanh toán tiền mặt"
+            android:textAllCaps="false"
+            android:textStyle="normal"
+            android:padding="10dp"
+            android:visibility="visible"
+            android:layout_weight="1"
+            android:background="@drawable/custom_button"
+            android:textSize="15dp" />
+
+        <Button
+            android:id="@+id/btn_zaloPay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:backgroundTint="@color/light_blue_600"
+            android:text="ZaloPay"
+            android:textAllCaps="false"
+            android:textStyle="normal"
+            android:padding="10dp"
+            android:visibility="visible"
+            android:layout_weight="1"
+            android:background="#146EB4"
+            android:textSize="15dp" />
+    </LinearLayout>
 
     <ProgressBar
         android:id="@+id/progressBar3"
@@ -38,7 +60,7 @@
         android:backgroundTint="@color/white"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
-        android:layout_above="@id/btn_addTOCart"
+        android:layout_above="@id/buttonPanel"
         android:src="@drawable/ic_baseline_preview_24"
         />
 

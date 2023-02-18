@@ -155,7 +155,6 @@ public static List<Food> listFoodFB = new ArrayList<>();
                         .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                startActivity(new Intent(InforActivity.this,MainActivity.class));
                                 finish();
                                 data.child(String.valueOf(user.getId())).child(food.getId_Food()).setValue(food);
                                 Toast.makeText(InforActivity.this,"Đã thêm vào giỏ hàng",Toast.LENGTH_SHORT).show();

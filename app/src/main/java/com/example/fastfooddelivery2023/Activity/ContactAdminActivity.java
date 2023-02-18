@@ -130,6 +130,9 @@ public class ContactAdminActivity extends AppCompatActivity {
         recommendMessAdapter = new RecommendMessAdapter(ContactAdminActivity.this, listRcm, new RecommendMessAdapter.ClickItems() {
             @Override
             public void Click(String string) {
+                if(checkSentMess(list,string)){
+                    return;
+                }
                  list.add(string);
                  messAdapter.notifyDataSetChanged();
             }
@@ -149,12 +152,7 @@ public class ContactAdminActivity extends AppCompatActivity {
                      edt_input.setText("");
                      edt_input.requestFocus();
                      messAdapter.notifyDataSetChanged();
-                     scrollView.post(new Runnable() {
-                         @Override
-                         public void run() {
-                             scrollView.fullScroll(View.FOCUS_DOWN);
-                         }
-                     });
+
                  }
              }
          });
@@ -168,7 +166,14 @@ public class ContactAdminActivity extends AppCompatActivity {
             }
         });
     }
-
+    private boolean checkSentMess(List<String> list,String input){
+        for(int i = 0;i<list.size();i++){
+            if(list.get(i).equals(input)){
+                return true;
+            }
+        }
+        return false;
+    }
     private void setWindow() {
 
         if (Build.VERSION.SDK_INT >= 21) {

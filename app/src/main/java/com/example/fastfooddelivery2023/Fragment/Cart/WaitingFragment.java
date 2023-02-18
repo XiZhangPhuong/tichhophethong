@@ -122,13 +122,6 @@ private String time = "";
                         rcv_order.setAdapter(orderAdapter);
                         clickButton(or);
 
-                        Snackbar.make(getActivity().findViewById(android.R.id.content),
-                                "Xem review đồ ăn", Snackbar.LENGTH_LONG).setAction("Xem", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                startActivity(new Intent(getContext(), VideoActivity.class));
-                            }
-                        }).show();
 
                     }else if(or.getUser().getId().equals(user.getId()) && or.getCheck()==2){
                         view_empty.setVisibility(View.VISIBLE);

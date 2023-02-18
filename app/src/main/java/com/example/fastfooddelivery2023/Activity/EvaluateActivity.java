@@ -101,6 +101,7 @@ private final DatabaseReference dataCMT = FirebaseDatabase.getInstance().getRefe
             }
         });
     }
+
     private void reviews(){
         btn_evaluate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,7 +115,6 @@ private final DatabaseReference dataCMT = FirebaseDatabase.getInstance().getRefe
                                 List<Comment_FB> list = new ArrayList<>();
                                 list.add(fb);
                                 dataCMT.child(food.getId_Food()).child(String.valueOf(user.getId())).setValue(fb);
-                                startActivity(new Intent(EvaluateActivity.this, MainActivity.class));
                                 finish();
                                 TEMPS.showNotification(EvaluateActivity.this,"FastFoodDelivery","Cảm ơn bạn đã đánh giá");
                                 Toast.makeText(EvaluateActivity.this,"Đánh giá đơn hàng thành công",Toast.LENGTH_SHORT).show();

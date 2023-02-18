@@ -2,22 +2,27 @@ package com.example.fastfooddelivery2023.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.fastfooddelivery2023.Adapter_New.FoodAdapter;
+import com.example.fastfooddelivery2023.Adapter_New.MessAdapter;
 import com.example.fastfooddelivery2023.Adapter_New.SearchAdapter;
 import com.example.fastfooddelivery2023.Model.Food;
 import com.example.fastfooddelivery2023.R;
@@ -33,11 +38,14 @@ import java.util.List;
 import java.util.Locale;
 
 public class SearchActivity extends AppCompatActivity {
-private RecyclerView rcv_searchFood;
+private RecyclerView rcv_searchFood,rcv_recommend;
 private SearchAdapter searchAdapter;
 private RelativeLayout view_rcv,view_history_search,view_rc_search;
 private EditText edt_search;
+private TextView txt_list_search;
+private ImageView imageView9;
 private final DatabaseReference dataFood = FirebaseDatabase.getInstance().getReference("Food");
+private MessAdapter messAdapter;
 private List<Food> list = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +55,7 @@ private List<Food> list = new ArrayList<>();
         try {
             setWindow();
             initView();
+            back();
             loadData();
             my_searchFood();
         }catch (Exception e){
@@ -67,7 +76,7 @@ private List<Food> list = new ArrayList<>();
                         for(DataSnapshot ds : snapshot.getChildren()) {
                             Food f = ds.getValue(Food.class);
                             list.add(f);
-                            Collections.shuffle(list);
+                           // Collections.shuffle(list);
                         }
                         loadDataRcvFood();
                         searchFood();
@@ -126,18 +135,30 @@ private List<Food> list = new ArrayList<>();
                listSearch.add(f);
            }
        }
+        txt_list_search.setText("Tìm thấy "+listSearch.size()+" sản phẩm");
         searchAdapter.filterList(listSearch);
         view_rc_search.setVisibility(View.GONE);
         view_rcv.setVisibility(View.VISIBLE);
         view_history_search.setVisibility(View.GONE);
     }
 
+    private void back(){
+        imageView9.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+    }
     private void initView(){
         rcv_searchFood = findViewById(R.id.rcv_searchFood);
         edt_search = findViewById(R.id.esearch_Viewdt_search);
         view_rcv = findViewById(R.id.view_rcv);
         view_rc_search = findViewById(R.id.view_rc_search);
         view_history_search = findViewById(R.id.view_history_search);
+        txt_list_search = findViewById(R.id.txt_list_search);
+        imageView9 = findViewById(R.id.imageView9);
+        rcv_recommend = findViewById(R.id.rcv_recommend);
     }
 
     private void setWindow(){

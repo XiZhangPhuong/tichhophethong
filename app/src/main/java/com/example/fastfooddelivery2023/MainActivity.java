@@ -12,10 +12,13 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.ConnectivityManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -29,6 +32,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.fastfooddelivery2023.Activity.WaitingActivity;
+import com.example.fastfooddelivery2023.BroadcastReceiver.MyInternet;
 import com.example.fastfooddelivery2023.Control.TEMPS;
 import com.example.fastfooddelivery2023.Model.Food;
 import com.example.fastfooddelivery2023.Model.Order_FB;
@@ -64,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference dataHistory = FirebaseDatabase.getInstance().getReference("History");
     private boolean flag = false;
     public static int check = 0;
+    private MyInternet myInternet;
     List<Order_FB>  list;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             startService(new Intent(MainActivity.this,MyService.class));
             checkDriver();
+            //checkInternet();
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -125,10 +131,38 @@ public class MainActivity extends AppCompatActivity {
 
     }
     private void checkInternet(){
-        if(TEMPS.checkInternet(MainActivity.this)==false){
-            viewPager2.setVisibility(View.GONE);
-        }else{
-            viewPager2.setVisibility(View.VISIBLE);
+        myInternet = new MyInternet();
+        if(myInternet.checkInternet==true){
+            View parentLayout = findViewById(android.R.id.content);
+            Snackbar.make(parentLayout, "Đã kết nối Internet", Snackbar.LENGTH_LONG)
+                    .setAction("", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                        }
+                    })
+                    .show();
+            return;
+        }
+        if(myInternet.checkInternet==false){
+            View parentLayout = findViewById(android.R.id.content);
+            Snackbar.make(parentLayout, "Mất kết nối Internet", Snackbar.LENGTH_INDEFINITE)
+                    .setAction("", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                        }
+                    })
+                    .show();
+            return;
+        }
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.N){
+            registerReceiver(myInternet,new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+            return;
+        }
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
+            registerReceiver(myInternet,new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+            return;
         }
     }
     private void showDialog(){
@@ -176,6 +210,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        checkInternet();
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
     }
 }

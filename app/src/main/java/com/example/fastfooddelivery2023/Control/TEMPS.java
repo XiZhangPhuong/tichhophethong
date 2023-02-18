@@ -21,6 +21,7 @@ import com.example.fastfooddelivery2023.R;
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Map;
 
 public class TEMPS {
 
@@ -124,12 +125,19 @@ public class TEMPS {
         return bitmap;
     }
 
-   public static boolean checkInternet(Context context){
-       ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
-       NetworkInfo nInfo = cm.getActiveNetworkInfo();
-       boolean connected = nInfo != null && nInfo.isAvailable() && nInfo.isConnected();
-       return connected;
-   }
+    public static boolean checkInternet(Context context){
+        try{
+            ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+            return (networkInfo!=null && networkInfo.isConnected());
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+
 
 
 

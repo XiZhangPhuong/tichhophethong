@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.StrictMode;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -32,6 +33,8 @@ import com.example.fastfooddelivery2023.Activity.InforActivity;
 import com.example.fastfooddelivery2023.Activity.WaitingActivity;
 import com.example.fastfooddelivery2023.Adapter.Cart_Adapter;
 import com.example.fastfooddelivery2023.Control.TEMPS;
+import com.example.fastfooddelivery2023.Helper.AppInfo;
+import com.example.fastfooddelivery2023.Helper.CreateOrder;
 import com.example.fastfooddelivery2023.MainActivity;
 import com.example.fastfooddelivery2023.Model.Food;
 import com.example.fastfooddelivery2023.Model.Order_FB;
@@ -47,10 +50,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.json.JSONObject;
+
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import vn.zalopay.sdk.Environment;
+import vn.zalopay.sdk.ZaloPayError;
+import vn.zalopay.sdk.ZaloPaySDK;
+import vn.zalopay.sdk.listeners.PayOrderListener;
 
 
 public class CartNotEmptyFragment extends Fragment {
@@ -59,7 +70,7 @@ public class CartNotEmptyFragment extends Fragment {
     private User user;
     private ProgressBar progressBar3;
     private ImageView image_back;
-    private Button btn_addTOCart;
+    private Button btn_addTOCart,btn_zaloPay;
     private FloatingActionButton floating;
     private RelativeLayout view_cart_not_empty,view_cart_empty,view_cart;
     private Cart_Adapter cartAdapter;
@@ -72,6 +83,7 @@ public class CartNotEmptyFragment extends Fragment {
     private Food f;
     private Order_FB order_fb;
     private List<Order_FB> listOrder = new ArrayList<>();
+    private DecimalFormat df = new DecimalFormat("######");
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -85,9 +97,10 @@ public class CartNotEmptyFragment extends Fragment {
 
         try {
             initView(mView);
-            checkOrder();
+           // checkOrder();
             loadDataCart();
             deleteItem();
+            zaloPay();
 
         }catch (Exception e){
             e.printStackTrace();
@@ -103,10 +116,10 @@ public class CartNotEmptyFragment extends Fragment {
             double ship = 15000;
             txt_ship_cart.setText(ship+"");
             sum = sum + (double)15000;
-            txt_total_cart.setText(sum+"");
+            txt_total_cart.setText(df.format(sum));
         }else{
             txt_ship_cart.setText("Free");
-            txt_total_cart.setText(sum+"");
+            txt_total_cart.setText(df.format(sum));
         }
     }
     private void loadDataCart(){
@@ -130,6 +143,7 @@ public class CartNotEmptyFragment extends Fragment {
                                      view_cart_empty.setVisibility(View.VISIBLE);
                                      view_cart_not_empty.setVisibility(View.GONE);
                                      btn_addTOCart.setVisibility(View.GONE);
+                                     btn_zaloPay.setVisibility(View.GONE);
                                      floating.setVisibility(View.GONE);
                                      progressBar3.setVisibility(View.GONE);
                                      return;
@@ -137,6 +151,7 @@ public class CartNotEmptyFragment extends Fragment {
                                  view_cart_empty.setVisibility(View.GONE);
                                  view_cart_not_empty.setVisibility(View.VISIBLE);
                                  btn_addTOCart.setVisibility(View.VISIBLE);
+                                 btn_zaloPay.setVisibility(View.VISIBLE);
                                  txt_items.setText("Mặt hàng ("+listFoodCart.size()+" món)");
                                  rcv_cart.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
                                  rcv_cart.setHasFixedSize(true);
@@ -221,12 +236,7 @@ public class CartNotEmptyFragment extends Fragment {
         txt_delete_items.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
+
                                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                                 builder.setTitle("Thông báo").setMessage("Xóa tất cả đơn hàng")
                                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -239,10 +249,6 @@ public class CartNotEmptyFragment extends Fragment {
                                             }
                                         }).setNegativeButton("Hủy",null)
                                         .create().show();
-                            }
-                        });
-                    }
-                }).start();
             }
         });
     }
@@ -273,7 +279,7 @@ public class CartNotEmptyFragment extends Fragment {
                                                   String address = edt_address.getText().toString() + " "+txt_city.getText().toString();
                                                   String time= new SimpleDateFormat("dd/MM/yyyy | hh:mm").format(Calendar.getInstance().getTime());
                                                   Double total = Double.parseDouble(txt_total_cart.getText().toString());
-                                                  order_fb = new Order_FB(id_order,user,staff,address,listFoodCart,time,total,1);
+                                                  order_fb = new Order_FB(id_order,user,staff,address,listFoodCart,time,total,"Thanh toán tiền mặt",1);
                                                   dataOrder.child(id_order).setValue(order_fb);
                                                   Toast.makeText(getContext(),"Đặt hàng thành công",Toast.LENGTH_SHORT).show();
                                                   dataCart.child(String.valueOf(user.getId())).removeValue();
@@ -307,17 +313,22 @@ public class CartNotEmptyFragment extends Fragment {
                         btn_addTOCart.setBackgroundColor(Color.parseColor("#ff8080"));
                         btn_addTOCart.setText("Đang trong trạng thái chờ");
                         btn_addTOCart.setEnabled(false);
+                      //  btn_zaloPay.setVisibility(View.GONE);
+                        btn_zaloPay.setEnabled(false);
                         ClickFloating();
                     }else if(or.getUser().getId().equals(user.getId()) && or.getCheck()==2){
                         btn_addTOCart.setBackgroundColor(Color.parseColor("#ff8080"));
                         btn_addTOCart.setText("Đang trong trạng thái chờ");
                         btn_addTOCart.setEnabled(false);
+                       // btn_zaloPay.setVisibility(View.GONE);
+                        btn_zaloPay.setEnabled(false);
                         ClickFloating();
                     }else if(or.getUser().getId().equals(user.getId()) && or.getCheck()!=1 || or.getCheck()!=2) {
                         btn_addTOCart.setBackgroundColor(Color.parseColor("#ff0000"));
-                        btn_addTOCart.setText("Xác nhận đặt hàng");
                         btn_addTOCart.setEnabled(true);
+                        btn_zaloPay.setEnabled(true);
                         floating.setVisibility(View.GONE);
+
                     }
                 }
             }
@@ -338,6 +349,79 @@ public class CartNotEmptyFragment extends Fragment {
             }
         });
     }
+
+    private void zaloPay(){
+        btn_zaloPay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String amount = txt_total_cart.getText().toString();
+                if(edt_address.length()<=5){
+                    edt_address.setError("Nhập lại địa chỉ");
+                    edt_address.setText("");
+                    edt_address.requestFocus();
+                    return;
+                }
+                // payment ZaloPay
+                StrictMode.ThreadPolicy policy = new
+                        StrictMode.ThreadPolicy.Builder().permitAll().build();
+                StrictMode.setThreadPolicy(policy);
+
+                ZaloPaySDK.init(AppInfo.APP_ID, Environment.SANDBOX);
+
+                CreateOrder orderApi = new CreateOrder();
+                try {
+                    JSONObject data = orderApi.createOrder(amount);
+                    String code = data.getString("returncode");
+
+                    if (code.equals("1")) {
+
+                        String token = data.getString("zptranstoken");
+
+                        ZaloPaySDK.getInstance().payOrder(getActivity(), token, "demozpdk://app", new PayOrderListener() {
+                            @Override
+                            public void onPaymentSucceeded(final String transactionId, final String transToken, final String appTransID) {
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        String id_order = dataOrder.push().getKey();
+                                        user = DataPreferences.getUser(getContext(),"KEY_USER");
+                                        Staff staff = new Staff("","","");
+                                        String address = edt_address.getText().toString() + " "+txt_city.getText().toString();
+                                        String time= new SimpleDateFormat("dd/MM/yyyy | hh:mm").format(Calendar.getInstance().getTime());
+                                        Double total = Double.parseDouble(txt_total_cart.getText().toString());
+                                        order_fb = new Order_FB(id_order,user,staff,address,listFoodCart,time,total,"ZaloPay",1);
+                                        dataOrder.child(id_order).setValue(order_fb);
+                                        Toast.makeText(getContext(),"Đặt hàng thành công",Toast.LENGTH_SHORT).show();
+                                        dataCart.child(String.valueOf(user.getId())).removeValue();
+                                        MainActivity.viewPager2.setCurrentItem(0);
+                                        TEMPS.showNotification(getContext(),"Đặt hàng thành công","Chờ tài xế xác nhận đơn nhé");
+                                    }
+                                });
+                              //  Toast.makeText(getActivity(), "Thanh toán thành công", Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onPaymentCanceled(String zpTransToken, String appTransID) {
+                                Toast.makeText(getActivity(), "Thanh toán bị hủy", Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onPaymentError(ZaloPayError zaloPayError, String zpTransToken, String appTransID) {
+                                Toast.makeText(getActivity(), "Thanh toán thất bại", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+
+
+    }
+
     private void initView(View view){
         rcv_cart = view.findViewById(R.id.rcv_cart);
         txt_total_cart = view.findViewById(R.id.txt_total_cart);
@@ -353,6 +437,7 @@ public class CartNotEmptyFragment extends Fragment {
         txt_ship_cart = view.findViewById(R.id.txt_ship_cart);
         floating = view.findViewById(R.id.floating);
         progressBar3 = view.findViewById(R.id.progressBar3);
+        btn_zaloPay = view.findViewById(R.id.btn_zaloPay);
     }
 
     @Override

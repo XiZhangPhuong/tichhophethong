@@ -10,9 +10,10 @@ public class Order_FB {
     private List<Food> listFood;
     private String time_order;
     private double total_cart;
+    private String payments;
     private int check;
 
-    public Order_FB(String id_order, User user, Staff staff, String address_order, List<Food> listFood, String time_order, double total_cart, int check) {
+    public Order_FB(String id_order, User user, Staff staff, String address_order, List<Food> listFood, String time_order, double total_cart, String payments, int check) {
         this.id_order = id_order;
         this.user = user;
         this.staff = staff;
@@ -20,6 +21,7 @@ public class Order_FB {
         this.listFood = listFood;
         this.time_order = time_order;
         this.total_cart = total_cart;
+        this.payments = payments;
         this.check = check;
     }
 
@@ -80,6 +82,14 @@ public class Order_FB {
 
     public void setTotal_cart(double total_cart) {
         this.total_cart = total_cart;
+    }
+
+    public String getPayments() {
+        return payments;
+    }
+
+    public void setPayments(String payments) {
+        this.payments = payments;
     }
 
     public int getCheck() {
