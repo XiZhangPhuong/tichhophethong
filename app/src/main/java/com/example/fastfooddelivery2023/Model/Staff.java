@@ -1,6 +1,9 @@
 package com.example.fastfooddelivery2023.Model;
 
-public class Staff {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Staff implements Parcelable {
     private String id_staff;
     private String fullName_staff;
     private String phoneNumber;
@@ -13,6 +16,24 @@ public class Staff {
 
     public Staff() {
     }
+
+    protected Staff(Parcel in) {
+        id_staff = in.readString();
+        fullName_staff = in.readString();
+        phoneNumber = in.readString();
+    }
+
+    public static final Creator<Staff> CREATOR = new Creator<Staff>() {
+        @Override
+        public Staff createFromParcel(Parcel in) {
+            return new Staff(in);
+        }
+
+        @Override
+        public Staff[] newArray(int size) {
+            return new Staff[size];
+        }
+    };
 
     public String getId_staff() {
         return id_staff;
@@ -36,5 +57,17 @@ public class Staff {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(id_staff);
+        parcel.writeString(fullName_staff);
+        parcel.writeString(phoneNumber);
     }
 }

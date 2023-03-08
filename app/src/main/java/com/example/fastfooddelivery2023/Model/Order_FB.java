@@ -1,8 +1,12 @@
 package com.example.fastfooddelivery2023.Model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
 import java.util.List;
 
-public class Order_FB {
+public class Order_FB  implements Parcelable {
     private String id_order;
     private User user;
     private Staff staff;
@@ -27,6 +31,47 @@ public class Order_FB {
 
     public Order_FB() {
     }
+
+    protected Order_FB(Parcel in) {
+        id_order = in.readString();
+        address_order = in.readString();
+        listFood = in.createTypedArrayList(Food.CREATOR);
+        time_order = in.readString();
+        total_cart = in.readDouble();
+        payments = in.readString();
+        check = in.readInt();
+    }
+
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id_order);
+        dest.writeParcelable(user, flags);
+        dest.writeParcelable(staff, flags);
+        dest.writeString(address_order);
+        dest.writeTypedList(listFood);
+        dest.writeString(time_order);
+        dest.writeDouble(total_cart);
+        dest.writeString(payments);
+        dest.writeInt(check);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Order_FB> CREATOR = new Creator<Order_FB>() {
+        @Override
+        public Order_FB createFromParcel(Parcel in) {
+            return new Order_FB(in);
+        }
+
+        @Override
+        public Order_FB[] newArray(int size) {
+            return new Order_FB[size];
+        }
+    };
 
     public String getId_order() {
         return id_order;
@@ -98,5 +143,23 @@ public class Order_FB {
 
     public void setCheck(int check) {
         this.check = check;
+    }
+
+
+
+
+    @Override
+    public String toString() {
+        return "Order_FB{" +
+                "id_order='" + id_order + '\'' +
+                ", user=" + user +
+                ", staff=" + staff +
+                ", address_order='" + address_order + '\'' +
+                ", listFood=" + listFood +
+                ", time_order='" + time_order + '\'' +
+                ", total_cart=" + total_cart +
+                ", payments='" + payments + '\'' +
+                ", check=" + check +
+                '}';
     }
 }

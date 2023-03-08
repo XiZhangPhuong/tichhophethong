@@ -7,6 +7,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.Manifest;
@@ -22,6 +23,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.StrictMode;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -34,6 +36,9 @@ import android.widget.Toast;
 import com.example.fastfooddelivery2023.Activity.WaitingActivity;
 import com.example.fastfooddelivery2023.BroadcastReceiver.MyInternet;
 import com.example.fastfooddelivery2023.Control.TEMPS;
+import com.example.fastfooddelivery2023.Fragment.Cart.CartNotEmptyFragment;
+import com.example.fastfooddelivery2023.Helper.AppInfo;
+import com.example.fastfooddelivery2023.Helper.CreateOrder;
 import com.example.fastfooddelivery2023.Model.Food;
 import com.example.fastfooddelivery2023.Model.Order_FB;
 import com.example.fastfooddelivery2023.Model.User;
@@ -51,8 +56,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import vn.zalopay.sdk.Environment;
+import vn.zalopay.sdk.ZaloPayError;
+import vn.zalopay.sdk.ZaloPaySDK;
+import vn.zalopay.sdk.listeners.PayOrderListener;
 
 public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
@@ -83,6 +95,10 @@ public class MainActivity extends AppCompatActivity {
         viewPager2.setUserInputEnabled(false);
 
         user = DataPreferences.getUser(MainActivity.this,"KEY_USER");
+
+
+
+
         try {
             startService(new Intent(MainActivity.this,MyService.class));
             checkDriver();
@@ -218,4 +234,8 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
 
     }
+
+
+
+
 }

@@ -48,7 +48,7 @@ dependencies {
 
     // zalo Pay
     implementation 'com.squareup.okhttp3:okhttp:4.6.0'
-
+    implementation files('../libs/zpdk-release-v3.1.aar')
 
 
 }

@@ -35,7 +35,6 @@ public class MyService extends Service {
         user = DataPreferences.getUser(MyService.this,KEY_USER);
         dataOrder = FirebaseDatabase.getInstance().getReference("Order");
 
-        final DatabaseReference dataOrder = FirebaseDatabase.getInstance().getReference("Order");
         list=  new ArrayList<>();
         dataOrder.addValueEventListener(new ValueEventListener() {
             @Override
@@ -51,6 +50,7 @@ public class MyService extends Service {
                 for(Order_FB or : list){
                     if(or.getCheck()==1 && or.getUser().getId().equals(user.getId())){
                       //  TEMPS.showNotification(MyService.this,"Thông báo","Chờ tài xế xác nhận đơn hàng");
+                        System.out.println("Dat hang success");
                     }else if(or.getCheck()==2 && or.getUser().getId().equals(user.getId())){
                         TEMPS.showNotification(MyService.this,"Thông báo","Tài xế đang giao");
                     }else if(or.getCheck()==3 && or.getUser().getId().equals(user.getId())){

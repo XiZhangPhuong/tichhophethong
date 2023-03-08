@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.os.StrictMode;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -31,6 +32,7 @@ import android.widget.Toast;
 
 import com.example.fastfooddelivery2023.Activity.InforActivity;
 import com.example.fastfooddelivery2023.Activity.WaitingActivity;
+import com.example.fastfooddelivery2023.Activity.ZaloActivity;
 import com.example.fastfooddelivery2023.Adapter.Cart_Adapter;
 import com.example.fastfooddelivery2023.Control.TEMPS;
 import com.example.fastfooddelivery2023.Helper.AppInfo;
@@ -273,18 +275,19 @@ public class CartNotEmptyFragment extends Fragment {
                                                       edt_address.requestFocus();
                                                       return;
                                                   }
-                                                  String id_order = dataOrder.push().getKey();
-                                                  user = DataPreferences.getUser(getContext(),"KEY_USER");
-                                                  Staff staff = new Staff("","","");
-                                                  String address = edt_address.getText().toString() + " "+txt_city.getText().toString();
-                                                  String time= new SimpleDateFormat("dd/MM/yyyy | hh:mm").format(Calendar.getInstance().getTime());
-                                                  Double total = Double.parseDouble(txt_total_cart.getText().toString());
-                                                  order_fb = new Order_FB(id_order,user,staff,address,listFoodCart,time,total,"Thanh toán tiền mặt",1);
-                                                  dataOrder.child(id_order).setValue(order_fb);
-                                                  Toast.makeText(getContext(),"Đặt hàng thành công",Toast.LENGTH_SHORT).show();
-                                                  dataCart.child(String.valueOf(user.getId())).removeValue();
-                                                  MainActivity.viewPager2.setCurrentItem(0);
-                                                  TEMPS.showNotification(getContext(),"Đặt hàng thành công","Chờ tài xế xác nhận đơn nhé");
+                                                String id_order = dataOrder.push().getKey();
+                                                user = DataPreferences.getUser(getContext(),"KEY_USER");
+                                                Staff staff = new Staff("","","");
+                                                String address = edt_address.getText().toString() + " "+txt_city.getText().toString();
+                                                String time= new SimpleDateFormat("dd/MM/yyyy | hh:mm").format(Calendar.getInstance().getTime());
+                                                Double total = Double.parseDouble(txt_total_cart.getText().toString());
+                                                order_fb = new Order_FB(id_order,user,staff,address,listFoodCart,time,total,"Thanh toán tiền mặt",1);
+
+                                                dataOrder.child(id_order).setValue(order_fb);
+                                                Toast.makeText(getContext(),"Đặt hàng thành công",Toast.LENGTH_SHORT).show();
+                                                dataCart.child(String.valueOf(user.getId())).removeValue();
+                                                MainActivity.viewPager2.setCurrentItem(0);
+                                                TEMPS.showNotification(getContext(),"Đặt hàng thành công","Chờ tài xế xác nhận đơn nhé");
 
                                             }
                                         }).setNegativeButton("Hủy",null).create().show();
@@ -350,11 +353,11 @@ public class CartNotEmptyFragment extends Fragment {
         });
     }
 
-    private void zaloPay(){
+    public  void zaloPay(){
         btn_zaloPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String amount = txt_total_cart.getText().toString();
+               // String amount = txt_total_cart.getText().toString();
                 if(edt_address.length()<=5){
                     edt_address.setError("Nhập lại địa chỉ");
                     edt_address.setText("");
@@ -362,65 +365,30 @@ public class CartNotEmptyFragment extends Fragment {
                     return;
                 }
                 // payment ZaloPay
-                StrictMode.ThreadPolicy policy = new
-                        StrictMode.ThreadPolicy.Builder().permitAll().build();
-                StrictMode.setThreadPolicy(policy);
+//                String id_order = dataOrder.push().getKey();
+//                user = DataPreferences.getUser(getContext(),"KEY_USER");
+//                Staff staff = new Staff("","","");
+                String address = edt_address.getText().toString() + " "+txt_city.getText().toString();
+            //    String time= new SimpleDateFormat("dd/MM/yyyy | hh:mm").format(Calendar.getInstance().getTime());
+                Double total = Double.parseDouble(txt_total_cart.getText().toString());
+             //   order_fb = new Order_FB(id_order,user,staff,address,listFoodCart,time,total,"ZaloPay",1);
 
-                ZaloPaySDK.init(AppInfo.APP_ID, Environment.SANDBOX);
+                progressBar3.setVisibility(View.VISIBLE);
 
-                CreateOrder orderApi = new CreateOrder();
-                try {
-                    JSONObject data = orderApi.createOrder(amount);
-                    String code = data.getString("returncode");
+                Intent intent = new Intent(getActivity(), ZaloActivity.class);
+                intent.putExtra("ADDRESS",address);
+                intent.putExtra("TOTALCART",total);
+                startActivity(intent);
 
-                    if (code.equals("1")) {
-
-                        String token = data.getString("zptranstoken");
-
-                        ZaloPaySDK.getInstance().payOrder(getActivity(), token, "demozpdk://app", new PayOrderListener() {
-                            @Override
-                            public void onPaymentSucceeded(final String transactionId, final String transToken, final String appTransID) {
-                                getActivity().runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        String id_order = dataOrder.push().getKey();
-                                        user = DataPreferences.getUser(getContext(),"KEY_USER");
-                                        Staff staff = new Staff("","","");
-                                        String address = edt_address.getText().toString() + " "+txt_city.getText().toString();
-                                        String time= new SimpleDateFormat("dd/MM/yyyy | hh:mm").format(Calendar.getInstance().getTime());
-                                        Double total = Double.parseDouble(txt_total_cart.getText().toString());
-                                        order_fb = new Order_FB(id_order,user,staff,address,listFoodCart,time,total,"ZaloPay",1);
-                                        dataOrder.child(id_order).setValue(order_fb);
-                                        Toast.makeText(getContext(),"Đặt hàng thành công",Toast.LENGTH_SHORT).show();
-                                        dataCart.child(String.valueOf(user.getId())).removeValue();
-                                        MainActivity.viewPager2.setCurrentItem(0);
-                                        TEMPS.showNotification(getContext(),"Đặt hàng thành công","Chờ tài xế xác nhận đơn nhé");
-                                    }
-                                });
-                              //  Toast.makeText(getActivity(), "Thanh toán thành công", Toast.LENGTH_SHORT).show();
-                            }
-
-                            @Override
-                            public void onPaymentCanceled(String zpTransToken, String appTransID) {
-                                Toast.makeText(getActivity(), "Thanh toán bị hủy", Toast.LENGTH_SHORT).show();
-                            }
-
-                            @Override
-                            public void onPaymentError(ZaloPayError zaloPayError, String zpTransToken, String appTransID) {
-                                Toast.makeText(getActivity(), "Thanh toán thất bại", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                progressBar3.setVisibility(View.GONE);
             }
         });
 
 
 
     }
+
+
 
     private void initView(View view){
         rcv_cart = view.findViewById(R.id.rcv_cart);

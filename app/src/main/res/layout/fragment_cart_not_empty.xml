@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:backgroundTint="@color/red"
-            android:text="Thanh toán tiền mặt"
+            android:text="Tiền mặt"
             android:textAllCaps="false"
             android:textStyle="normal"
             android:padding="10dp"
