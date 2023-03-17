@@ -94,25 +94,37 @@ public class CartNotEmptyFragment extends Fragment {
         }
         return mView;
     }
-    private void total_cart(){
-        for(Food food: listFoodCart){
-            sum+=food.getQuantity()*food.getPrice_Food();
+//    private void total_cart(){
+//        for(Food food: listFoodCart){
+//            sum+=food.getQuantity()*food.getPrice_Food();
+//        }
+//        txt_temp_cart.setText(sum+" ");
+//        if(sum<=100000){
+//            txt_ship_cart.setText("15000");
+//            sum = sum + 15000;
+//            txt_total_cart.setText(df.format(sum));
+//        }else{
+//            txt_ship_cart.setText("Free");
+//            txt_total_cart.setText(df.format(sum));
+//        }
+//    }
+    private  void _totalPrices(){
+        double data =0;
+        for(Food food : listFoodCart){
+            data += food.getQuantity()*food.getPrice_Food();
         }
-        txt_temp_cart.setText(sum+" ");
-        if(sum<=100000){
-            double ship = 15000;
-            txt_ship_cart.setText(ship+"");
-            sum = sum + (double)15000;
-            txt_total_cart.setText(df.format(sum));
+        if(data < 100000){
+            txt_temp_cart.setText(""+data);
+            txt_ship_cart.setText("15000");
+            txt_total_cart.setText(""+(15000+data));
         }else{
+            txt_temp_cart.setText(""+data);
             txt_ship_cart.setText("Free");
-            txt_total_cart.setText(df.format(sum));
+            txt_total_cart.setText(""+data);
         }
     }
     private void loadDataCart(){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
+
                 dataCart.child(String.valueOf(user.getId())).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -122,6 +134,7 @@ public class CartNotEmptyFragment extends Fragment {
                              f = ds.getValue(Food.class);
                              listFoodCart.add(f);
                          }
+                        _totalPrices();
                          getActivity().runOnUiThread(new Runnable() {
                              @Override
                              public void run() {
@@ -145,42 +158,40 @@ public class CartNotEmptyFragment extends Fragment {
                                  cartAdapter = new Cart_Adapter(listFoodCart, new Cart_Adapter.IClickCart() {
                                      @Override
                                      public void ClickPlusCart(TextView tv_number_cart, TextView tv_total_item, Food food) {
+
                                          int i = Integer.parseInt(tv_number_cart.getText().toString());
                                          i++;
                                          food.setQuantity(i);
                                          tv_number_cart.setText(i+"");
                                          tv_total_item.setText(i*food.getPrice_Food()+"");
-                                         sum = sum + food.getPrice_Food();
-                                         txt_temp_cart.setText(sum + "");
-
-                                         if(sum<=100000){
-                                             txt_ship_cart.setText("15000");
-                                             sum = sum + (double)15000;
-                                             txt_total_cart.setText(sum+"");
-                                         }else{
-                                             txt_ship_cart.setText("Free");
-                                             txt_total_cart.setText(sum+"");
-                                         }
+                                         _totalPrices();
+                                         // sum la bang cho tong total item
+                                         //total_cart();
                                      }
 
                                      @Override
                                      public void ClickMinusCart(TextView tv_number_cart, TextView tv_total_item, Food food) {
+
                                          int i = Integer.parseInt(tv_number_cart.getText().toString());
                                          i--;
                                          tv_number_cart.setText(i+"");
                                          food.setQuantity(i);
                                          tv_total_item.setText(i*food.getPrice_Food()+"");
-                                         sum = sum - food.getPrice_Food();
-                                         txt_temp_cart.setText(sum+" ");
-                                         if(sum<=100000){
-                                             double ship = 15000;
-                                             txt_ship_cart.setText(ship+"");
-                                             sum = sum + (double)15000;
-                                             txt_total_cart.setText(sum+"");
-                                         }else{
-                                             txt_ship_cart.setText("Free");
-                                             txt_total_cart.setText(sum+"");
-                                         }
+                                         _totalPrices();
+//                                         sum = sum - food.getPrice_Food();
+//                                         txt_temp_cart.setText((sum - 15000) + "");
+//                                         txt_total_cart.setText(""+sum);
+
+//                                         if(sum<=100000){
+//                                             double ship = 15000;
+//                                             txt_ship_cart.setText(ship+"");
+//                                             sum = sum + (double)15000;
+//                                             txt_total_cart.setText(sum+"");
+//                                         }else{
+//                                             txt_ship_cart.setText("Free");
+//                                             txt_total_cart.setText(sum+"");
+//                                         }
+
                                          if(i==0){
                                             // listFoodCart.remove(food);
                                              sum = 0;
@@ -205,10 +216,11 @@ public class CartNotEmptyFragment extends Fragment {
                                  rcv_cart.setAdapter(cartAdapter);
                                  cartAdapter.notifyDataSetChanged();
                                  progressBar3.setVisibility(View.GONE);
-                                 total_cart();
+                                 //total_cart();
                                  confirm_Cart();
                              }
                          });
+
                     }
 
                     @Override
@@ -216,8 +228,6 @@ public class CartNotEmptyFragment extends Fragment {
 
                     }
                 });
-            }
-        }).start();
     }
     private void deleteItem(){
         txt_delete_items.setOnClickListener(new View.OnClickListener() {

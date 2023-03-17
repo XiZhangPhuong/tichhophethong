@@ -13,34 +13,24 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.Window;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.MultiAutoCompleteTextView;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 import android.widget.ViewFlipper;
 
 import com.example.fastfooddelivery2023.Activity.CategoryActivity;
 import com.example.fastfooddelivery2023.Activity.InforActivity;
 import com.example.fastfooddelivery2023.Activity.SearchActivity;
 import com.example.fastfooddelivery2023.Adapter.Category_Adapter;
-import com.example.fastfooddelivery2023.Adapter_New.FoodAdapter;
 import com.example.fastfooddelivery2023.Adapter_New.ObjectFoodAdapter;
 import com.example.fastfooddelivery2023.Adapter_New.SearchAdapter;
-import com.example.fastfooddelivery2023.Dialog.BottomSheetDialogFragment;
 import com.example.fastfooddelivery2023.Model.Category;
 import com.example.fastfooddelivery2023.Model.Food;
 import com.example.fastfooddelivery2023.Model.ObjectFood;
@@ -58,8 +48,6 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class HomeFragment extends Fragment {
