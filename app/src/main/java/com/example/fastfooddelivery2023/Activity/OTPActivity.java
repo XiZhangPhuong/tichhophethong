@@ -1,7 +1,7 @@
 package com.example.fastfooddelivery2023.Activity;
 
-import static com.example.fastfooddelivery2023.Control.TEMPS.ranDomCODE;
-import static com.example.fastfooddelivery2023.Control.TEMPS.showNotification;
+import static com.example.fastfooddelivery2023.Fragment.Control.TEMPS.ranDomCODE;
+import static com.example.fastfooddelivery2023.Fragment.Control.TEMPS.showNotification;
 
 import androidx.appcompat.app.AppCompatActivity;
 

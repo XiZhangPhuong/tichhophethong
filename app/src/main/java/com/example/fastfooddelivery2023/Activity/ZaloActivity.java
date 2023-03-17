@@ -1,7 +1,6 @@
 package com.example.fastfooddelivery2023.Activity;
 
 import static com.example.fastfooddelivery2023.Fragment.Cart.CartNotEmptyFragment.listFoodCart;
-import static com.example.fastfooddelivery2023.Fragment.LoginSignUp.LoginFragment.KEY_USER;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,11 +10,10 @@ import android.os.StrictMode;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.fastfooddelivery2023.Control.TEMPS;
+import com.example.fastfooddelivery2023.Fragment.Control.TEMPS;
 import com.example.fastfooddelivery2023.Helper.AppInfo;
 import com.example.fastfooddelivery2023.Helper.CreateOrder;
 import com.example.fastfooddelivery2023.MainActivity;
-import com.example.fastfooddelivery2023.Model.Food;
 import com.example.fastfooddelivery2023.Model.Order_FB;
 import com.example.fastfooddelivery2023.Model.Staff;
 import com.example.fastfooddelivery2023.Model.User;
@@ -23,7 +21,6 @@ import com.example.fastfooddelivery2023.R;
 import com.example.fastfooddelivery2023.SharedPreferences.DataPreferences;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.gson.JsonIOException;
 
 import org.json.JSONObject;
 

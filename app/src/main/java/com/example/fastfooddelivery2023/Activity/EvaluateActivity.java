@@ -17,9 +17,8 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.fastfooddelivery2023.Control.TEMPS;
+import com.example.fastfooddelivery2023.Fragment.Control.TEMPS;
 import com.example.fastfooddelivery2023.MainActivity;
-import com.example.fastfooddelivery2023.Model.Comment;
 import com.example.fastfooddelivery2023.Model.Comment_FB;
 import com.example.fastfooddelivery2023.Model.Food;
 import com.example.fastfooddelivery2023.Model.User;
@@ -115,7 +114,8 @@ private final DatabaseReference dataCMT = FirebaseDatabase.getInstance().getRefe
                                 List<Comment_FB> list = new ArrayList<>();
                                 list.add(fb);
                                 dataCMT.child(food.getId_Food()).child(String.valueOf(user.getId())).setValue(fb);
-                                finish();
+                                Intent intent = new Intent(EvaluateActivity.this,MainActivity.class);
+                                startActivity(intent);
                                 TEMPS.showNotification(EvaluateActivity.this,"FastFoodDelivery","Cảm ơn bạn đã đánh giá");
                                 Toast.makeText(EvaluateActivity.this,"Đánh giá đơn hàng thành công",Toast.LENGTH_SHORT).show();
                             }
@@ -138,6 +138,7 @@ private final DatabaseReference dataCMT = FirebaseDatabase.getInstance().getRefe
             }
         });
     }
+
     private void setWindow(){
 
         if(Build.VERSION.SDK_INT>=21){

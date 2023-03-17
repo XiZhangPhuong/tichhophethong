@@ -1,16 +1,12 @@
 package com.example.fastfooddelivery2023.BroadcastReceiver;
 
-import static com.example.fastfooddelivery2023.Control.TEMPS.checkInternet;
+import static com.example.fastfooddelivery2023.Fragment.Control.TEMPS.checkInternet;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
-import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.material.snackbar.Snackbar;
 
 public class MyInternet extends BroadcastReceiver {
     public static boolean checkInternet;

@@ -1,8 +1,8 @@
 package com.example.fastfooddelivery2023.Activity;
 
-import static com.example.fastfooddelivery2023.Control.TEMPS.checkUser;
-import static com.example.fastfooddelivery2023.Control.TEMPS.ranDomCODE;
-import static com.example.fastfooddelivery2023.Control.TEMPS.showNotification;
+import static com.example.fastfooddelivery2023.Fragment.Control.TEMPS.checkUser;
+import static com.example.fastfooddelivery2023.Fragment.Control.TEMPS.ranDomCODE;
+import static com.example.fastfooddelivery2023.Fragment.Control.TEMPS.showNotification;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,7 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.fastfooddelivery2023.Control.TEMPS;
+import com.example.fastfooddelivery2023.Fragment.Control.TEMPS;
 import com.example.fastfooddelivery2023.Model.User;
 import com.example.fastfooddelivery2023.R;
 import com.google.firebase.database.DataSnapshot;

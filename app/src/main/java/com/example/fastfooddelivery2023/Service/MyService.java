@@ -10,8 +10,7 @@ import android.os.IBinder;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.fastfooddelivery2023.Control.TEMPS;
-import com.example.fastfooddelivery2023.MainActivity;
+import com.example.fastfooddelivery2023.Fragment.Control.TEMPS;
 import com.example.fastfooddelivery2023.Model.Order_FB;
 import com.example.fastfooddelivery2023.Model.User;
 import com.example.fastfooddelivery2023.SharedPreferences.DataPreferences;

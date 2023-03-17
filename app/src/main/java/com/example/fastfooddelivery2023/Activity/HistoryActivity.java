@@ -1,7 +1,5 @@
 package com.example.fastfooddelivery2023.Activity;
 
-import static com.example.fastfooddelivery2023.Fragment.LoginSignUp.LoginFragment.KEY_USER;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,26 +8,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.fastfooddelivery2023.Adapter.History_Adapter;
 import com.example.fastfooddelivery2023.Adapter_New.ObjectHistoryAdapter;
-import com.example.fastfooddelivery2023.Control.TEMPS;
 import com.example.fastfooddelivery2023.MainActivity;
-import com.example.fastfooddelivery2023.Model.Comment;
 import com.example.fastfooddelivery2023.Model.Food;
 import com.example.fastfooddelivery2023.Model.Order_FB;
 import com.example.fastfooddelivery2023.Model.User;
@@ -40,12 +28,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
 
-import java.security.spec.EllipticCurve;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 public class HistoryActivity extends AppCompatActivity {
